@@ -12,6 +12,7 @@ module.exports = {
         'plugin:jsx-a11y/recommended',
         'plugin:prettier/recommended',
     ],
+    ignorePatterns: ['/*.js'],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         project: './tsconfig.json',
