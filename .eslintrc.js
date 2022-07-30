@@ -30,7 +30,6 @@ module.exports = {
     rules: {
         eqeqeq: ['error'],
         'import/named': 'warn',
-        'import/no-default-export': 'error',
         'import/order': [
             'error',
             {
@@ -77,49 +76,6 @@ module.exports = {
         'react/self-closing-comp': ['error', { component: true, html: false }],
         'react/prefer-stateless-function': 'error',
         'require-await': 'error',
-        '@typescript-eslint/naming-convention': [
-            'warn',
-            {
-                selector: 'default',
-                format: ['camelCase'],
-            },
-            {
-                selector: 'enumMember',
-                format: ['UPPER_CASE', 'PascalCase'],
-            },
-            {
-                selector: 'interface',
-                format: ['PascalCase'],
-                custom: {
-                    regex: '^I[A-Z]',
-                    match: true,
-                },
-            },
-            {
-                selector: 'memberLike',
-                modifiers: ['private'],
-                format: ['camelCase'],
-                leadingUnderscore: 'allow',
-            },
-            {
-                selector: 'parameter',
-                format: ['camelCase'],
-                leadingUnderscore: 'allow',
-            },
-            {
-                selector: 'typeLike',
-                format: ['PascalCase'],
-            },
-            {
-                selector: 'typeParameter',
-                format: ['PascalCase'],
-                prefix: ['T'],
-            },
-            {
-                selector: 'variable',
-                format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
-            },
-        ],
         '@typescript-eslint/no-unnecessary-condition': 'error',
         '@typescript-eslint/no-unused-vars': ['error'],
     },
