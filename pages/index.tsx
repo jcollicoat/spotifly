@@ -1,15 +1,18 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useState } from 'react';
+import { ITopTrackDTO } from '../interfaces/spotify/ITopTrackDTO';
 
 const Home: NextPage = () => {
-    const getTopTracks = async () => {
-        const response = await axios.get('/api/spotify/topTracks');
-        return response.data;
-    };
-    const topTracks = getTopTracks();
+    const [topTracks, setTopTracks] = useState<ITopTrackDTO>();
 
-    console.log(topTracks);
+    const getTopTracks = async () => {
+        const { data } = await axios.get('/api/spotify/topTracks');
+        setTopTracks(data);
+    };
+
+    getTopTracks();
 
     return (
         <>
@@ -18,9 +21,13 @@ const Home: NextPage = () => {
                 <meta name="description" content="Spotifly app" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div>
-                <ol></ol>
-            </div>
+            {topTracks && (
+                <ol>
+                    {topTracks.items.map((track) => (
+                        <li key={track.id}>{track.name}</li>
+                    ))}
+                </ol>
+            )}
         </>
     );
 };
