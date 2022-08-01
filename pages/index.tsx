@@ -1,10 +1,12 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import Head from 'next/head';
 import { useState } from 'react';
 import { ITopTrackDTO } from '../interfaces/spotify/ITopTrackDTO';
 
 const Home: NextPage = () => {
+    const { data: session } = useSession();
     const [topTracks, setTopTracks] = useState<ITopTrackDTO>();
 
     const getTopTracks = async () => {
@@ -27,6 +29,11 @@ const Home: NextPage = () => {
                         <li key={track.id}>{track.name}</li>
                     ))}
                 </ol>
+            )}
+            {session ? (
+                <button onClick={() => signOut()}>Sign out</button>
+            ) : (
+                <button onClick={() => signIn()}>Sign in</button>
             )}
         </>
     );
