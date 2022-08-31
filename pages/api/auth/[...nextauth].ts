@@ -4,37 +4,30 @@ import SpotifyProvider from 'next-auth/providers/spotify';
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET;
 
-const scope =
-    'user-read-recently-played user-read-playback-state user-top-read user-modify-playback-state user-read-currently-playing user-follow-read playlist-read-private user-read-email user-read-private user-library-read playlist-read-collaborative';
+const scope = 'user-top-read';
 
 export default NextAuth({
     providers: [
         SpotifyProvider({
-            clientId: CLIENT_ID as string,
-            clientSecret: CLIENT_SECRET as string,
             authorization: {
                 params: { scope },
             },
+            clientId: CLIENT_ID as string,
+            clientSecret: CLIENT_SECRET as string,
         }),
     ],
-    secret: NEXTAUTH_SECRET,
     callbacks: {
         async jwt({ token, account }) {
             if (account) {
-                token.id = account.id;
-                token.expires_at = account.expires_at;
-                token.accessToken = account.access_token;
+                token.accessToken = account.refresh_token;
             }
             return token;
         },
-        async session({ session, token }) {
-            session.user = token;
+        async session({ session, user, token }) {
+            session.user = user;
+            session.refresh_token = token.accessToken;
             return session;
         },
     },
-    //pages: {
-    //signIn: '/login',
-    //},
 });
