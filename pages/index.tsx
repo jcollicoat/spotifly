@@ -7,6 +7,7 @@ import { ITopTrackDTO } from '../interfaces/spotify/ITopTrackDTO';
 
 const Home: NextPage = () => {
     const { data: session } = useSession();
+    console.log(session);
     const [topTracks, setTopTracks] = useState<ITopTrackDTO>();
 
     const getTopTracks = async () => {
@@ -14,7 +15,7 @@ const Home: NextPage = () => {
         setTopTracks(data);
     };
 
-    getTopTracks();
+    // getTopTracks();
 
     return (
         <>
