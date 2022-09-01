@@ -1,6 +1,6 @@
 import { ITrackDTO } from './ITrackDTO';
 
-export interface ITopTrackDTO {
+export interface ITopTracksDTO {
     href: string;
     items: ITrackDTO[];
     limit: number;

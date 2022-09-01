@@ -1,21 +1,32 @@
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import type { NextPage } from 'next';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Head from 'next/head';
-import { useState } from 'react';
-import { ITopTrackDTO } from '../interfaces/spotify/ITopTrackDTO';
+// import { useState } from 'react';
+import { ITopTracksDTO } from '../interfaces/spotify/ITopTracksDTO';
 
 const Home: NextPage = () => {
     const { data: session } = useSession();
-    console.log(session);
-    const [topTracks, setTopTracks] = useState<ITopTrackDTO>();
 
     const getTopTracks = async () => {
+        if (!session) {
+            return null;
+        }
         const { data } = await axios.get('/api/spotify/topTracks');
-        setTopTracks(data);
+        return data;
     };
 
-    // getTopTracks();
+    const {
+        data: topTracks,
+        isError,
+        isLoading,
+    } = useQuery<ITopTracksDTO | null>(['topTracks'], getTopTracks);
+    console.log(topTracks);
+
+    if (isLoading) return <div>Loading...</div>;
+
+    if (isError) return <div>An error occured.</div>;
 
     return (
         <>
@@ -32,7 +43,10 @@ const Home: NextPage = () => {
                 </ol>
             )}
             {session ? (
-                <button onClick={() => signOut()}>Sign out</button>
+                <>
+                    <button onClick={() => signOut()}>Sign out</button>
+                    <button onClick={getTopTracks}>Get top tracks</button>
+                </>
             ) : (
                 <button onClick={() => signIn()}>Sign in</button>
             )}

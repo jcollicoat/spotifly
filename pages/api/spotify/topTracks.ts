@@ -3,8 +3,9 @@ import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 
+const endpoint = 'https://api.spotify.com/v1/me/top/tracks';
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const endpoint = 'https://api.spotify.com/v1/me/top/tracks';
     const session = await getSession({ req });
 
     if (!session) {
