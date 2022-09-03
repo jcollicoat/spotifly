@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         data: topTracks,
         isError,
         isLoading,
-    } = useQuery<ITopTracksDTO | null>(['topTracks'], getTopTracks);
+    } = useQuery<ITopTracksDTO>(['topTracks'], getTopTracks);
 
     return (
         <>
