@@ -13,11 +13,6 @@ const Home: NextPage = () => {
         isError,
         isLoading,
     } = useQuery<ITopTracksDTO | null>(['topTracks'], getTopTracks);
-    console.log(topTracks);
-
-    if (isLoading) return <div>Loading...</div>;
-
-    if (isError) return <div>An error occured.</div>;
 
     return (
         <>
@@ -26,6 +21,8 @@ const Home: NextPage = () => {
                 <meta name="description" content="Spotifly app" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            {isLoading && <div>Loading...</div>}
+            {isError && <div>An error occured.</div>}
             {topTracks && (
                 <ol>
                     {topTracks.items.map((track) => (
