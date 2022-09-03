@@ -1,21 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import type { NextPage } from 'next';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Head from 'next/head';
-// import { useState } from 'react';
 import { ITopTracksDTO } from '../interfaces/spotify/ITopTracksDTO';
+import { getTopTracks } from '../lib/spotify';
 
 const Home: NextPage = () => {
     const { data: session } = useSession();
-
-    const getTopTracks = async () => {
-        if (!session) {
-            return null;
-        }
-        const { data } = await axios.get('/api/spotify/topTracks');
-        return data;
-    };
 
     const {
         data: topTracks,
@@ -38,15 +29,14 @@ const Home: NextPage = () => {
             {topTracks && (
                 <ol>
                     {topTracks.items.map((track) => (
-                        <li key={track.id}>{track.name}</li>
+                        <li key={track.id}>
+                            {track.name} — {track.artists[0].name}
+                        </li>
                     ))}
                 </ol>
             )}
             {session ? (
-                <>
-                    <button onClick={() => signOut()}>Sign out</button>
-                    <button onClick={getTopTracks}>Get top tracks</button>
-                </>
+                <button onClick={() => signOut()}>Sign out</button>
             ) : (
                 <button onClick={() => signIn()}>Sign in</button>
             )}
