@@ -37,16 +37,24 @@ async function refreshAccessToken(token: JWT) {
         const refreshedToken = await response.data;
 
         if (response.status !== 200) {
+            console.log(
+                `Error fetching refreshed token: ${response.status} | ${response.statusText}`
+            );
             throw refreshedToken;
         }
 
+        console.log(
+            `Refresh access token successfully. New expiry: ${new Date(
+                Date.now() + 3600000
+            )}`
+        );
         return {
             ...token,
             access_token: refreshedToken.access_token,
             access_token_expires: Date.now() + 3600000,
         };
     } catch (error) {
-        console.error(error);
+        console.log(`Failed to refresh access token: ${error}`);
 
         return {
             ...token,
@@ -76,7 +84,7 @@ export default NextAuth({
 
             if (typeof token.access_token_expires === 'number') {
                 // Return previous token if the access token has not expired yet
-                if (Date.now() < token.access_token_expires) {
+                if (Date.now() > token.access_token_expires) {
                     return token;
                 }
 
