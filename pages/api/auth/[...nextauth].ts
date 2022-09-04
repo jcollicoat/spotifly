@@ -37,8 +37,8 @@ async function refreshAccessToken(token: JWT) {
         const refreshedToken = await response.data;
 
         if (response.status !== 200) {
-            console.log(
-                `Error fetching refreshed token: ${response.status} | ${response.statusText}`
+            console.warn(
+                `Error fetching new access token: ${response.status} | ${response.statusText}`
             );
             throw refreshedToken;
         }
@@ -54,7 +54,7 @@ async function refreshAccessToken(token: JWT) {
             access_token_expires: Date.now() + 3600000,
         };
     } catch (error) {
-        console.log(`Failed to refresh access token: ${error}`);
+        console.error(`Failed to refresh access token: ${error}`);
 
         return {
             ...token,
