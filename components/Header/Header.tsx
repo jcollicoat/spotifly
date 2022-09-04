@@ -20,17 +20,15 @@ export const Header: FC = () => {
 
     return (
         <header className={styles.header}>
-            <div className={styles.container}>
-                <div className={styles.content}>
-                    <SpotiflyLogo height={30} />
-                    <nav className={styles.nav}>
-                        <Button
-                            ariaLabel={buttonContent}
-                            onClick={handleSignInOut}
-                            text={buttonContent}
-                        />
-                    </nav>
-                </div>
+            <div className={styles.content}>
+                <SpotiflyLogo height={20} />
+                <nav className={styles.nav}>
+                    <Button
+                        ariaLabel={buttonContent}
+                        onClick={handleSignInOut}
+                        text={buttonContent}
+                    />
+                </nav>
             </div>
         </header>
     );

@@ -39,16 +39,15 @@ $c-gray-b-9: #111827;
 
 /* MIXINS */
 
-@mixin container-base {
-    margin: 0 auto;
-    padding: 0 3rem;
-    width: 100%;
+@mixin app-panel {
+    background-color: $c-gray-n-8;
+    border: 1px solid $c-gray-n-7;
+    border-radius: 0.5rem;
+    padding: 12px;
 }
 
-@mixin container-large {
-    @include container-base;
-
-    max-width: 1600px;
+@mixin grid-full-width {
+    grid-column: 1 / -1;
 }
 
 /* TRANSITIONS */

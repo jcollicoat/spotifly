@@ -1,18 +1,15 @@
 @import '../../styles/variables.scss';
 
 .header {
-    background-color: $c-gray-n-8;
-    border-bottom: 1px solid $c-gray-n-7;
-    padding: 1rem 0;
-    width: 100%;
+    @include app-panel;
 
-    .container {
-        @include container-large;
+    .content {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+    }
 
-        .content {
-            align-items: center;
-            display: flex;
-            justify-content: space-between;
-        }
+    @media (min-width: $b-app-1) {
+        @include grid-full-width;
     }
 }
