@@ -1,10 +1,8 @@
 import type { NextPage } from 'next';
-import { useSession, signIn, signOut } from 'next-auth/react';
 import Head from 'next/head';
+import { Header } from '../components/Header/Header';
 
 const Home: NextPage = () => {
-    const { data: session } = useSession();
-
     return (
         <>
             <Head>
@@ -12,11 +10,7 @@ const Home: NextPage = () => {
                 <meta name="description" content="Spotifly app" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            {session ? (
-                <button onClick={() => signOut()}>Sign out</button>
-            ) : (
-                <button onClick={() => signIn()}>Sign in</button>
-            )}
+            <Header />
         </>
     );
 };

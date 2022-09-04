@@ -1,0 +1,22 @@
+@import '../../styles/variables.scss';
+
+@mixin button-base {
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    padding: 0.5em 1em;
+}
+
+.button {
+    @include button-base;
+
+    background-color: $c-primary-3;
+    color: $c-primary-1;
+}
+
+.button_secondary {
+    @include button-base;
+
+    background-color: $c-primary-1;
+    color: $c-primary-3;
+}
