@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { AppPage } from '../components/AppPage/AppPage';
 import { Header } from '../components/Header/Header';
 
 const Home: NextPage = () => {
@@ -10,7 +11,9 @@ const Home: NextPage = () => {
                 <meta name="description" content="Spotifly app" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Header />
+            <AppPage>
+                <Header />
+            </AppPage>
         </>
     );
 };
