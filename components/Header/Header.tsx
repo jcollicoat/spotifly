@@ -1,5 +1,5 @@
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 import { Button } from '../Button/Button';
 import { SpotiflyLogo } from '../SpotiflyLogo/SpotiflyLogo';
 import styles from './Header.module.scss';
@@ -14,6 +14,10 @@ export const Header: FC = () => {
         signIn();
     }, [session]);
 
+    const buttonContent = useMemo(() => {
+        return session ? 'Sign out' : 'Sign in';
+    }, [session]);
+
     return (
         <header className={styles.header}>
             <div className={styles.container}>
@@ -21,8 +25,9 @@ export const Header: FC = () => {
                     <SpotiflyLogo height={30} />
                     <nav className={styles.nav}>
                         <Button
+                            ariaLabel={buttonContent}
                             onClick={handleSignInOut}
-                            text={session ? 'Sign out' : 'Sign in'}
+                            text={buttonContent}
                         />
                     </nav>
                 </div>
