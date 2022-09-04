@@ -1,0 +1,47 @@
+/* COLORS */
+
+$c-primary-1: #031809;
+$c-primary-2: #108e37;
+$c-primary-3: #1aec5c;
+$c-primary-4: #76f49d;
+$c-primary-5: #e8fdef;
+
+$c-secondary-1: #070019;
+$c-secondary-2: #2c0099;
+$c-secondary-3: #4a00ff;
+$c-secondary-4: #9266ff;
+$c-secondary-5: #ede6ff;
+
+$c-gray-n-1: #f5f5f5;
+$c-gray-n-2: #e5e5e5;
+$c-gray-n-3: #d4d4d4;
+$c-gray-n-4: #a3a3a3;
+$c-gray-n-5: #737373;
+$c-gray-n-6: #525252;
+$c-gray-n-7: #404040;
+$c-gray-n-8: #262626;
+$c-gray-n-9: #171717;
+
+$c-gray-b-1: #f3f4f6;
+$c-gray-b-2: #e5e7eb;
+$c-gray-b-3: #d1d5db;
+$c-gray-b-4: #9ca3af;
+$c-gray-b-5: #6b7280;
+$c-gray-b-6: #4b5563;
+$c-gray-b-7: #374151;
+$c-gray-b-8: #1f2937;
+$c-gray-b-9: #111827;
+
+/* MIXINS */
+
+@mixin container-base {
+    margin: 0 auto;
+    padding: 0 3rem;
+    width: 100%;
+}
+
+@mixin container-large {
+    @include container-base;
+
+    max-width: 1600px;
+}
