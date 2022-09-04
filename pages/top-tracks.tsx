@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { NextPage } from 'next';
 import Head from 'next/head';
+import { Header } from '../components/Header/Header';
 import { ITopTracksDTO } from '../lib/interfaces/spotify';
 import { getTopTracks } from '../lib/spotify';
 
@@ -18,6 +19,7 @@ const TopTracks: NextPage = () => {
                 <meta name="description" content="Spotifly: Top Tracks" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <Header />
             {isLoading && <div>Loading...</div>}
             {isError && <div>An error occured.</div>}
             {topTracks && (

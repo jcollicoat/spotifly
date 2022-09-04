@@ -9,17 +9,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getSession({ req });
 
     if (!session) {
-        res.status(401).send('Not logged in');
+        res.status(401).send(
+            'No session data found. User is likely not logged in.'
+        );
     } else {
         const access_token = session.access_token;
 
-        const { data } = await axios.get(endpoint, {
+        const response = await axios.get(endpoint, {
             headers: {
                 Authorization: `Bearer ${access_token}`,
             },
         });
 
-        res.status(200).json(data);
+        res.status(response.status).json(response.data);
     }
 };
 
