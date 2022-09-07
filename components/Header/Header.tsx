@@ -21,20 +21,22 @@ export const Header: FC = () => {
     }, [session]);
 
     return (
-        <header className={styles.panel}>
-            <div className={styles.content}>
-                <Link href="/" passHref>
-                    <a aria-label="Navigate home">
-                        <SpotiflyLogo height={20} />
-                    </a>
-                </Link>
-                <nav className={styles.nav}>
-                    <Button
-                        ariaLabel={buttonContent}
-                        onClick={handleSignInOut}
-                        text={buttonContent}
-                    />
-                </nav>
+        <header className={styles.header}>
+            <div className={styles.panel}>
+                <div className={styles.content}>
+                    <Link href="/" passHref>
+                        <a aria-label="Navigate home">
+                            <SpotiflyLogo height={20} />
+                        </a>
+                    </Link>
+                    <nav className={styles.nav}>
+                        <Button
+                            ariaLabel={buttonContent}
+                            onClick={handleSignInOut}
+                            text={buttonContent}
+                        />
+                    </nav>
+                </div>
             </div>
         </header>
     );

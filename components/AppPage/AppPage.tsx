@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Header } from '../Header/Header';
 import styles from './AppPage.module.scss';
 
 interface IAppPage {
@@ -6,5 +7,10 @@ interface IAppPage {
 }
 
 export const AppPage: FC<IAppPage> = ({ children }) => {
-    return <main className={styles.page}>{children}</main>;
+    return (
+        <>
+            <Header />
+            <main className={styles.main}>{children}</main>
+        </>
+    );
 };

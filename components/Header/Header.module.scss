@@ -1,15 +1,19 @@
 @import '../../styles/variables.scss';
 
-.panel {
-    @include app-panel;
+.header {
+    @include app-container;
 
-    .content {
-        align-items: center;
-        display: flex;
-        justify-content: space-between;
-    }
+    padding-bottom: 0 !important;
 
-    @media (min-width: $b-app-1) {
-        @include grid-full-width;
+    .panel {
+        @include app-panel;
+
+        // margin-bottom: 0;
+
+        .content {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+        }
     }
 }
