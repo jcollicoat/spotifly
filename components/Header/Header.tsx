@@ -1,4 +1,5 @@
 import { useSession, signIn, signOut } from 'next-auth/react';
+import Link from 'next/link';
 import { FC, useCallback, useMemo } from 'react';
 import { Button } from '../Button/Button';
 import { SpotiflyLogo } from '../SpotiflyLogo/SpotiflyLogo';
@@ -10,8 +11,9 @@ export const Header: FC = () => {
     const handleSignInOut = useCallback(() => {
         if (session) {
             signOut();
+        } else {
+            signIn('spotify');
         }
-        signIn();
     }, [session]);
 
     const buttonContent = useMemo(() => {
@@ -19,9 +21,13 @@ export const Header: FC = () => {
     }, [session]);
 
     return (
-        <header className={styles.header}>
+        <header className={styles.panel}>
             <div className={styles.content}>
-                <SpotiflyLogo height={20} />
+                <Link href="/" passHref>
+                    <a aria-label="Navigate home">
+                        <SpotiflyLogo height={20} />
+                    </a>
+                </Link>
                 <nav className={styles.nav}>
                     <Button
                         ariaLabel={buttonContent}
