@@ -47,6 +47,14 @@ module.exports = {
                 },
             },
         ],
+        'jsx-a11y/anchor-is-valid': [
+            'error',
+            {
+                components: ['Link'],
+                specialLink: ['hrefLeft', 'hrefRight'],
+                aspects: ['invalidHref', 'preferButton'],
+            },
+        ],
         'jsx-a11y/no-noninteractive-tabindex': 'error',
         'no-implicit-coercion': ['error'],
         'no-nested-ternary': 'warn',

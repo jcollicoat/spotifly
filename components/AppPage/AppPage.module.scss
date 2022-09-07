@@ -10,6 +10,7 @@
         display: grid;
         gap: 12px;
         grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: min-content;
     }
 
     @media (min-width: $b-app-2) {

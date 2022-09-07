@@ -1,0 +1,6 @@
+@import '../../styles/variables.scss';
+
+.panel {
+    @include app-panel;
+    @include grid-full-width;
+}

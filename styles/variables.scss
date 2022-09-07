@@ -43,7 +43,12 @@ $c-gray-b-9: #111827;
     background-color: $c-gray-n-8;
     border: 1px solid $c-gray-n-7;
     border-radius: 0.5rem;
+    margin-bottom: 12px;
     padding: 12px;
+
+    @media (min-width: $b-app-1) {
+        margin-bottom: 0;
+    }
 }
 
 @mixin grid-full-width {
