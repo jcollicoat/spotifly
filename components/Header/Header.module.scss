@@ -8,8 +8,6 @@
     .panel {
         @include app-panel;
 
-        // margin-bottom: 0;
-
         .content {
             align-items: center;
             display: flex;
