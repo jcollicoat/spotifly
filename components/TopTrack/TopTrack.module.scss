@@ -1,0 +1,33 @@
+@import '../../styles/variables.scss';
+
+.track {
+    border-bottom: 1px solid $c-gray-n-9;
+    display: flex;
+    gap: $s-medium;
+    padding: $s-medium;
+
+    .cover {
+        height: 50px;
+        flex-shrink: 0;
+        width: 50px;
+    }
+
+    .details {
+        padding: $s-small 0;
+
+        .name {
+            margin-bottom: $s-xsmall;
+        }
+
+        .subdetails {
+            display: flex;
+            flex-wrap: wrap;
+            font-size: 0.75em;
+            gap: 0.5em;
+
+            span {
+                color: $c-gray-n-4;
+            }
+        }
+    }
+}

@@ -5,13 +5,13 @@
 
     @media (min-width: $b-app-1) {
         display: grid;
-        gap: 12px;
+        gap: $s-medium;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: min-content;
     }
 
     @media (min-width: $b-app-2) {
-        gap: 24px;
+        gap: $s-large;
         grid-template-columns: repeat(12, 1fr);
     }
 }
