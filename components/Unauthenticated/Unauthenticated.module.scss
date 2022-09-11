@@ -1,0 +1,25 @@
+@import '../../styles/variables.scss';
+
+.container {
+    @include grid-full-width;
+
+    padding: $s-xxlarge 0;
+    text-align: center;
+
+    .icon {
+        @include icon-medium;
+
+        margin: 0 auto;
+        stroke: $c-warning;
+    }
+
+    .heading {
+        font-size: 1.5em;
+        font-weight: 500;
+        margin: $s-medium 0;
+    }
+
+    .body {
+        margin-bottom: $s-large;
+    }
+}

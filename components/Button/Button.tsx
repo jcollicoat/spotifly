@@ -8,7 +8,12 @@ interface IButton {
 }
 
 export const Button: FC<IButton> = ({ ariaLabel, onClick, text }) => (
-    <button aria-label={ariaLabel} className={styles.button} onClick={onClick}>
+    <button
+        aria-label={ariaLabel}
+        className={styles.button}
+        onClick={onClick}
+        type="button"
+    >
         {text}
     </button>
 );
