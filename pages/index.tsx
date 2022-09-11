@@ -1,11 +1,16 @@
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { AppPage } from '../components/AppPage/AppPage';
-import { TopTracks } from '../components/TopTracks/TopTracks';
 
 const Home: NextPage = () => {
     const { data: session } = useSession();
+    const router = useRouter();
+
+    if (session) {
+        router.push('/dashboard/top-lists');
+    }
 
     return (
         <>
@@ -14,7 +19,7 @@ const Home: NextPage = () => {
                 <meta name="description" content="Spotifly app" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <AppPage>{session && <TopTracks />}</AppPage>
+            <AppPage />
         </>
     );
 };
