@@ -37,6 +37,8 @@ $c-gray-b-7: #374151;
 $c-gray-b-8: #1f2937;
 $c-gray-b-9: #111827;
 
+$c-warning: #ffae00;
+
 /* MIXINS */
 
 @mixin app-container {
@@ -73,13 +75,35 @@ $c-gray-b-9: #111827;
     grid-column: 1 / 4;
 }
 
+@mixin icon-inline {
+    display: inline;
+    height: 1.25em;
+    width: 1.25em;
+}
+
+@mixin icon-small {
+    height: $s-large;
+    width: $s-large;
+}
+
+@mixin icon-medium {
+    height: $s-xlarge;
+    width: $s-xlarge;
+}
+
+@mixin icon-large {
+    height: $s-xxlarge;
+    width: $s-xxlarge;
+}
+
 /* SPACING */
 
 $s-xsmall: 4px;
 $s-small: 8px;
 $s-medium: 12px;
 $s-large: 24px;
-$s-xlarge: 32px;
+$s-xlarge: 36px;
+$s-xxlarge: 60px;
 
 /* TRANSITIONS */
 
