@@ -3,4 +3,8 @@
 .panel {
     @include app-panel;
     @include grid-full-width;
+
+    @media (min-width: $b-app-1) {
+        @include grid-third-width;
+    }
 }
