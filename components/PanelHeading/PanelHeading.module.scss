@@ -1,7 +1,9 @@
 @import '../../styles/variables.scss';
 
 .wrapper {
+    border-bottom: 1px solid $c-gray-n-5;
     margin-bottom: $s-panel-padding;
+    padding-bottom: $s-panel-padding;
 
     .heading {
         font-size: 1.75em;

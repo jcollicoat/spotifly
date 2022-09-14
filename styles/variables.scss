@@ -71,6 +71,10 @@ $c-warning: #ffae00;
     grid-column: 1 / -1;
 }
 
+@mixin grid-half-width {
+    grid-column: 1 / 7;
+}
+
 @mixin grid-third-width {
     grid-column: 1 / 4;
 }

@@ -5,6 +5,10 @@
     @include grid-full-width;
 
     @media (min-width: $b-app-1) {
+        @include grid-half-width;
+    }
+
+    @media (min-width: $b-app-2) {
         @include grid-third-width;
     }
 }
