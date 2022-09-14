@@ -1,10 +1,15 @@
 @import '../../styles/variables.scss';
 
 .track {
+    align-items: center;
     border-bottom: 1px solid $c-gray-n-9;
     display: flex;
     gap: $s-medium;
     padding: $s-medium;
+
+    &:last-of-type {
+        border-bottom: none;
+    }
 
     .cover {
         height: 50px;
