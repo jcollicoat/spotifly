@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 import { ITopTracksDTO } from '../../lib/interfaces/spotify';
 import { getTopTracks } from '../../lib/spotify';
+import { PanelHeading } from '../PanelHeading/PanelHeading';
 import { Spinner } from '../Spinner/Spinner';
 import { TopTrack } from '../TopTrack/TopTrack';
 import styles from './TopTracks.module.scss';
@@ -19,6 +20,7 @@ export const TopTracks: FC = () => {
         <section className={styles.panel}>
             {isLoading && <Spinner />}
             {isError && <div>An error occured.</div>}
+            <PanelHeading heading="Top Tracks" subheading="Last 6 months" />
             {topTracks &&
                 topTracks.items.map((track) => (
                     <TopTrack key={track.id} track={track} />

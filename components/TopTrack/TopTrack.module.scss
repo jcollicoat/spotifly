@@ -5,10 +5,13 @@
     border-bottom: 1px solid $c-gray-n-9;
     display: flex;
     gap: $s-medium;
-    padding: $s-medium;
+    margin: $s-medium 0;
+    padding-bottom: $s-medium;
 
     &:last-of-type {
         border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
     }
 
     .cover {
