@@ -18,9 +18,9 @@ export const TopTracks: FC = () => {
 
     return (
         <section className={styles.panel}>
-            {isLoading && <Spinner />}
-            {isError && <div>An error occured.</div>}
             <PanelHeading heading="Top Tracks" subheading="Last 6 months" />
+            {isLoading && <Spinner padding="small" />}
+            {isError && <div>An error occured.</div>}
             {topTracks &&
                 topTracks.items.map((track) => (
                     <TopTrack key={track.id} track={track} />
