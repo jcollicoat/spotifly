@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
+import { TimeConstants } from '../../lib/constants';
 import { ITopTracksDTO } from '../../lib/interfaces/spotify';
 import { getTopTracks } from '../../lib/spotify';
 import { PanelHeading } from '../PanelHeading/PanelHeading';
@@ -13,7 +14,7 @@ export const TopTracks: FC = () => {
         isError,
         isLoading,
     } = useQuery<ITopTracksDTO>(['topTracks'], getTopTracks, {
-        staleTime: 3600000, // 1 hour
+        staleTime: TimeConstants.HourMS,
     });
 
     return (
