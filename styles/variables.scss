@@ -56,7 +56,7 @@ $c-warning: #ffae00;
     border: 1px solid $c-gray-n-7;
     border-radius: 0.5rem;
     margin-bottom: $s-medium;
-    padding: $s-medium;
+    padding: $s-panel-padding;
 
     &:last-of-type {
         margin-bottom: 0;
@@ -104,6 +104,8 @@ $s-medium: 12px;
 $s-large: 24px;
 $s-xlarge: 36px;
 $s-xxlarge: 60px;
+
+$s-panel-padding: 18px;
 
 /* TRANSITIONS */
 
