@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styles from './PanelHeading.module.scss';
 
-interface IPanelHeading {
+export interface IPanelHeading {
     heading: string;
     subheading?: string;
 }

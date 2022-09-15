@@ -1,0 +1,17 @@
+@import '../../../styles/variables.scss';
+
+.panel {
+    @include app-panel;
+
+    &.full {
+        @include grid-full-width;
+    }
+
+    &.half {
+        @include grid-half-width;
+    }
+
+    &.third {
+        @include grid-third-width;
+    }
+}
