@@ -9,8 +9,8 @@ type PanelWidth = 'third' | 'half' | 'full';
 export interface IPanelDisplay {
     width: {
         small: PanelWidth;
-        medium: PanelWidth;
-        large: PanelWidth;
+        medium?: PanelWidth;
+        large?: PanelWidth;
     };
 }
 
@@ -25,11 +25,14 @@ export const Panel: FC<IPanel> = ({ children, display, heading }) => {
         [
             {
                 matches: (breakpoints) => breakpoints.large,
-                value: display.width.large,
+                value:
+                    display.width.large ??
+                    display.width.medium ??
+                    display.width.small,
             },
             {
                 matches: (breakpoints) => breakpoints.medium,
-                value: display.width.medium,
+                value: display.width.medium ?? display.width.small,
             },
         ],
         display.width.small

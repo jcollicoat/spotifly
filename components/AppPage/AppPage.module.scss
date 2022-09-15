@@ -3,11 +3,13 @@
 .main {
     @include app-container;
 
+    display: grid;
+    gap: $s-small;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: min-content;
+
     @media (min-width: $b-app-1) {
-        display: grid;
         gap: $s-medium;
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-rows: min-content;
     }
 
     @media (min-width: $b-app-2) {
