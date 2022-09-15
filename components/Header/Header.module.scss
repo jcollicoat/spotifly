@@ -5,13 +5,9 @@
 
     padding-bottom: 0 !important;
 
-    .panel {
-        @include app-panel;
-
-        .content {
-            align-items: center;
-            display: flex;
-            justify-content: space-between;
-        }
+    .content {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
     }
 }

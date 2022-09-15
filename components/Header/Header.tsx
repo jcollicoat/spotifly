@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { signInOrOut } from '../../lib/auth';
 import { Button } from '../Button/Button';
+import { Panel } from '../Panels/Panel/Panel';
 import { SpotiflyLogo } from '../SpotiflyLogo/SpotiflyLogo';
 import styles from './Header.module.scss';
 
@@ -13,7 +14,7 @@ export const Header: FC = () => {
 
     return (
         <header className={styles.header}>
-            <div className={styles.panel}>
+            <Panel>
                 <div className={styles.content}>
                     <Link href="/" passHref>
                         <a aria-label="Navigate home">
@@ -28,7 +29,7 @@ export const Header: FC = () => {
                         />
                     </nav>
                 </div>
-            </div>
+            </Panel>
         </header>
     );
 };
