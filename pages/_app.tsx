@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { BreakpointProvider } from '../context/breakpoints/context';
 
 const queryClient = new QueryClient();
 
@@ -22,7 +23,9 @@ const MyApp = ({
             </Head>
             <SessionProvider session={session}>
                 <QueryClientProvider client={queryClient}>
-                    <Component {...pageProps} />
+                    <BreakpointProvider>
+                        <Component {...pageProps} />
+                    </BreakpointProvider>
                     <ReactQueryDevtools initialIsOpen={false} />
                 </QueryClientProvider>
             </SessionProvider>
