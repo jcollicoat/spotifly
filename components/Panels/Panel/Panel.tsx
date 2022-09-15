@@ -16,11 +16,15 @@ export interface IPanelDisplay {
 
 interface IPanel {
     children: React.ReactNode;
-    display: IPanelDisplay;
+    display?: IPanelDisplay;
     heading?: IPanelHeading;
 }
 
-export const Panel: FC<IPanel> = ({ children, display, heading }) => {
+export const Panel: FC<IPanel> = ({
+    children,
+    display = { width: { small: 'full' } },
+    heading,
+}) => {
     const panelWidth = useMediaQueries(
         [
             {
