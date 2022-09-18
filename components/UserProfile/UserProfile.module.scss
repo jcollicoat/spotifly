@@ -1,0 +1,52 @@
+@import '../../styles/variables.scss';
+
+.wrapper {
+    .dashboard {
+        @include panel-heading;
+    }
+
+    .user {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: $s-small;
+        margin-top: $s-medium;
+
+        .image {
+            margin-right: $s-medium;
+
+            span {
+                border-radius: 50%;
+            }
+        }
+
+        .details {
+            flex-shrink: 0;
+
+            .name {
+                @include panel-title;
+                @include panel-title-large;
+
+                display: block;
+            }
+
+            .stats {
+                margin-top: $s-small;
+
+                .stat {
+                    border-right: 1px solid $c-gray-n-5;
+                    padding: 0 1em;
+
+                    &:first-of-type {
+                        padding-left: 0;
+                    }
+
+                    &:last-of-type {
+                        border-right: none;
+                        padding-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
