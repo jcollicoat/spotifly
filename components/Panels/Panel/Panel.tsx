@@ -20,9 +20,13 @@ interface IPanel {
     heading?: IPanelHeading;
 }
 
+const defaultDisplaySettings: IPanelDisplay = {
+    width: { small: 'full' },
+};
+
 export const Panel: FC<IPanel> = ({
     children,
-    display = { width: { small: 'full' } },
+    display = defaultDisplaySettings,
     heading,
 }) => {
     const panelWidth = useMediaQueries(
