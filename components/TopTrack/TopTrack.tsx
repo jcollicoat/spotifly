@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { FC } from 'react';
 import { ITrackDTO } from '../../lib/interfaces/spotify';
 import styles from './TopTrack.module.scss';
@@ -14,7 +15,14 @@ export const TopTrack: FC<{ track: ITrackDTO }> = ({ track }) => (
             />
         </div>
         <div className={styles.details}>
-            <div className={styles.name}>{track.name}</div>
+            <Link href={`/track/${track.id}`} passHref>
+                <a
+                    aria-label={`Explore ${track.name} by ${track.artists[0].name}`}
+                    className={styles.name}
+                >
+                    {track.name}
+                </a>
+            </Link>
             <div className={styles.subdetails}>
                 <span className={styles.artist}>{track.artists[0].name}</span>
                 <span className={styles.album}>{track.album.name}</span>

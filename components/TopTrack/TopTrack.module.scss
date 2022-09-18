@@ -30,7 +30,15 @@
         padding: $s-small 0;
 
         .name {
+            color: #ffffff;
             margin-bottom: $s-xsmall;
+            text-decoration: none;
+            transition: $t-ease;
+            transition-property: color;
+
+            &:hover {
+                color: $c-primary-3;
+            }
         }
 
         .subdetails {
