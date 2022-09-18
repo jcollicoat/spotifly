@@ -8,7 +8,7 @@ import styles from './AppPage.module.scss';
 
 interface IAppPage {
     children?: React.ReactNode;
-    page: 'dashboard';
+    page: 'dashboard' | 'home' | 'track';
 }
 
 export const AppPage: FC<IAppPage> = ({ children, page }) => {

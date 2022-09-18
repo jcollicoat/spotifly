@@ -9,7 +9,7 @@ const Home: NextPage = () => {
     const router = useRouter();
 
     if (session) {
-        router.push('/dashboard/top-lists');
+        router.push('/dashboard');
     }
 
     return (
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
                 <meta name="description" content="Spotifly app" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <AppPage />
+            <AppPage page="home" />
         </>
     );
 };
