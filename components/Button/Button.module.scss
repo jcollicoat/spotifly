@@ -2,7 +2,7 @@
 
 @mixin button-base {
     border: none;
-    border-radius: 0.25rem;
+    border-radius: $bo-radius-button;
     cursor: pointer;
     padding: 0.5em 1em;
     transition: background-color $t-ease;
