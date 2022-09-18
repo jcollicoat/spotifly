@@ -18,9 +18,12 @@
     }
 
     .cover {
-        height: 50px;
         flex-shrink: 0;
-        width: 50px;
+        height: 50px;
+
+        span {
+            border-radius: 2px;
+        }
     }
 
     .details {

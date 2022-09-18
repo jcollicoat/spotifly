@@ -7,7 +7,7 @@ export const TopTrack: FC<{ track: ITrackDTO }> = ({ track }) => (
     <div className={styles.track}>
         <div className={styles.cover}>
             <Image
-                src={track.album.images[0].url}
+                src={track.album.images[2].url}
                 alt=""
                 height={50}
                 width={50}
