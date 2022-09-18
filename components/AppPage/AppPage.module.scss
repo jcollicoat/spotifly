@@ -3,16 +3,29 @@
 .main {
     @include app-container;
 
+    align-items: start;
     display: grid;
-    gap: $s-small;
-    grid-template-columns: repeat(12, 1fr);
+    gap: $s-medium;
     grid-template-rows: min-content;
 
     @media (min-width: $b-app-1) {
-        gap: $s-medium;
+        grid-template-columns: repeat(6, 1fr);
+
+        &.dashboard {
+            grid-template-areas:
+                'user user user user user user'
+                'top-tracks top-tracks top-tracks x x x';
+        }
     }
 
     @media (min-width: $b-app-2) {
+        grid-template-columns: repeat(12, 1fr);
         gap: $s-large;
+
+        &.dashboard {
+            grid-template-areas:
+                'user user user user user user user user user user user user'
+                'top-tracks top-tracks top-tracks top-tracks x x x x x x x x';
+        }
     }
 }

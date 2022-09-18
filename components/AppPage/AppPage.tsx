@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useSession } from 'next-auth/react';
 import { FC } from 'react';
 import { Header } from '../Header/Header';
@@ -7,9 +8,10 @@ import styles from './AppPage.module.scss';
 
 interface IAppPage {
     children?: React.ReactNode;
+    page: 'dashboard';
 }
 
-export const AppPage: FC<IAppPage> = ({ children }) => {
+export const AppPage: FC<IAppPage> = ({ children, page }) => {
     const { status } = useSession();
 
     const pageContent = () => {
@@ -27,7 +29,9 @@ export const AppPage: FC<IAppPage> = ({ children }) => {
     return (
         <>
             <Header />
-            <main className={styles.main}>{pageContent()}</main>
+            <main className={classNames(styles.main, styles[page])}>
+                {pageContent()}
+            </main>
         </>
     );
 };
