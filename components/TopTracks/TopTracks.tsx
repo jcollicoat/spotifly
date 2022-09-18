@@ -19,7 +19,6 @@ export const TopTracks: FC = () => {
     const heading: IPanelHeading = {
         title: 'Top Tracks',
         heading: 'Last 6 months',
-        large: true,
     };
 
     const display: IPanelDisplay = {
