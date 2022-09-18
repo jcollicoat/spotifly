@@ -7,8 +7,8 @@ import styles from './Unauthenticated.module.scss';
 export const Unauthenticated: FC = () => (
     <section className={styles.container}>
         <HiOutlineExclamation className={styles.icon} />
-        <h1 className={styles.heading}>Unauthenticated</h1>
-        <p className={styles.body}>You are not logged in to Spotify.</p>
+        <h1 className={styles.heading}>Not Logged In</h1>
+        <p className={styles.body}>Please log in to Spotify to continue.</p>
         <Button ariaLabel="Sign in" onClick={signInOrOut} text="Sign in" />
     </section>
 );
