@@ -1,7 +1,7 @@
 /* BREAKPOINTS */
 
 $b-app-1: 600px;
-$b-app-2: 900px;
+$b-app-2: 1200px;
 
 /* BORDERS */
 
@@ -59,7 +59,6 @@ $c-warning: #ffae00;
 @mixin app-panel {
     background-color: $c-gray-n-8;
     border-radius: $bo-radius-panel;
-    margin-bottom: $s-medium;
 
     &:last-of-type {
         margin-bottom: 0;
@@ -72,14 +71,6 @@ $c-warning: #ffae00;
 
 @mixin grid-full-width {
     grid-column: 1 / -1;
-}
-
-@mixin grid-half-width {
-    grid-column: 1 / 7;
-}
-
-@mixin grid-third-width {
-    grid-column: 1 / 4;
 }
 
 @mixin icon-inline {
@@ -103,6 +94,36 @@ $c-warning: #ffae00;
     width: $s-xxlarge;
 }
 
+@mixin panel-heading {
+    color: $c-gray-n-4;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    margin: 0 0 $s-xsmall 0;
+    text-transform: uppercase;
+
+    @media (min-width: $b-app-1) {
+        margin-bottom: $s-small;
+    }
+}
+
+@mixin panel-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1;
+    margin: 0;
+}
+
+@mixin panel-title-large {
+    @media (min-width: $b-app-1) {
+        font-size: 2rem;
+    }
+
+    @media (min-width: $b-app-2) {
+        font-size: 2.5rem;
+    }
+}
+
 /* SPACING */
 
 $s-xsmall: 4px;
@@ -112,7 +133,8 @@ $s-large: 24px;
 $s-xlarge: 36px;
 $s-xxlarge: 60px;
 
-$s-panel-padding: 18px;
+$s-panel-padding-small: 12px;
+$s-panel-padding-large: 18px;
 
 /* TRANSITIONS */
 
