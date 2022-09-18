@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
-import { TimeConstants } from '../../lib/constants';
 import { ITopTracksDTO } from '../../lib/interfaces/spotify';
 import { getTopTracks } from '../../lib/spotify';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
@@ -14,21 +13,18 @@ export const TopTracks: FC = () => {
         isError,
         isLoading,
     } = useQuery<ITopTracksDTO>(['topTracks'], getTopTracks, {
-        staleTime: TimeConstants.HourMS,
+        staleTime: Infinity,
     });
 
     const heading: IPanelHeading = {
-        heading: 'Top Tracks',
-        subheading: 'Last 6 months',
+        title: 'Top Tracks',
+        heading: 'Last 6 months',
+        large: true,
     };
 
     const display: IPanelDisplay = {
+        area: 'top-tracks',
         minHeight: 1475,
-        width: {
-            small: 'full',
-            medium: 'half',
-            large: 'third',
-        },
     };
 
     return (

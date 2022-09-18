@@ -16,5 +16,9 @@
 
     .title {
         @include panel-title;
+
+        &.large {
+            @include panel-title-large;
+        }
     }
 }
