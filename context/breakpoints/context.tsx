@@ -12,8 +12,8 @@ const BreakpointContext = createContext<IBreakpoints | undefined>(undefined);
 const BreakpointProvider: FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
-    const medium = useMedia(`(min-width: ${breakpoints.medium}px)`);
-    const large = useMedia(`(min-width: ${breakpoints.large}px)`);
+    const medium = useMedia(`(min-width: ${breakpoints.medium}px)`, false);
+    const large = useMedia(`(min-width: ${breakpoints.large}px)`, false);
 
     const value = useMemo(() => ({ medium, large }), [medium, large]);
 
