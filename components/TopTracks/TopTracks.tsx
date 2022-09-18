@@ -23,6 +23,7 @@ export const TopTracks: FC = () => {
     };
 
     const display: IPanelDisplay = {
+        minHeight: 1475,
         width: {
             small: 'full',
             medium: 'half',

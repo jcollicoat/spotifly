@@ -2,11 +2,14 @@
 
 .track {
     align-items: center;
-    border-bottom: 1px solid $c-gray-n-9;
+    border-bottom: 1px solid $c-gray-n-8;
     display: flex;
     gap: $s-medium;
-    margin: $s-medium 0;
-    padding-bottom: $s-medium;
+    padding: $s-medium 0;
+
+    &:first-of-type {
+        padding-top: 0;
+    }
 
     &:last-of-type {
         border-bottom: none;
