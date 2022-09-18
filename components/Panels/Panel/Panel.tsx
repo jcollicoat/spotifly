@@ -1,19 +1,12 @@
-import classNames from 'classnames';
 import { FC } from 'react';
 import { useMediaQueries } from '../../../hooks/useMediaQueries';
 import { PanelContent } from '../PanelContent/PanelContent';
 import { IPanelHeading, PanelHeading } from '../PanelHeading/PanelHeading';
 import styles from './Panel.module.scss';
 
-type PanelWidth = 'third' | 'half' | 'full';
-
 export interface IPanelDisplay {
+    area?: string;
     minHeight?: number;
-    width: {
-        small: PanelWidth;
-        medium?: PanelWidth;
-        large?: PanelWidth;
-    };
 }
 
 interface IPanel {
@@ -24,7 +17,6 @@ interface IPanel {
 
 const defaultDisplaySettings: IPanelDisplay = {
     minHeight: 0,
-    width: { small: 'full' },
 };
 
 export const Panel: FC<IPanel> = ({
@@ -32,27 +24,23 @@ export const Panel: FC<IPanel> = ({
     display = defaultDisplaySettings,
     heading,
 }) => {
-    const panelMinHeight = display.minHeight ?? 0;
-
-    const panelWidth = useMediaQueries(
+    // const panelArea = display.area;
+    const panelArea = useMediaQueries(
         [
             {
-                matches: (breakpoints) => breakpoints.large,
-                value:
-                    display.width.large ??
-                    display.width.medium ??
-                    display.width.small,
-            },
-            {
                 matches: (breakpoints) => breakpoints.medium,
-                value: display.width.medium ?? display.width.small,
+                value: display.area ?? '',
             },
         ],
-        display.width.small
+        ''
     );
+    const panelMinHeight = display.minHeight ?? 0;
 
     return (
-        <section className={classNames(styles.panel, styles[panelWidth])}>
+        <section
+            className={styles.panel}
+            style={{ gridArea: panelArea ? panelArea : '' }}
+        >
             {heading && <PanelHeading {...heading} />}
             <PanelContent minHeight={panelMinHeight}>{children}</PanelContent>
         </section>
