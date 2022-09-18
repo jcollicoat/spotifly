@@ -5,11 +5,15 @@
     border: 1px solid $c-gray-n-7;
     border-radius: 0 0 $bo-radius-panel $bo-radius-panel;
     border-top: none;
-    padding: $s-panel-padding;
+    padding: $s-panel-padding-small;
 
     &:only-child {
         background-color: $c-gray-n-8;
         border-radius: $bo-radius-panel;
         border-top: 1px solid $c-gray-n-7;
+    }
+
+    @media (min-width: $b-app-1) {
+        padding: $s-panel-padding-large;
     }
 }

@@ -4,16 +4,17 @@
     background-color: $c-gray-n-8;
     border: 1px solid $c-gray-n-7;
     border-radius: $bo-radius-panel $bo-radius-panel 0 0;
-    padding: $s-panel-padding;
+    padding: $s-panel-padding-small;
 
-    .heading {
-        font-size: 1.75em;
-        font-weight: 500;
-        line-height: 1;
-        margin: 0 0 $s-xsmall 0;
+    @media (min-width: $b-app-1) {
+        padding: $s-panel-padding-large;
     }
 
-    .subheading {
-        color: $c-gray-b-5;
+    .heading {
+        @include panel-heading;
+    }
+
+    .title {
+        @include panel-title;
     }
 }
