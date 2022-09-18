@@ -2,7 +2,7 @@
 
 const nextConfig = {
     images: {
-        domains: ['i.scdn.co'],
+        domains: ['i.scdn.co', 'platform-lookaside.fbsbx.com'],
     },
     reactStrictMode: true,
     swcMinify: true,
