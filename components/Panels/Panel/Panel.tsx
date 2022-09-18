@@ -1,12 +1,14 @@
 import classNames from 'classnames';
 import { FC } from 'react';
 import { useMediaQueries } from '../../../hooks/useMediaQueries';
+import { PanelContent } from '../PanelContent/PanelContent';
 import { IPanelHeading, PanelHeading } from '../PanelHeading/PanelHeading';
 import styles from './Panel.module.scss';
 
 type PanelWidth = 'third' | 'half' | 'full';
 
 export interface IPanelDisplay {
+    minHeight?: number;
     width: {
         small: PanelWidth;
         medium?: PanelWidth;
@@ -21,6 +23,7 @@ interface IPanel {
 }
 
 const defaultDisplaySettings: IPanelDisplay = {
+    minHeight: 0,
     width: { small: 'full' },
 };
 
@@ -29,6 +32,8 @@ export const Panel: FC<IPanel> = ({
     display = defaultDisplaySettings,
     heading,
 }) => {
+    const panelMinHeight = display.minHeight ?? 0;
+
     const panelWidth = useMediaQueries(
         [
             {
@@ -49,7 +54,7 @@ export const Panel: FC<IPanel> = ({
     return (
         <section className={classNames(styles.panel, styles[panelWidth])}>
             {heading && <PanelHeading {...heading} />}
-            {children}
+            <PanelContent minHeight={panelMinHeight}>{children}</PanelContent>
         </section>
     );
 };

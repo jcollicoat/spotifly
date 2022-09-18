@@ -3,6 +3,11 @@
 $b-app-1: 600px;
 $b-app-2: 900px;
 
+/* BORDERS */
+
+$bo-radius-button: 4px;
+$bo-radius-panel: 8px;
+
 /* COLORS */
 
 $c-primary-1: #031809;
@@ -53,10 +58,8 @@ $c-warning: #ffae00;
 
 @mixin app-panel {
     background-color: $c-gray-n-8;
-    border: 1px solid $c-gray-n-7;
-    border-radius: 0.5rem;
+    border-radius: $bo-radius-panel;
     margin-bottom: $s-medium;
-    padding: $s-panel-padding;
 
     &:last-of-type {
         margin-bottom: 0;
