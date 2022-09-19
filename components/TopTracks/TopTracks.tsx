@@ -23,7 +23,7 @@ export const TopTracks: FC = () => {
 
     const display: IPanelDisplay = {
         area: 'top-tracks',
-        minHeight: 1475,
+        minHeight: isLoading ? 1475 : undefined,
     };
 
     return (
