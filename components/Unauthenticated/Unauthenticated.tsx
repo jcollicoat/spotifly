@@ -8,6 +8,16 @@ export const Unauthenticated: FC = () => (
         <HiOutlineExclamation className={styles.icon} />
         <h1 className={styles.heading}>Not Logged In</h1>
         <p className={styles.body}>Please log in to Spotify to continue.</p>
-        <Button type="signInOut" />
+        <div className={styles.buttons}>
+            <Button type="signInOut" />
+            <Button
+                ariaLabel="Navigate home"
+                href="/"
+                style="secondary"
+                type="link"
+            >
+                Go home
+            </Button>
+        </div>
     </section>
 );

@@ -22,4 +22,10 @@
     .body {
         margin-bottom: $s-large;
     }
+
+    .buttons {
+        display: flex;
+        gap: $s-medium;
+        justify-content: center;
+    }
 }
