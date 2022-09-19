@@ -10,8 +10,8 @@ export const TopTrack: FC<{ track: ITrackDTO }> = ({ track }) => (
             <Image
                 src={track.album.images[2].url}
                 alt=""
-                height={50}
-                width={50}
+                height={36}
+                width={36}
             />
         </div>
         <div className={styles.details}>

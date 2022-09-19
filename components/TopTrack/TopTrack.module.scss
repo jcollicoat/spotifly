@@ -19,7 +19,7 @@
 
     .cover {
         flex-shrink: 0;
-        height: 50px;
+        height: 36px;
 
         span {
             border-radius: 2px;
@@ -27,7 +27,7 @@
     }
 
     .details {
-        padding: $s-small 0;
+        padding: $s-xsmall 0;
 
         .name {
             color: #ffffff;
