@@ -9,5 +9,10 @@
         align-items: center;
         display: flex;
         justify-content: space-between;
+
+        .nav {
+            display: flex;
+            gap: $s-medium;
+        }
     }
 }

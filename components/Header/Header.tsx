@@ -10,7 +10,7 @@ import styles from './Header.module.scss';
 export const Header: FC = () => {
     const { data: session } = useSession();
 
-    const buttonContent = session ? 'Sign out' : 'Sign in';
+    const signInButtonContent = session ? 'Sign out' : 'Sign in';
 
     return (
         <header className={styles.header}>
@@ -23,10 +23,27 @@ export const Header: FC = () => {
                     </Link>
                     <nav className={styles.nav}>
                         <Button
-                            ariaLabel={buttonContent}
+                            ariaLabel="Navigate home"
+                            href="/"
+                            style="tertiary"
+                            type="link"
+                        >
+                            Home
+                        </Button>
+                        <Button
+                            ariaLabel="Navigate to your dashboard"
+                            href="/dashboard"
+                            style="secondary"
+                            type="link"
+                        >
+                            Dashboard
+                        </Button>
+                        <Button
+                            ariaLabel={signInButtonContent}
                             onClick={signInOrOut}
-                            text={buttonContent}
-                        />
+                        >
+                            {signInButtonContent}
+                        </Button>
                     </nav>
                 </div>
             </Panel>
