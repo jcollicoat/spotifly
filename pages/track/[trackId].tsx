@@ -19,8 +19,6 @@ const Track: NextPage = () => {
         staleTime: Infinity,
     });
 
-    console.log(track);
-
     return (
         <>
             <Head>
