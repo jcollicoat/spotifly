@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { HiOutlineExclamation } from 'react-icons/hi';
-import { signInOrOut } from '../../lib/auth';
 import { Button } from '../Button/Button';
 import styles from './Unauthenticated.module.scss';
 
@@ -9,8 +8,6 @@ export const Unauthenticated: FC = () => (
         <HiOutlineExclamation className={styles.icon} />
         <h1 className={styles.heading}>Not Logged In</h1>
         <p className={styles.body}>Please log in to Spotify to continue.</p>
-        <Button ariaLabel="Sign in" onClick={signInOrOut}>
-            Sign in
-        </Button>
+        <Button type="signInOut" />
     </section>
 );
