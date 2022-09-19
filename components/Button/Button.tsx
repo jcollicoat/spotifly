@@ -1,15 +1,20 @@
 import classNames from 'classnames';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { FC } from 'react';
+import { signInOrOut } from '../../lib/auth';
 import styles from './Button.module.scss';
 
-interface IShared {
-    ariaLabel: string;
-    children: React.ReactNode;
+interface IButton {
     style?: 'primary' | 'secondary' | 'tertiary';
 }
 
-interface IButtonType extends IShared {
+interface IButtonWithChildren extends IButton {
+    ariaLabel: string;
+    children: React.ReactNode;
+}
+
+interface IButtonType extends IButtonWithChildren {
     onClick: () => void;
 }
 
@@ -29,7 +34,7 @@ const ButtonType: FC<IButtonType> = ({
     </button>
 );
 
-interface ILinkType extends IShared {
+interface ILinkType extends IButtonWithChildren {
     href: string;
 }
 
@@ -49,19 +54,40 @@ const LinkType: FC<ILinkType> = ({
     </Link>
 );
 
-interface IButtonTypeProps extends IShared {
+const SignInOutType: FC<IButton> = ({ style }) => {
+    const { data: session } = useSession();
+    return (
+        <ButtonType
+            ariaLabel={session ? 'Sign out' : 'Sign in with Spotify'}
+            onClick={signInOrOut}
+            style={style ?? (session ? 'secondary' : 'primary')}
+        >
+            {session ? 'Sign out' : 'Sign in with Spotify'}
+        </ButtonType>
+    );
+};
+
+interface IButtonTypeProps extends IButtonWithChildren {
     onClick: () => void;
     href?: never;
     type?: never;
 }
 
-interface ILinkTypeProps extends IShared {
+interface ILinkTypeProps extends IButtonWithChildren {
     href: string;
     type: 'link';
     onClick?: never;
 }
 
-type IButtonProps = IButtonTypeProps | ILinkTypeProps;
+interface ISignInOutTypeProps extends IButton {
+    ariaLabel?: never;
+    children?: never;
+    type: 'signInOut';
+    onClick?: never;
+    href?: never;
+}
+
+type IButtonProps = IButtonTypeProps | ILinkTypeProps | ISignInOutTypeProps;
 
 export const Button: FC<IButtonProps> = ({
     ariaLabel,
@@ -71,7 +97,9 @@ export const Button: FC<IButtonProps> = ({
     style,
     type,
 }) => {
-    if (type === 'link') {
+    if (type === 'signInOut') {
+        return <SignInOutType style={style} />;
+    } else if (type === 'link') {
         return (
             <LinkType ariaLabel={ariaLabel} href={href} style={style}>
                 {children}
