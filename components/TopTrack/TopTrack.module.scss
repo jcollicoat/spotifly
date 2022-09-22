@@ -31,6 +31,7 @@
 
         .name {
             color: #ffffff;
+            display: block;
             margin-bottom: $s-xsmall;
             text-decoration: none;
             transition: $t-ease;
@@ -45,10 +46,17 @@
             display: flex;
             flex-wrap: wrap;
             font-size: 0.75em;
-            gap: 0.5em;
+            gap: $s-small;
 
-            span {
-                color: $c-gray-n-4;
+            .subdetail {
+                color: $c-gray-b-4;
+                text-decoration: none;
+                transition: $t-ease;
+                transition-property: color;
+
+                &:hover {
+                    color: $c-primary-3;
+                }
             }
         }
     }

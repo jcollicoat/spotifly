@@ -24,8 +24,12 @@ export const TopTrack: FC<{ track: ITrackDTO }> = ({ track }) => (
                 </a>
             </Link>
             <div className={styles.subdetails}>
-                <span className={styles.artist}>{track.artists[0].name}</span>
-                <span className={styles.album}>{track.album.name}</span>
+                <span className={styles.subdetail}>
+                    {track.artists[0].name}
+                </span>
+                <Link href={`/album/${track.album.id}`} passHref>
+                    <a className={styles.subdetail}>{track.album.name}</a>
+                </Link>
             </div>
         </div>
     </div>
