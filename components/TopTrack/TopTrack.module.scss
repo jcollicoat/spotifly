@@ -27,35 +27,93 @@
     }
 
     .details {
+        flex-grow: 1;
+        max-width: 100%;
         padding: $s-xsmall 0;
 
         .name {
             color: #ffffff;
             display: block;
+            height: 1.15em;
             margin-bottom: $s-xsmall;
+            max-width: 100%;
+            overflow: hidden;
+            position: relative;
             text-decoration: none;
             transition: $t-ease;
             transition-property: color;
+            white-space: nowrap;
 
             &:hover {
                 color: $c-primary-3;
             }
+
+            &::after {
+                background: linear-gradient(
+                    to right,
+                    rgba($c-gray-n-9, 0),
+                    rgba($c-gray-n-9, 100)
+                );
+                content: '';
+                height: 100%;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 80px;
+            }
+
+            .content {
+                position: absolute;
+            }
         }
 
         .subdetails {
+            color: $c-gray-b-4;
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             font-size: 0.75em;
             gap: $s-small;
 
-            .subdetail {
+            .artist {
                 color: $c-gray-b-4;
+                display: block;
                 text-decoration: none;
                 transition: $t-ease;
                 transition-property: color;
+            }
+
+            .album {
+                color: $c-gray-b-4;
+                display: block;
+                flex-grow: 1;
+                height: 1.15em;
+                overflow: hidden;
+                position: relative;
+                text-decoration: none;
+                transition: $t-ease;
+                transition-property: color;
+                white-space: nowrap;
 
                 &:hover {
                     color: $c-primary-3;
+                }
+
+                &::after {
+                    background: linear-gradient(
+                        to right,
+                        rgba($c-gray-n-9, 0),
+                        rgba($c-gray-n-9, 100)
+                    );
+                    content: '';
+                    height: 100%;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: 80px;
+                }
+
+                .content {
+                    position: absolute;
                 }
             }
         }

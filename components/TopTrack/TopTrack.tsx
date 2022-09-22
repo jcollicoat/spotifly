@@ -20,15 +20,20 @@ export const TopTrack: FC<{ track: ITrackDTO }> = ({ track }) => (
                     aria-label={`Explore ${track.name} by ${track.artists[0].name}`}
                     className={styles.name}
                 >
-                    {track.name}
+                    <span className={styles.content}>{track.name}</span>
                 </a>
             </Link>
             <div className={styles.subdetails}>
                 <Link href={`/artist/${track.artists[0].id}`} passHref>
-                    <a className={styles.subdetail}>{track.artists[0].name}</a>
+                    <a className={styles.artist}>{track.artists[0].name}</a>
                 </Link>
+                •
                 <Link href={`/album/${track.album.id}`} passHref>
-                    <a className={styles.subdetail}>{track.album.name}</a>
+                    <a className={styles.album}>
+                        <span className={styles.content}>
+                            {track.album.name}
+                        </span>
+                    </a>
                 </Link>
             </div>
         </div>
