@@ -22,7 +22,9 @@ const AlbumPage: NextPage = () => {
     return (
         <>
             <Head>
-                <title>Top Lists | Spotifly</title>
+                <title>
+                    {album ? `${album.name} | Spotifly` : 'Album | Spotifly'}
+                </title>
                 <meta name="description" content="Top Lists" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>

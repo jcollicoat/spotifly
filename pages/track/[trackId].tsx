@@ -22,7 +22,9 @@ const TrackPage: NextPage = () => {
     return (
         <>
             <Head>
-                <title>Top Lists | Spotifly</title>
+                <title>
+                    {track ? `${track.name} | Spotifly` : 'Track | Spotifly'}
+                </title>
                 <meta name="description" content="Top Lists" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
