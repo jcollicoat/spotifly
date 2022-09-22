@@ -4,18 +4,18 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { AppPage } from '../../components/AppPage/AppPage';
 import { Spinner } from '../../components/Spinner/Spinner';
-import { ITrackDTO } from '../../lib/interfaces/spotify';
-import { getTrack } from '../../lib/spotify';
+import { IAlbumDTO } from '../../lib/interfaces/spotify';
+import { getAlbum } from '../../lib/spotify';
 
-const TrackPage: NextPage = () => {
+const AlbumPage: NextPage = () => {
     const router = useRouter();
-    const { trackId } = router.query;
+    const { albumId } = router.query;
 
     const {
-        data: track,
+        data: album,
         isError,
         isLoading,
-    } = useQuery<ITrackDTO>(['tracks', trackId], getTrack, {
+    } = useQuery<IAlbumDTO>(['albums', albumId], getAlbum, {
         staleTime: Infinity,
     });
 
@@ -26,13 +26,13 @@ const TrackPage: NextPage = () => {
                 <meta name="description" content="Top Lists" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <AppPage page="track">
+            <AppPage page="album">
                 {isLoading && <Spinner padding="small" />}
                 {isError && <div>An error occured.</div>}
-                {track && track.name}
+                {album && album.name}
             </AppPage>
         </>
     );
 };
 
-export default TrackPage;
+export default AlbumPage;

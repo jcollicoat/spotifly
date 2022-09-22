@@ -1,10 +1,22 @@
 import { QueryKey } from '@tanstack/react-query';
 import axios from 'axios';
 import {
+    IAlbumDTO,
     ITopTracksDTO,
     ITrackDTO,
     IUserProfileDTO,
 } from '../lib/interfaces/spotify';
+
+export const getAlbum = async ({
+    queryKey,
+}: {
+    queryKey: QueryKey;
+}): Promise<IAlbumDTO> => {
+    const { data } = await axios.get('/api/spotify/getAlbum', {
+        params: { albumId: queryKey[1] },
+    });
+    return data;
+};
 
 export const getTopTracks = async (): Promise<ITopTracksDTO> => {
     const { data } = await axios.get('/api/spotify/getTopTracks');
@@ -17,7 +29,7 @@ export const getTrack = async ({
     queryKey: QueryKey;
 }): Promise<ITrackDTO> => {
     const { data } = await axios.get('/api/spotify/getTrack', {
-        params: { trackId: queryKey[0] },
+        params: { trackId: queryKey[1] },
     });
     return data;
 };
