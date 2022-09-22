@@ -18,6 +18,17 @@ export const getAlbum = async ({
     return data;
 };
 
+export const getAlbums = async ({
+    queryKey,
+}: {
+    queryKey: QueryKey;
+}): Promise<IAlbumDTO[]> => {
+    const { data } = await axios.get('/api/spotify/getAlbums', {
+        params: { albumIds: queryKey[1] },
+    });
+    return data;
+};
+
 export const getTopTracks = async (): Promise<ITopTracksDTO> => {
     const { data } = await axios.get('/api/spotify/getTopTracks');
     return data;
