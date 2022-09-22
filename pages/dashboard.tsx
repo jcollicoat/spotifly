@@ -7,7 +7,7 @@ import { UserProfile } from '../components/UserProfile/UserProfile';
 const TopLists: NextPage = () => (
     <>
         <Head>
-            <title>Top Lists | Spotifly</title>
+            <title>Dashboard | Spotifly</title>
             <meta name="description" content="Top Lists" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
