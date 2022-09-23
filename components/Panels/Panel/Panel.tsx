@@ -7,6 +7,7 @@ import styles from './Panel.module.scss';
 export interface IPanelDisplay {
     area?: string;
     minHeight?: number;
+    noPadding?: boolean;
 }
 
 interface IPanel {
@@ -35,6 +36,7 @@ export const Panel: FC<IPanel> = ({
         ''
     );
     const panelMinHeight = display.minHeight ?? 0;
+    const noPadding = display.noPadding;
 
     return (
         <section
@@ -42,7 +44,9 @@ export const Panel: FC<IPanel> = ({
             style={{ gridArea: panelArea ? panelArea : '' }}
         >
             {heading && <PanelHeading {...heading} />}
-            <PanelContent minHeight={panelMinHeight}>{children}</PanelContent>
+            <PanelContent minHeight={panelMinHeight} noPadding={noPadding}>
+                {children}
+            </PanelContent>
         </section>
     );
 };

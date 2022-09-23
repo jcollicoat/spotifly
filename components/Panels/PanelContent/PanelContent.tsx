@@ -1,14 +1,20 @@
+import classNames from 'classnames';
 import { FC } from 'react';
 import styles from './PanelContent.module.scss';
 
 export interface IPanelContent {
     children: React.ReactNode;
     minHeight?: number;
+    noPadding?: boolean;
 }
 
-export const PanelContent: FC<IPanelContent> = ({ children, minHeight }) => (
+export const PanelContent: FC<IPanelContent> = ({
+    children,
+    minHeight,
+    noPadding,
+}) => (
     <div
-        className={styles.wrapper}
+        className={classNames(styles.wrapper, noPadding && styles.nopadding)}
         style={{ minHeight: `${minHeight ? minHeight : 0}px` }}
     >
         {children}

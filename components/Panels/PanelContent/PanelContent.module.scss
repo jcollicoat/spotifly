@@ -13,6 +13,10 @@
         border-top: 1px solid $c-gray-n-7;
     }
 
+    &.nopadding {
+        padding: 0;
+    }
+
     @media (min-width: $b-app-1) {
         padding: $s-panel-padding-large;
     }
