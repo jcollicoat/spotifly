@@ -3,10 +3,9 @@
     background-position: left;
     background-repeat: no-repeat;
     background-size: calc(100% - $s-large);
-    border-bottom: 1px solid $c-gray-n-9;
+    margin-bottom: 2px;
 
     &:last-of-type {
-        border-bottom: none;
         margin-bottom: 0;
     }
 
