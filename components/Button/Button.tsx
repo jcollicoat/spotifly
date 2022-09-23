@@ -81,7 +81,7 @@ export const Button: FC<IButtonProps> = ({
     style,
     type,
 }) => {
-    const isSmall = useMedia(`(max-width: ${breakpoints.medium - 1}px)`);
+    const isSmall = useMedia(`(max-width: ${breakpoints.medium - 1}px)`, false);
     const showSmallGlyph = isSmall && Boolean(smallGlyph);
 
     if (type === 'link') {
