@@ -25,7 +25,6 @@ export const Panel: FC<IPanel> = ({
     display = defaultDisplaySettings,
     heading,
 }) => {
-    // const panelArea = display.area;
     const panelArea = useMediaQueries(
         [
             {
