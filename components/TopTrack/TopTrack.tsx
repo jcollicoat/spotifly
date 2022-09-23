@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -19,23 +18,19 @@ export const TopTrack: FC<{ track: ITrackDTO }> = ({ track }) => (
             <Link href={`/track/${track.id}`} passHref>
                 <a
                     aria-label={`Explore ${track.name} by ${track.artists[0].name}`}
-                    className={classNames(styles.nowrap_wrapper, styles.name)}
+                    className={styles.name}
                 >
-                    <span className={styles.nowrap_child}>{track.name}</span>
+                    <span>{track.name}</span>
                 </a>
             </Link>
-            <div
-                className={classNames(styles.nowrap_wrapper, styles.subdetails)}
-            >
+            <div className={styles.subdetails}>
                 <Link href={`/artist/${track.artists[0].id}`} passHref>
                     <a className={styles.subdetail}>{track.artists[0].name}</a>
                 </Link>
                 •
                 <Link href={`/album/${track.album.id}`} passHref>
                     <a className={styles.subdetail}>
-                        <span className={styles.nowrap_child}>
-                            {track.album.name}
-                        </span>
+                        <span>{track.album.name}</span>
                     </a>
                 </Link>
             </div>
