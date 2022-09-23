@@ -40,8 +40,10 @@
             );
             background-position: right;
             content: '';
+            cursor: none;
             height: 100%;
             opacity: 0;
+            pointer-events: none;
             position: absolute;
             right: $s-medium;
             width: 80px;
