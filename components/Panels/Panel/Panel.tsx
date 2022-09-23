@@ -29,19 +29,16 @@ export const Panel: FC<IPanel> = ({
         [
             {
                 matches: (breakpoints) => breakpoints.medium,
-                value: display.area ?? '',
+                value: display.area ?? undefined,
             },
         ],
-        ''
+        undefined
     );
     const panelMinHeight = display.minHeight ?? 0;
     const noPadding = display.noPadding;
 
     return (
-        <section
-            className={styles.panel}
-            style={panelArea ? { gridArea: panelArea } : {}}
-        >
+        <section className={styles.panel} style={{ gridArea: panelArea }}>
             {heading && <PanelHeading {...heading} />}
             <PanelContent minHeight={panelMinHeight} noPadding={noPadding}>
                 {children}
