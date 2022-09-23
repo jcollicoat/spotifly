@@ -41,7 +41,7 @@ export const Panel: FC<IPanel> = ({
     return (
         <section
             className={styles.panel}
-            style={{ gridArea: panelArea ? panelArea : '' }}
+            style={panelArea ? { gridArea: panelArea } : {}}
         >
             {heading && <PanelHeading {...heading} />}
             <PanelContent minHeight={panelMinHeight} noPadding={noPadding}>
