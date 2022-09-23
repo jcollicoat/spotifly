@@ -2,7 +2,7 @@
 .track {
     background-position: left;
     background-repeat: no-repeat;
-    background-size: calc(100% - $s-large);
+    background-size: 100%;
     margin-bottom: 2px;
 
     &:last-of-type {
