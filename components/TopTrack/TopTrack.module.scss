@@ -1,88 +1,128 @@
 @import '../../styles/variables.scss';
-
 .track {
-    align-items: center;
-    border-bottom: 1px solid $c-gray-n-8;
-    display: flex;
-    gap: $s-medium;
-    padding: $s-medium 0;
-
-    &:first-of-type {
-        padding-top: 0;
-    }
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: calc(100% - $s-large);
+    border-bottom: 1px solid $c-gray-n-9;
 
     &:last-of-type {
         border-bottom: none;
         margin-bottom: 0;
-        padding-bottom: 0;
     }
 
-    .cover {
-        flex-shrink: 0;
-        height: 36px;
-
-        span {
-            border-radius: 2px;
-        }
-    }
-
-    .details {
-        height: 1.9em;
-        padding: $s-xsmall 0;
+    .content {
+        backdrop-filter: blur($s-small);
+        display: flex;
+        gap: $s-medium;
+        padding: $s-medium;
         position: relative;
-        width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
+
+        &::before {
+            background: linear-gradient(
+                    to left,
+                    rgba($c-gray-n-9, 1),
+                    rgba($c-gray-n-9, 0.85)
+                ),
+                linear-gradient(
+                    to left,
+                    rgba($c-gray-n-9, 1) $s-large,
+                    rgba($c-gray-n-9, 0) 80px
+                );
+            background-position: right;
+            content: '';
+            height: 100%;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 1;
+        }
 
         &::after {
             background: linear-gradient(
-                to right,
-                rgba($c-gray-n-9, 0),
-                rgba($c-gray-n-9, 100)
+                to left,
+                rgba($c-gray-n-9, 1),
+                rgba($c-gray-n-9, 0)
             );
+            background-position: right;
             content: '';
-            cursor: none;
             height: 100%;
-            pointer-events: none;
             position: absolute;
-            right: 0;
-            top: 0;
+            right: $s-medium;
             width: 80px;
+            top: 0;
+            z-index: 3;
         }
 
-        .nowrap {
-            position: absolute;
+        .cover {
+            position: relative;
+            flex-shrink: 0;
+            height: 36px;
+            z-index: 2;
 
-            .name {
-                color: #ffffff;
-                display: block;
-                height: 1.15em;
-                margin-bottom: $s-xsmall;
-                text-decoration: none;
-                transition: $t-ease;
-                transition-property: color;
-
-                &:hover {
-                    color: $c-primary-3;
-                }
+            span {
+                border-radius: 2px;
             }
+        }
 
-            .subdetails {
-                color: $c-gray-b-4;
-                display: flex;
-                flex-wrap: nowrap;
-                font-size: 0.75em;
-                gap: $s-small;
+        .details {
+            padding: $s-xsmall 0;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            white-space: nowrap;
+            z-index: 2;
 
-                .subdetail {
-                    color: $c-gray-b-4;
+            // &::after {
+            //     background: linear-gradient(
+            //         to left,
+            //         rgba($c-gray-n-9, 1),
+            //         rgba($c-gray-n-9, 0)
+            //     );
+            //     content: '';
+            //     cursor: none;
+            //     height: calc(100% + $s-large);
+            //     pointer-events: none;
+            //     position: absolute;
+            //     right: 0;
+            //     top: -$s-medium;
+            //     width: 25%;
+            // }
+
+            .nowrap {
+                position: absolute;
+
+                .name {
+                    color: #ffffff;
+                    display: block;
                     height: 1.15em;
+                    margin-bottom: $s-xsmall;
                     text-decoration: none;
                     transition: $t-ease;
                     transition-property: color;
 
                     &:hover {
                         color: $c-primary-3;
+                    }
+                }
+
+                .subdetails {
+                    color: $c-gray-b-4;
+                    display: flex;
+                    flex-wrap: nowrap;
+                    font-size: 0.75em;
+                    gap: $s-small;
+
+                    .subdetail {
+                        color: $c-gray-b-4;
+                        height: 1.15em;
+                        text-decoration: none;
+                        transition: $t-ease;
+                        transition-property: color;
+
+                        &:hover {
+                            color: $c-primary-3;
+                        }
                     }
                 }
             }
