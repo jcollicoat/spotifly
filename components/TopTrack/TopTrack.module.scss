@@ -27,94 +27,65 @@
     }
 
     .details {
-        flex-grow: 1;
-        max-width: 100%;
         padding: $s-xsmall 0;
+        position: relative;
+        width: 100%;
 
-        .name {
-            color: #ffffff;
-            display: block;
-            height: 1.15em;
-            margin-bottom: $s-xsmall;
-            max-width: 100%;
-            overflow: hidden;
-            position: relative;
-            text-decoration: none;
-            transition: $t-ease;
-            transition-property: color;
-            white-space: nowrap;
-
-            &:hover {
-                color: $c-primary-3;
-            }
-
-            &::after {
-                background: linear-gradient(
-                    to right,
-                    rgba($c-gray-n-9, 0),
-                    rgba($c-gray-n-9, 100)
-                );
-                content: '';
-                height: 100%;
-                position: absolute;
-                right: 0;
-                top: 0;
-                width: 80px;
-            }
-
-            .content {
-                position: absolute;
-            }
+        &::after {
+            background: linear-gradient(
+                to right,
+                rgba($c-gray-n-9, 0),
+                rgba($c-gray-n-9, 100)
+            );
+            content: '';
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 80px;
         }
 
-        .subdetails {
-            color: $c-gray-b-4;
-            display: flex;
-            flex-wrap: nowrap;
-            font-size: 0.75em;
-            gap: $s-small;
+        .nowrap_wrapper {
+            overflow: hidden;
+            position: relative;
 
-            .artist {
-                color: $c-gray-b-4;
+            &.name {
+                color: #ffffff;
                 display: block;
-                text-decoration: none;
-                transition: $t-ease;
-                transition-property: color;
-            }
-
-            .album {
-                color: $c-gray-b-4;
-                display: block;
-                flex-grow: 1;
                 height: 1.15em;
-                overflow: hidden;
-                position: relative;
+                margin-bottom: $s-xsmall;
                 text-decoration: none;
                 transition: $t-ease;
                 transition-property: color;
-                white-space: nowrap;
 
                 &:hover {
                     color: $c-primary-3;
                 }
+            }
 
-                &::after {
-                    background: linear-gradient(
-                        to right,
-                        rgba($c-gray-n-9, 0),
-                        rgba($c-gray-n-9, 100)
-                    );
-                    content: '';
-                    height: 100%;
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                    width: 80px;
-                }
+            &.subdetails {
+                color: $c-gray-b-4;
+                display: flex;
+                flex-wrap: nowrap;
+                font-size: 0.75em;
+                gap: $s-small;
 
-                .content {
-                    position: absolute;
+                .subdetail {
+                    color: $c-gray-b-4;
+                    height: 1.15em;
+                    text-decoration: none;
+                    transition: $t-ease;
+                    transition-property: color;
+
+                    &:hover {
+                        color: $c-primary-3;
+                    }
                 }
+            }
+
+            .nowrap_child {
+                position: absolute;
+                white-space: nowrap;
             }
         }
     }
