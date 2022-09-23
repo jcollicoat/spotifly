@@ -1,15 +1,5 @@
 @import '../../styles/variables.scss';
 
-@mixin nowrap-wrapper {
-    overflow: hidden;
-    position: relative;
-
-    span {
-        position: absolute;
-        white-space: nowrap;
-    }
-}
-
 .track {
     align-items: center;
     border-bottom: 1px solid $c-gray-n-8;
@@ -37,9 +27,12 @@
     }
 
     .details {
+        height: 1.9em;
         padding: $s-xsmall 0;
         position: relative;
         width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
 
         &::after {
             background: linear-gradient(
@@ -48,47 +41,49 @@
                 rgba($c-gray-n-9, 100)
             );
             content: '';
+            cursor: none;
             height: 100%;
+            pointer-events: none;
             position: absolute;
             right: 0;
             top: 0;
             width: 80px;
         }
 
-        .name {
-            @include nowrap-wrapper;
+        .nowrap {
+            position: absolute;
 
-            color: #ffffff;
-            display: block;
-            height: 1.15em;
-            margin-bottom: $s-xsmall;
-            text-decoration: none;
-            transition: $t-ease;
-            transition-property: color;
-
-            &:hover {
-                color: $c-primary-3;
-            }
-        }
-
-        .subdetails {
-            @include nowrap-wrapper;
-
-            color: $c-gray-b-4;
-            display: flex;
-            flex-wrap: nowrap;
-            font-size: 0.75em;
-            gap: $s-small;
-
-            .subdetail {
-                color: $c-gray-b-4;
+            .name {
+                color: #ffffff;
+                display: block;
                 height: 1.15em;
+                margin-bottom: $s-xsmall;
                 text-decoration: none;
                 transition: $t-ease;
                 transition-property: color;
 
                 &:hover {
                     color: $c-primary-3;
+                }
+            }
+
+            .subdetails {
+                color: $c-gray-b-4;
+                display: flex;
+                flex-wrap: nowrap;
+                font-size: 0.75em;
+                gap: $s-small;
+
+                .subdetail {
+                    color: $c-gray-b-4;
+                    height: 1.15em;
+                    text-decoration: none;
+                    transition: $t-ease;
+                    transition-property: color;
+
+                    &:hover {
+                        color: $c-primary-3;
+                    }
                 }
             }
         }
