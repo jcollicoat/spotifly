@@ -19,15 +19,10 @@
 
         &::before {
             background: linear-gradient(
-                    to left,
-                    rgba($c-gray-n-9, 1),
-                    rgba($c-gray-n-9, 0.85)
-                ),
-                linear-gradient(
-                    to left,
-                    rgba($c-gray-n-9, 1) $s-large,
-                    rgba($c-gray-n-9, 0) 80px
-                );
+                to left,
+                rgba($c-gray-n-9, 1),
+                rgba($c-gray-n-9, 0.9)
+            );
             background-position: right;
             content: '';
             height: 100%;
@@ -47,11 +42,20 @@
             background-position: right;
             content: '';
             height: 100%;
+            opacity: 0;
             position: absolute;
             right: $s-medium;
             width: 80px;
             top: 0;
             z-index: 3;
+            transition: $t-ease-slow;
+            transition-property: opacity;
+        }
+
+        &.overflowed {
+            &::after {
+                opacity: 1;
+            }
         }
 
         .cover {
@@ -72,22 +76,6 @@
             width: 100%;
             white-space: nowrap;
             z-index: 2;
-
-            // &::after {
-            //     background: linear-gradient(
-            //         to left,
-            //         rgba($c-gray-n-9, 1),
-            //         rgba($c-gray-n-9, 0)
-            //     );
-            //     content: '';
-            //     cursor: none;
-            //     height: calc(100% + $s-large);
-            //     pointer-events: none;
-            //     position: absolute;
-            //     right: 0;
-            //     top: -$s-medium;
-            //     width: 25%;
-            // }
 
             .nowrap {
                 position: absolute;
