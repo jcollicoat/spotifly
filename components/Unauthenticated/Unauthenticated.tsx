@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { HiOutlineExclamation } from 'react-icons/hi';
-import { Button } from '../Button/Button';
+import { Button, ButtonSignInOut } from '../Button/Button';
 import styles from './Unauthenticated.module.scss';
 
 export const Unauthenticated: FC = () => (
@@ -9,7 +9,7 @@ export const Unauthenticated: FC = () => (
         <h1 className={styles.heading}>Not Logged In</h1>
         <p className={styles.body}>Please log in to Spotify to continue.</p>
         <div className={styles.buttons}>
-            <Button type="signInOut" />
+            <ButtonSignInOut />
             <Button
                 ariaLabel="Navigate home"
                 href="/"

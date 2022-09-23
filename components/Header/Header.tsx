@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { FC } from 'react';
-import { Button } from '../Button/Button';
+import { HiOutlineHome, HiOutlineMusicNote } from 'react-icons/hi';
+import { Button, ButtonSignInOut } from '../Button/Button';
 import { Panel } from '../Panels/Panel/Panel';
 import { SpotiflyLogo } from '../SpotiflyLogo/SpotiflyLogo';
 import styles from './Header.module.scss';
@@ -18,6 +19,7 @@ export const Header: FC = () => (
                     <Button
                         ariaLabel="Navigate home"
                         href="/"
+                        smallGlyph={<HiOutlineHome />}
                         style="tertiary"
                         type="link"
                     >
@@ -26,12 +28,13 @@ export const Header: FC = () => (
                     <Button
                         ariaLabel="Navigate to your dashboard"
                         href="/dashboard"
+                        smallGlyph={<HiOutlineMusicNote />}
                         style="tertiary"
                         type="link"
                     >
                         Dashboard
                     </Button>
-                    <Button type="signInOut" />
+                    <ButtonSignInOut showSmallGlyph={true} />
                 </nav>
             </div>
         </Panel>
