@@ -20,7 +20,7 @@ const TopLists: NextPage = () => (
             />
             <TrackList
                 subheading="Last 6 months"
-                title="Top Tracks"
+                title="Your Top Tracks"
                 type="top-tracks"
             />
         </AppPage>
