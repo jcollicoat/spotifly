@@ -4,13 +4,17 @@ import styles from './PanelHeading.module.scss';
 
 export interface IPanelHeading {
     title: string;
-    heading?: string;
+    subheading: string;
     large?: true;
 }
 
-export const PanelHeading: FC<IPanelHeading> = ({ title, heading, large }) => (
+export const PanelHeading: FC<IPanelHeading> = ({
+    title,
+    subheading,
+    large,
+}) => (
     <header className={styles.wrapper}>
-        {heading && <div className={styles.heading}>{heading}</div>}
+        <div className={styles.heading}>{subheading}</div>
         <h2 className={classNames(styles.title, large && styles.large)}>
             {title}
         </h2>

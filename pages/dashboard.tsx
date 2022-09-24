@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { AppPage } from '../components/AppPage/AppPage';
-import { TopTracks } from '../components/TopTracks/TopTracks';
+import { TrackList } from '../components/TrackList/TrackList';
 import { UserProfile } from '../components/UserProfile/UserProfile';
 
 const TopLists: NextPage = () => (
@@ -13,7 +13,16 @@ const TopLists: NextPage = () => (
         </Head>
         <AppPage page="dashboard">
             <UserProfile />
-            <TopTracks />
+            <TrackList
+                subheading="Your music"
+                title="Recently Played"
+                type="recently-played"
+            />
+            <TrackList
+                subheading="Last 6 months"
+                title="Top Tracks"
+                type="top-tracks"
+            />
         </AppPage>
     </>
 );
