@@ -81,6 +81,23 @@ export interface ITrackDTO {
     uri: string;
 }
 
+export interface IRecentlyPlayedTrackDTO {
+    context?: string;
+    href: string;
+    track: ITrackDTO;
+}
+
+export interface IRecentlyPlayedDTO {
+    href: string;
+    items: IRecentlyPlayedTrackDTO[];
+    limit: number;
+    next: string;
+    cursors: {
+        after: string;
+    };
+    total: number;
+}
+
 export interface ITopTracksDTO {
     href: string;
     items: ITrackDTO[];

@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
     IAlbumDTO,
     IArtistDTO,
+    IRecentlyPlayedDTO,
     ITopTracksDTO,
     ITrackDTO,
     IUserProfileDTO,
@@ -38,6 +39,11 @@ export const getArtist = async ({
     const { data } = await axios.get('/api/spotify/getArtist', {
         params: { artistId: queryKey[1] },
     });
+    return data;
+};
+
+export const getRecentlyPlayed = async (): Promise<IRecentlyPlayedDTO> => {
+    const { data } = await axios.get('/api/spotify/getRecentlyPlayed');
     return data;
 };
 
