@@ -49,11 +49,11 @@ const buildAlbum = (data: IGetAlbum): IAlbum => ({
     artists: reduceArtists(data.artists),
     id: data.id,
     images: data.images,
+    key: appendUUID(data.id),
     name: data.name,
     release_date: data.release_date,
     total_tracks: data.total_tracks,
     type: data.type,
-    unique_id: appendUUID(data.id),
 });
 
 export const getAlbum = async ({
@@ -76,11 +76,11 @@ const buildAlbums = (data: IGetAlbum[]): IAlbum[] =>
         artists: reduceArtists(item.artists),
         id: item.id,
         images: item.images,
+        key: appendUUID(item.id),
         name: item.name,
         release_date: item.release_date,
         total_tracks: item.total_tracks,
         type: item.type,
-        unique_id: appendUUID(item.id),
     }));
 
 export const getAlbums = async ({
@@ -126,10 +126,10 @@ const buildArtist = (data: IGetArtist): IArtist => ({
     genres: data.genres,
     id: data.id,
     images: data.images,
+    key: appendUUID(data.id),
     name: data.name,
     popularity: data.popularity,
     type: data.type,
-    unique_id: appendUUID(data.id),
 });
 
 export const getArtist = async ({
@@ -174,10 +174,10 @@ const buildTrack = (data: IGetTrack): ITrack => ({
     album: data.album,
     artists: reduceArtists(data.artists),
     id: data.id,
+    key: appendUUID(data.id),
     name: data.name,
     popularity: data.popularity,
     type: data.type,
-    unique_id: appendUUID(data.id),
 });
 
 export const getTrack = async ({
@@ -237,10 +237,10 @@ const buildTopTracks = (data: IGetTopTracks): ITopTracks => ({
         album: item.album,
         artists: reduceArtists(item.artists),
         id: item.id,
+        key: appendUUID(item.id),
         name: item.name,
         popularity: item.popularity,
         type: item.type,
-        unique_id: appendUUID(item.id),
     })),
 });
 

@@ -27,7 +27,7 @@ export const TrackList: FC<ITracksList> = ({ subheading, title, type }) => {
     const { data, isError, isLoading } = query();
 
     const mapTracks = (tracks: ITrack[]) =>
-        tracks.map((track) => <Track key={track.unique_id} track={track} />);
+        tracks.map((track) => <Track key={track.key} track={track} />);
 
     const heading: IPanelHeading = {
         title: title,

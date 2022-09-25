@@ -1,9 +1,16 @@
 import { ISpotifyImageDTO } from '../spotify';
 
+export interface IAlbumReduced {
+    id: string;
+    key: string;
+    name: string;
+    release_date: string;
+}
+
 export interface IArtistReduced {
     id: string;
+    key: string;
     name: string;
-    unique_id: string;
 }
 
 export interface IAlbum {
@@ -11,11 +18,11 @@ export interface IAlbum {
     artists: IArtistReduced[];
     id: string;
     images: ISpotifyImageDTO[];
+    key: string;
     name: string;
     release_date: string;
     total_tracks: number;
     type: string;
-    unique_id: string;
 }
 
 export interface IArtist {
@@ -23,20 +30,20 @@ export interface IArtist {
     genres: string[];
     id: string;
     images: ISpotifyImageDTO[];
+    key: string;
     name: string;
     popularity: number;
     type: string;
-    unique_id: string;
 }
 
 export interface ITrack {
-    album: IAlbum;
+    album: IAlbumReduced;
     artists: IArtistReduced[];
     id: string;
+    key: string;
     name: string;
     popularity: number;
     type: string;
-    unique_id: string;
 }
 
 export interface IRecentlyPlayed {

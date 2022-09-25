@@ -10,8 +10,8 @@ export const appendUUID = (id: string): string => {
 export const reduceArtists = (artists: IAlbumArtistDTO[]): IArtistReduced[] => {
     const albumArtists: IArtistReduced[] = artists.map((artist) => ({
         id: artist.id,
+        key: appendUUID(artist.id),
         name: artist.name,
-        unique_id: appendUUID(artist.id),
     }));
     return albumArtists;
 };
