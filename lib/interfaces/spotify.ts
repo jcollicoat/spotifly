@@ -15,6 +15,18 @@ export interface IAlbumArtistDTO {
     uri: string;
 }
 
+export interface IAlbum {
+    album_type: string;
+    artists: IAlbumArtistDTO[];
+    id: string;
+    images: IAlbumArtDTO[];
+    name: string;
+    release_date: string;
+    total_tracks: number;
+    type: string;
+    unique_id: string;
+}
+
 export interface IAlbumDTO {
     album_type: string;
     artists: IAlbumArtistDTO[];

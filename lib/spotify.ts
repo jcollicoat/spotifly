@@ -1,6 +1,7 @@
 import { QueryKey } from '@tanstack/react-query';
 import axios from 'axios';
 import {
+    IAlbum,
     IAlbumDTO,
     IArtistDTO,
     IRecentlyPlayedDTO,
@@ -13,11 +14,26 @@ export const getAlbum = async ({
     queryKey,
 }: {
     queryKey: QueryKey;
-}): Promise<IAlbumDTO> => {
-    const { data } = await axios.get('/api/spotify/getAlbum', {
-        params: { albumId: queryKey[1] },
-    });
-    return data;
+}): Promise<IAlbum> => {
+    const { data }: { data: IAlbumDTO } = await axios.get(
+        '/api/spotify/getAlbum',
+        {
+            params: { albumId: queryKey[1] },
+        }
+    );
+    const unique_id = transformId(data.id);
+    const album: IAlbum = {
+        album_type: data.album_type,
+        artists: data.artists,
+        id: data.id,
+        images: data.images,
+        name: data.name,
+        release_date: data.release_date,
+        total_tracks: data.total_tracks,
+        type: data.type,
+        unique_id: unique_id,
+    };
+    return album;
 };
 
 export const getAlbums = async ({
