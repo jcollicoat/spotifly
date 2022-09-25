@@ -5,13 +5,18 @@ import {
     IArtistDTO,
     IRecentlyPlayed,
     IRecentlyPlayedTrackDTO,
-    ISpotifyImageDTO,
     ITopTracks,
     ITrack,
     ITrackDTO,
     IUserProfileDTO,
 } from '../lib/interfaces/spotify';
-import { appendUUID } from './helpers';
+import { appendUUID, reduceArtists } from './helpers';
+
+export interface ISpotifyImageDTO {
+    height: number;
+    url: string;
+    width: number;
+}
 
 export interface IAlbumArtistDTO {
     external_urls: {
@@ -45,7 +50,7 @@ export interface IGetAlbum {
 const buildAlbum = (data: IGetAlbum): IAlbum => {
     const album: IAlbum = {
         album_type: data.album_type,
-        artists: data.artists,
+        artists: reduceArtists(data.artists),
         id: data.id,
         images: data.images,
         name: data.name,
@@ -108,7 +113,7 @@ const buildRecentlyPlayed = (data: IGetRecentlyPlayed): IRecentlyPlayed => {
     const recentlyPlayed: ITrack[] = data.items.map((item) => {
         return {
             album: item.track.album,
-            artists: item.track.artists,
+            artists: reduceArtists(item.track.artists),
             id: item.track.id,
             name: item.track.name,
             popularity: item.track.popularity,
@@ -140,7 +145,7 @@ const buildTopTracks = (data: IGetTopTracks): ITopTracks => {
     const topTracks: ITrack[] = data.items.map((item) => {
         return {
             album: item.album,
-            artists: item.artists,
+            artists: reduceArtists(item.artists),
             id: item.id,
             name: item.name,
             popularity: item.popularity,

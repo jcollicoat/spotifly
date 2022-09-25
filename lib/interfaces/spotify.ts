@@ -1,14 +1,14 @@
-import { IAlbumArtistDTO } from '../spotify';
+import { IAlbumArtistDTO, ISpotifyImageDTO } from '../spotify';
 
-export interface ISpotifyImageDTO {
-    height: number;
-    url: string;
-    width: number;
+export interface IArtistReduced {
+    id: string;
+    name: string;
+    unique_id: string;
 }
 
 export interface IAlbum {
     album_type: string;
-    artists: IAlbumArtistDTO[];
+    artists: IArtistReduced[];
     id: string;
     images: ISpotifyImageDTO[];
     name: string;
@@ -20,7 +20,7 @@ export interface IAlbum {
 
 export interface ITrack {
     album: IAlbum;
-    artists: IAlbumArtistDTO[];
+    artists: IArtistReduced[];
     id: string;
     name: string;
     popularity: number;
