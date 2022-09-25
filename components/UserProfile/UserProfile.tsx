@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { FC } from 'react';
-import { IUserProfileDTO } from '../../lib/interfaces/spotify';
-import { getUserProfile } from '../../lib/spotify';
+import { getUserProfile, IGetUserProfile } from '../../lib/spotify';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './UserProfile.module.scss';
@@ -12,7 +11,7 @@ export const UserProfile: FC = () => {
         data: user,
         isError,
         isLoading,
-    } = useQuery<IUserProfileDTO>(['userProfile'], getUserProfile, {
+    } = useQuery<IGetUserProfile>(['userProfile'], getUserProfile, {
         staleTime: Infinity,
     });
 
