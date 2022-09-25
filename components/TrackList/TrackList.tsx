@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useRecentlyPlayed, useTopTracks } from '../../hooks/useReactQueries';
+import { useRecentlyPlayed, useTopTracks } from '../../hooks/useSpotify';
 import {
     IRecentlyPlayedDTO,
     ITopTracks,
