@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { FC } from 'react';
 import styles from './PanelContent.module.scss';
 
-export interface IPanelContent {
+interface IPanelContent {
     children: React.ReactNode;
     minHeight?: number;
     noPadding?: boolean;

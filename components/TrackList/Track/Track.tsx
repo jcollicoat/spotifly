@@ -12,7 +12,7 @@ export const Track: FC<{ track: ITrack }> = ({ track }) => {
     const noWrapRef = useRef<HTMLDivElement>(null);
     const { width } = useWindowSize();
     const [isOverflowed, setIsOverflowed] = useState(false);
-    const { data: albumColor } = useColor(track.album.images[2].url, 'hex', {
+    const { data: albumColor } = useColor(track.album.image, 'hex', {
         crossOrigin: 'true',
     });
 
@@ -37,7 +37,6 @@ export const Track: FC<{ track: ITrack }> = ({ track }) => {
         <div
             className={styles.track}
             style={{
-                // backgroundImage: `url(${track.album.images[0].url})`,
                 backgroundColor: albumColor,
             }}
         >
@@ -49,7 +48,7 @@ export const Track: FC<{ track: ITrack }> = ({ track }) => {
             >
                 <div className={styles.cover}>
                     <Image
-                        src={track.album.images[2].url}
+                        src={track.album.image}
                         alt=""
                         height={36}
                         width={36}

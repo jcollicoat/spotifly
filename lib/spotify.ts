@@ -2,51 +2,22 @@ import { QueryKey } from '@tanstack/react-query';
 import axios from 'axios';
 import {
     IAlbum,
+    IAlbumDTO,
     IArtist,
+    IArtistDTO,
     IRecentlyPlayed,
+    IRecentlyPlayedDTO,
     ITopTracks,
+    ITopTracksDTO,
     ITrack,
+    ITrackDTO,
+    IUserProfileDTO,
 } from '../lib/interfaces/spotify';
-import { appendUUID, reduceArtists } from './helpers';
+import { appendUUID, reduceAlbum, reduceItemArtists } from './helpers';
 
-export interface ISpotifyImageDTO {
-    height: number;
-    url: string;
-    width: number;
-}
-
-export interface IAlbumArtistDTO {
-    external_urls: {
-        spotify: string;
-    };
-    href: string;
-    id: string;
-    name: string;
-    type: string;
-    uri: string;
-}
-
-export interface IGetAlbum {
-    album_type: string;
-    artists: IAlbumArtistDTO[];
-    available_markets: string[];
-    external_urls: {
-        spotify: string;
-    };
-    href: string;
-    id: string;
-    images: ISpotifyImageDTO[];
-    name: string;
-    release_date: string;
-    release_date_precision: string;
-    total_tracks: number;
-    type: string;
-    uri: string;
-}
-
-const buildAlbum = (data: IGetAlbum): IAlbum => ({
+const buildAlbum = (data: IAlbumDTO): IAlbum => ({
     album_type: data.album_type,
-    artists: reduceArtists(data.artists),
+    artists: reduceItemArtists(data.artists),
     id: data.id,
     images: data.images,
     key: appendUUID(data.id),
@@ -61,7 +32,7 @@ export const getAlbum = async ({
 }: {
     queryKey: QueryKey;
 }): Promise<IAlbum> => {
-    const { data }: { data: IGetAlbum } = await axios.get(
+    const { data }: { data: IAlbumDTO } = await axios.get(
         '/api/spotify/getAlbum',
         {
             params: { albumId: queryKey[1] },
@@ -70,10 +41,10 @@ export const getAlbum = async ({
     return buildAlbum(data);
 };
 
-const buildAlbums = (data: IGetAlbum[]): IAlbum[] =>
+const buildAlbums = (data: IAlbumDTO[]): IAlbum[] =>
     data.map((item) => ({
         album_type: item.album_type,
-        artists: reduceArtists(item.artists),
+        artists: reduceItemArtists(item.artists),
         id: item.id,
         images: item.images,
         key: appendUUID(item.id),
@@ -88,7 +59,7 @@ export const getAlbums = async ({
 }: {
     queryKey: QueryKey;
 }): Promise<IAlbum[]> => {
-    const { data }: { data: IGetAlbum[] } = await axios.get(
+    const { data }: { data: IAlbumDTO[] } = await axios.get(
         '/api/spotify/getAlbums',
         {
             params: { albumIds: queryKey[1] },
@@ -97,31 +68,7 @@ export const getAlbums = async ({
     return buildAlbums(data);
 };
 
-export interface IGetArtist {
-    external_urls: {
-        spotify: string;
-    };
-    followers: {
-        href: string;
-        total: number;
-    };
-    genres: string[];
-    href: string;
-    id: string;
-    images: [
-        {
-            url: string;
-            height: number;
-            width: number;
-        }
-    ];
-    name: string;
-    popularity: number;
-    type: string;
-    uri: string;
-}
-
-const buildArtist = (data: IGetArtist): IArtist => ({
+const buildArtist = (data: IArtistDTO): IArtist => ({
     followers: data.followers.total,
     genres: data.genres,
     id: data.id,
@@ -137,7 +84,7 @@ export const getArtist = async ({
 }: {
     queryKey: QueryKey;
 }): Promise<IArtist> => {
-    const { data }: { data: IGetArtist } = await axios.get(
+    const { data }: { data: IArtistDTO } = await axios.get(
         '/api/spotify/getArtist',
         {
             params: { artistId: queryKey[1] },
@@ -146,33 +93,9 @@ export const getArtist = async ({
     return buildArtist(data);
 };
 
-export interface IGetTrack {
-    album: IAlbum;
-    artists: IAlbumArtistDTO[];
-    available_markets: string[];
-    disc_number: number;
-    duration_ms: number;
-    explicit: boolean;
-    external_ids: {
-        isrc: string;
-    };
-    external_urls: {
-        spotify: string;
-    };
-    href: string;
-    id: string;
-    is_local: false;
-    name: string;
-    popularity: number;
-    preview_url: string;
-    track_number: number;
-    type: string;
-    uri: string;
-}
-
-const buildTrack = (data: IGetTrack): ITrack => ({
-    album: data.album,
-    artists: reduceArtists(data.artists),
+const buildTrack = (data: ITrackDTO): ITrack => ({
+    album: reduceAlbum(data.album),
+    artists: reduceItemArtists(data.artists),
     id: data.id,
     key: appendUUID(data.id),
     name: data.name,
@@ -185,7 +108,7 @@ export const getTrack = async ({
 }: {
     queryKey: QueryKey;
 }): Promise<ITrack> => {
-    const { data }: { data: IGetTrack } = await axios.get(
+    const { data }: { data: ITrackDTO } = await axios.get(
         '/api/spotify/getTrack',
         {
             params: { trackId: queryKey[1] },
@@ -194,48 +117,21 @@ export const getTrack = async ({
     return buildTrack(data);
 };
 
-export interface IRecentlyPlayedTrackDTO {
-    context?: string;
-    href: string;
-    track: IGetTrack;
-}
-
-interface IGetRecentlyPlayed {
-    href: string;
-    items: IRecentlyPlayedTrackDTO[];
-    limit: number;
-    next: string;
-    cursors: {
-        after: string;
-    };
-    total: number;
-}
-
-const buildRecentlyPlayed = (data: IGetRecentlyPlayed): IRecentlyPlayed => ({
+const buildRecentlyPlayed = (data: IRecentlyPlayedDTO): IRecentlyPlayed => ({
     items: data.items.map((item) => buildTrack(item.track)),
 });
 
 export const getRecentlyPlayed = async (): Promise<IRecentlyPlayed> => {
-    const { data }: { data: IGetRecentlyPlayed } = await axios.get(
+    const { data }: { data: IRecentlyPlayedDTO } = await axios.get(
         '/api/spotify/getRecentlyPlayed'
     );
     return buildRecentlyPlayed(data);
 };
 
-export interface IGetTopTracks {
-    href: string;
-    items: IGetTrack[];
-    limit: number;
-    next?: string;
-    offset: number;
-    previous?: string;
-    total: number;
-}
-
-const buildTopTracks = (data: IGetTopTracks): ITopTracks => ({
+const buildTopTracks = (data: ITopTracksDTO): ITopTracks => ({
     items: data.items.map((item) => ({
-        album: item.album,
-        artists: reduceArtists(item.artists),
+        album: reduceAlbum(item.album),
+        artists: reduceItemArtists(item.artists),
         id: item.id,
         key: appendUUID(item.id),
         name: item.name,
@@ -245,43 +141,14 @@ const buildTopTracks = (data: IGetTopTracks): ITopTracks => ({
 });
 
 export const getTopTracks = async (): Promise<ITopTracks> => {
-    const { data }: { data: IGetTopTracks } = await axios.get(
+    const { data }: { data: ITopTracksDTO } = await axios.get(
         '/api/spotify/getTopTracks'
     );
     return buildTopTracks(data);
 };
 
-export interface IGetUserProfile {
-    country: string;
-    display_name: string;
-    email: string;
-    explicit_content: {
-        filter_enabled: true;
-        filter_locked: true;
-    };
-    external_urls: {
-        spotify: string;
-    };
-    followers: {
-        href: string;
-        total: number;
-    };
-    href: string;
-    id: string;
-    images: [
-        {
-            url: string;
-            height: number;
-            width: number;
-        }
-    ];
-    product: string;
-    type: string;
-    uri: string;
-}
-
-export const getUserProfile = async (): Promise<IGetUserProfile> => {
-    const { data }: { data: IGetUserProfile } = await axios.get(
+export const getUserProfile = async (): Promise<IUserProfileDTO> => {
+    const { data }: { data: IUserProfileDTO } = await axios.get(
         '/api/spotify/getUserProfile'
     );
     return data;
