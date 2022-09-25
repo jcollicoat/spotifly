@@ -113,29 +113,8 @@ export interface IRecentlyPlayed {
     items: ITrack[];
 }
 
-export interface IRecentlyPlayedDTO {
-    href: string;
-    items: IRecentlyPlayedTrackDTO[];
-    limit: number;
-    next: string;
-    cursors: {
-        after: string;
-    };
-    total: number;
-}
-
 export interface ITopTracks {
     items: ITrack[];
-}
-
-export interface ITopTracksDTO {
-    href: string;
-    items: ITrackDTO[];
-    limit: number;
-    next?: string;
-    offset: number;
-    previous?: string;
-    total: number;
 }
 
 export interface IUserProfileDTO {

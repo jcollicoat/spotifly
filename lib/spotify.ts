@@ -5,9 +5,8 @@ import {
     IAlbumDTO,
     IArtistDTO,
     IRecentlyPlayed,
-    IRecentlyPlayedDTO,
+    IRecentlyPlayedTrackDTO,
     ITopTracks,
-    ITopTracksDTO,
     ITrack,
     ITrackDTO,
     IUserProfileDTO,
@@ -62,7 +61,18 @@ export const getArtist = async ({
     return data;
 };
 
-const buildRecentlyPlayed = (data: IRecentlyPlayedDTO): IRecentlyPlayed => {
+export interface IGetRecentlyPlayed {
+    href: string;
+    items: IRecentlyPlayedTrackDTO[];
+    limit: number;
+    next: string;
+    cursors: {
+        after: string;
+    };
+    total: number;
+}
+
+const buildRecentlyPlayed = (data: IGetRecentlyPlayed): IRecentlyPlayed => {
     const recentlyPlayed: ITrack[] = data.items.map((item) => {
         return {
             album: item.track.album,
@@ -78,12 +88,24 @@ const buildRecentlyPlayed = (data: IRecentlyPlayedDTO): IRecentlyPlayed => {
 };
 
 export const getRecentlyPlayed = async (): Promise<IRecentlyPlayed> => {
-    const { data } = await axios.get('/api/spotify/getRecentlyPlayed');
+    const { data }: { data: IGetRecentlyPlayed } = await axios.get(
+        '/api/spotify/getRecentlyPlayed'
+    );
     const builtRecentlyPlayed = buildRecentlyPlayed(data);
     return builtRecentlyPlayed;
 };
 
-const buildTopTracks = (data: ITopTracksDTO): ITopTracks => {
+export interface IGetTopTracks {
+    href: string;
+    items: ITrackDTO[];
+    limit: number;
+    next?: string;
+    offset: number;
+    previous?: string;
+    total: number;
+}
+
+const buildTopTracks = (data: IGetTopTracks): ITopTracks => {
     const topTracks: ITrack[] = data.items.map((item) => {
         return {
             album: item.album,
@@ -99,7 +121,9 @@ const buildTopTracks = (data: ITopTracksDTO): ITopTracks => {
 };
 
 export const getTopTracks = async (): Promise<ITopTracks> => {
-    const { data } = await axios.get('/api/spotify/getTopTracks');
+    const { data }: { data: IGetTopTracks } = await axios.get(
+        '/api/spotify/getTopTracks'
+    );
     const builtTopTracks = buildTopTracks(data);
     return builtTopTracks;
 };

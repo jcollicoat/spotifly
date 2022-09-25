@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useRecentlyPlayed, useTopTracks } from '../../hooks/useSpotify';
 import {
-    IRecentlyPlayedDTO,
+    IRecentlyPlayed,
     ITopTracks,
     ITrack,
 } from '../../lib/interfaces/spotify';
@@ -12,7 +12,7 @@ import { Track } from './Track/Track';
 
 type ComponentTypes = 'recently-played' | 'top-tracks';
 
-type DataTypes = IRecentlyPlayedDTO | ITopTracks;
+type DataTypes = IRecentlyPlayed | ITopTracks;
 
 interface IList<T> {
     items: T[];
