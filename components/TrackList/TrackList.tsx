@@ -22,18 +22,17 @@ const RecentlyPlayed: FC<IList<ITrack>> = ({ items }) => {
     return (
         <>
             {items.map((item) => (
-                <Track key={item.id} track={item} />
+                <Track key={item.unique_id} track={item} />
             ))}
         </>
     );
 };
 
 const TopTracks: FC<IList<ITrack>> = ({ items }) => {
-    console.log(items);
     return (
         <>
             {items.map((item) => (
-                <Track key={item.id} track={item} />
+                <Track key={item.unique_id} track={item} />
             ))}
         </>
     );
