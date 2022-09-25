@@ -44,20 +44,17 @@ export interface IGetAlbum {
     uri: string;
 }
 
-const buildAlbum = (data: IGetAlbum): IAlbum => {
-    const album: IAlbum = {
-        album_type: data.album_type,
-        artists: reduceArtists(data.artists),
-        id: data.id,
-        images: data.images,
-        name: data.name,
-        release_date: data.release_date,
-        total_tracks: data.total_tracks,
-        type: data.type,
-        unique_id: appendUUID(data.id),
-    };
-    return album;
-};
+const buildAlbum = (data: IGetAlbum): IAlbum => ({
+    album_type: data.album_type,
+    artists: reduceArtists(data.artists),
+    id: data.id,
+    images: data.images,
+    name: data.name,
+    release_date: data.release_date,
+    total_tracks: data.total_tracks,
+    type: data.type,
+    unique_id: appendUUID(data.id),
+});
 
 export const getAlbum = async ({
     queryKey,
@@ -73,8 +70,8 @@ export const getAlbum = async ({
     return buildAlbum(data);
 };
 
-const buildAlbums = (data: IGetAlbum[]): IAlbum[] => {
-    const albums = data.map((item) => ({
+const buildAlbums = (data: IGetAlbum[]): IAlbum[] =>
+    data.map((item) => ({
         album_type: item.album_type,
         artists: reduceArtists(item.artists),
         id: item.id,
@@ -85,8 +82,6 @@ const buildAlbums = (data: IGetAlbum[]): IAlbum[] => {
         type: item.type,
         unique_id: appendUUID(item.id),
     }));
-    return albums;
-};
 
 export const getAlbums = async ({
     queryKey,
@@ -216,10 +211,9 @@ interface IGetRecentlyPlayed {
     total: number;
 }
 
-const buildRecentlyPlayed = (data: IGetRecentlyPlayed): IRecentlyPlayed => {
-    const items: ITrack[] = data.items.map((item) => buildTrack(item.track));
-    return { items: items };
-};
+const buildRecentlyPlayed = (data: IGetRecentlyPlayed): IRecentlyPlayed => ({
+    items: data.items.map((item) => buildTrack(item.track)),
+});
 
 export const getRecentlyPlayed = async (): Promise<IRecentlyPlayed> => {
     const { data }: { data: IGetRecentlyPlayed } = await axios.get(
@@ -238,20 +232,17 @@ export interface IGetTopTracks {
     total: number;
 }
 
-const buildTopTracks = (data: IGetTopTracks): ITopTracks => {
-    const topTracks: ITrack[] = data.items.map((item) => {
-        return {
-            album: item.album,
-            artists: reduceArtists(item.artists),
-            id: item.id,
-            name: item.name,
-            popularity: item.popularity,
-            type: item.type,
-            unique_id: appendUUID(item.id),
-        };
-    });
-    return { items: topTracks };
-};
+const buildTopTracks = (data: IGetTopTracks): ITopTracks => ({
+    items: data.items.map((item) => ({
+        album: item.album,
+        artists: reduceArtists(item.artists),
+        id: item.id,
+        name: item.name,
+        popularity: item.popularity,
+        type: item.type,
+        unique_id: appendUUID(item.id),
+    })),
+});
 
 export const getTopTracks = async (): Promise<ITopTracks> => {
     const { data }: { data: IGetTopTracks } = await axios.get(
