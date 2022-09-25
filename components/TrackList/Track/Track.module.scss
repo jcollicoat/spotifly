@@ -11,27 +11,16 @@
     }
 
     .content {
-        backdrop-filter: blur($s-small);
+        // backdrop-filter: blur($s-small);
+        background: linear-gradient(
+            to left,
+            rgba($c-gray-n-9, 1),
+            rgba($c-gray-n-9, 0.9)
+        );
         display: flex;
         gap: $s-medium;
         padding: $s-medium;
         position: relative;
-
-        &::before {
-            background: linear-gradient(
-                to left,
-                rgba($c-gray-n-9, 1),
-                rgba($c-gray-n-9, 0.9)
-            );
-            background-position: right;
-            content: '';
-            height: 100%;
-            left: 0;
-            position: absolute;
-            width: 100%;
-            top: 0;
-            z-index: 1;
-        }
 
         &::after {
             background: linear-gradient(
@@ -49,7 +38,6 @@
             right: $s-medium;
             width: 80px;
             top: 0;
-            z-index: 3;
             transition: $t-ease-slow;
             transition-property: opacity;
         }
@@ -77,7 +65,6 @@
             position: relative;
             width: 100%;
             white-space: nowrap;
-            z-index: 2;
 
             .nowrap {
                 position: absolute;

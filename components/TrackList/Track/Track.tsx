@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useColor } from 'color-thief-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -11,6 +12,9 @@ export const Track: FC<{ track: ITrack }> = ({ track }) => {
     const noWrapRef = useRef<HTMLDivElement>(null);
     const { width } = useWindowSize();
     const [isOverflowed, setIsOverflowed] = useState(false);
+    const { data: albumColor } = useColor(track.album.images[2].url, 'hex', {
+        crossOrigin: 'true',
+    });
 
     const measureOverflow = (): void => {
         const detailsWidth = detailsRef.current?.clientWidth;
@@ -33,7 +37,8 @@ export const Track: FC<{ track: ITrack }> = ({ track }) => {
         <div
             className={styles.track}
             style={{
-                backgroundImage: `url(${track.album.images[0].url})`,
+                // backgroundImage: `url(${track.album.images[0].url})`,
+                backgroundColor: albumColor,
             }}
         >
             <div
