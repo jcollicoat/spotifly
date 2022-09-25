@@ -1,25 +1,16 @@
-export interface IAlbumArtDTO {
+import { IAlbumArtistDTO } from '../spotify';
+
+export interface ISpotifyImageDTO {
     height: number;
     url: string;
     width: number;
-}
-
-export interface IAlbumArtistDTO {
-    external_urls: {
-        spotify: string;
-    };
-    href: string;
-    id: string;
-    name: string;
-    type: string;
-    uri: string;
 }
 
 export interface IAlbum {
     album_type: string;
     artists: IAlbumArtistDTO[];
     id: string;
-    images: IAlbumArtDTO[];
+    images: ISpotifyImageDTO[];
     name: string;
     release_date: string;
     total_tracks: number;
@@ -27,22 +18,22 @@ export interface IAlbum {
     unique_id: string;
 }
 
-export interface IAlbumDTO {
-    album_type: string;
+export interface ITrack {
+    album: IAlbum;
     artists: IAlbumArtistDTO[];
-    available_markets: string[];
-    external_urls: {
-        spotify: string;
-    };
-    href: string;
     id: string;
-    images: IAlbumArtDTO[];
     name: string;
-    release_date: string;
-    release_date_precision: string;
-    total_tracks: number;
+    popularity: number;
     type: string;
-    uri: string;
+    unique_id: string;
+}
+
+export interface IRecentlyPlayed {
+    items: ITrack[];
+}
+
+export interface ITopTracks {
+    items: ITrack[];
 }
 
 export interface IArtistDTO {
@@ -69,18 +60,8 @@ export interface IArtistDTO {
     uri: string;
 }
 
-export interface ITrack {
-    album: IAlbumDTO;
-    artists: IAlbumArtistDTO[];
-    id: string;
-    name: string;
-    popularity: number;
-    type: string;
-    unique_id: string;
-}
-
 export interface ITrackDTO {
-    album: IAlbumDTO;
+    album: IAlbum;
     artists: IAlbumArtistDTO[];
     available_markets: string[];
     disc_number: number;
@@ -108,15 +89,6 @@ export interface IRecentlyPlayedTrackDTO {
     href: string;
     track: ITrackDTO;
 }
-
-export interface IRecentlyPlayed {
-    items: ITrack[];
-}
-
-export interface ITopTracks {
-    items: ITrack[];
-}
-
 export interface IUserProfileDTO {
     country: string;
     display_name: string;
