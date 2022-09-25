@@ -4,11 +4,15 @@ import {
     IAlbum,
     IAlbumDTO,
     IArtistDTO,
+    IRecentlyPlayed,
     IRecentlyPlayedDTO,
+    ITopTracks,
     ITopTracksDTO,
+    ITrack,
     ITrackDTO,
     IUserProfileDTO,
 } from '../lib/interfaces/spotify';
+import { transformId } from './helpers';
 
 export const getAlbum = async ({
     queryKey,
@@ -58,14 +62,46 @@ export const getArtist = async ({
     return data;
 };
 
-export const getRecentlyPlayed = async (): Promise<IRecentlyPlayedDTO> => {
-    const { data } = await axios.get('/api/spotify/getRecentlyPlayed');
-    return data;
+const buildRecentlyPlayed = (data: IRecentlyPlayedDTO): IRecentlyPlayed => {
+    const recentlyPlayed: ITrack[] = data.items.map((item) => {
+        return {
+            album: item.track.album,
+            artists: item.track.artists,
+            id: item.track.id,
+            name: item.track.name,
+            popularity: item.track.popularity,
+            type: item.track.type,
+            unique_id: transformId(item.track.id),
+        };
+    });
+    return { items: recentlyPlayed };
 };
 
-export const getTopTracks = async (): Promise<ITopTracksDTO> => {
+export const getRecentlyPlayed = async (): Promise<IRecentlyPlayed> => {
+    const { data } = await axios.get('/api/spotify/getRecentlyPlayed');
+    const builtRecentlyPlayed = buildRecentlyPlayed(data);
+    return builtRecentlyPlayed;
+};
+
+const buildTopTracks = (data: ITopTracksDTO): ITopTracks => {
+    const topTracks: ITrack[] = data.items.map((item) => {
+        return {
+            album: item.album,
+            artists: item.artists,
+            id: item.id,
+            name: item.name,
+            popularity: item.popularity,
+            type: item.type,
+            unique_id: transformId(item.id),
+        };
+    });
+    return { items: topTracks };
+};
+
+export const getTopTracks = async (): Promise<ITopTracks> => {
     const { data } = await axios.get('/api/spotify/getTopTracks');
-    return data;
+    const builtTopTracks = buildTopTracks(data);
+    return builtTopTracks;
 };
 
 export const getTrack = async ({

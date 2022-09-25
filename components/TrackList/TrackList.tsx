@@ -2,9 +2,8 @@ import { FC } from 'react';
 import { useRecentlyPlayed, useTopTracks } from '../../hooks/useReactQueries';
 import {
     IRecentlyPlayedDTO,
-    IRecentlyPlayedTrackDTO,
-    ITopTracksDTO,
-    ITrackDTO,
+    ITopTracks,
+    ITrack,
 } from '../../lib/interfaces/spotify';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
@@ -13,23 +12,24 @@ import { Track } from './Track/Track';
 
 type ComponentTypes = 'recently-played' | 'top-tracks';
 
-type DataTypes = IRecentlyPlayedDTO | ITopTracksDTO;
+type DataTypes = IRecentlyPlayedDTO | ITopTracks;
 
 interface IList<T> {
     items: T[];
 }
 
-const RecentlyPlayed: FC<IList<IRecentlyPlayedTrackDTO>> = ({ items }) => {
+const RecentlyPlayed: FC<IList<ITrack>> = ({ items }) => {
     return (
         <>
             {items.map((item) => (
-                <Track key={item.track.id} track={item.track} />
+                <Track key={item.id} track={item} />
             ))}
         </>
     );
 };
 
-const TopTracks: FC<IList<ITrackDTO>> = ({ items }) => {
+const TopTracks: FC<IList<ITrack>> = ({ items }) => {
+    console.log(items);
     return (
         <>
             {items.map((item) => (
@@ -60,13 +60,9 @@ export const TrackList: FC<ITracksList> = ({ subheading, title, type }) => {
     const mapTracks = (data: DataTypes) => {
         switch (type) {
             case 'recently-played':
-                return (
-                    <RecentlyPlayed
-                        items={data.items as IRecentlyPlayedTrackDTO[]}
-                    />
-                );
+                return <RecentlyPlayed items={data.items as ITrack[]} />;
             case 'top-tracks':
-                return <TopTracks items={data.items as ITrackDTO[]} />;
+                return <TopTracks items={data.items as ITrack[]} />;
         }
     };
 

@@ -69,6 +69,16 @@ export interface IArtistDTO {
     uri: string;
 }
 
+export interface ITrack {
+    album: IAlbumDTO;
+    artists: IAlbumArtistDTO[];
+    id: string;
+    name: string;
+    popularity: number;
+    type: string;
+    unique_id: string;
+}
+
 export interface ITrackDTO {
     album: IAlbumDTO;
     artists: IAlbumArtistDTO[];
@@ -99,6 +109,10 @@ export interface IRecentlyPlayedTrackDTO {
     track: ITrackDTO;
 }
 
+export interface IRecentlyPlayed {
+    items: ITrack[];
+}
+
 export interface IRecentlyPlayedDTO {
     href: string;
     items: IRecentlyPlayedTrackDTO[];
@@ -108,6 +122,10 @@ export interface IRecentlyPlayedDTO {
         after: string;
     };
     total: number;
+}
+
+export interface ITopTracks {
+    items: ITrack[];
 }
 
 export interface ITopTracksDTO {

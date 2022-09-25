@@ -3,10 +3,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
-import { ITrackDTO } from '../../../lib/interfaces/spotify';
+import { ITrack } from '../../../lib/interfaces/spotify';
 import styles from './Track.module.scss';
 
-export const Track: FC<{ track: ITrackDTO }> = ({ track }) => {
+export const Track: FC<{ track: ITrack }> = ({ track }) => {
     const detailsRef = useRef<HTMLDivElement>(null);
     const noWrapRef = useRef<HTMLDivElement>(null);
     const { width } = useWindowSize();
