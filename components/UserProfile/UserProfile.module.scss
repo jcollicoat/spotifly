@@ -9,12 +9,11 @@
         align-items: center;
         display: flex;
         flex-wrap: wrap;
-        gap: $s-small;
+        gap: $s-medium;
         margin-top: $s-medium;
 
         .image {
             height: 80px;
-            margin-right: $s-medium;
 
             span {
                 border-radius: 50%;
@@ -32,17 +31,28 @@
             }
 
             .stats {
+                display: flex;
+                gap: 1em;
                 margin-top: $s-small;
 
                 .stat {
                     border-right: 1px solid $c-gray-n-5;
-                    padding: 0 1em;
-
-                    &:first-of-type {
-                        padding-left: 0;
-                    }
+                    padding-right: 1em;
 
                     &:last-of-type {
+                        border-right: none;
+                        padding-right: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    &.skeleton {
+        .user {
+            .details {
+                .stats {
+                    .stat {
                         border-right: none;
                         padding-right: 0;
                     }
