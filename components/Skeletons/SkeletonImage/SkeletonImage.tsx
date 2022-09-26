@@ -10,10 +10,10 @@ interface ISkeletonImage {
 }
 
 export const SkeletonImage: FC<ISkeletonImage> = ({
-    height,
+    height = '100%',
     loading = false,
     rounded = false,
-    width,
+    width = '100%',
 }) => {
     const inlineStyles: CSSProperties = {
         borderRadius: rounded ? '50%' : '4px',

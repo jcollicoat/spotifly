@@ -43,6 +43,7 @@ $c-gray-b-8: #1f2937;
 $c-gray-b-9: #111827;
 
 $c-skeleton-block: $c-gray-n-7;
+$c-skeleton-border-radius: 4px;
 $c-skeleton-shimmer: $c-gray-n-6;
 
 $c-warning: #ffae00;
@@ -124,6 +125,51 @@ $c-warning: #ffae00;
 
     @media (min-width: $b-app-2) {
         font-size: 2.5rem;
+    }
+}
+
+@mixin skeleton {
+    background-color: $c-skeleton-block;
+    color: transparent;
+    cursor: auto;
+    display: block;
+    user-select: none;
+    width: 10ch;
+}
+
+@mixin skeleton-shimmer {
+    cursor: wait;
+    overflow: hidden;
+    position: relative;
+
+    &::after {
+        @keyframes shimmer {
+            from {
+                transform: translateX(0%);
+            }
+            to {
+                transform: translateX(500%);
+            }
+        }
+
+        animation: shimmer 1s infinite ease-in-out;
+        background-image: linear-gradient(
+                100deg,
+                $c-skeleton-block,
+                $c-skeleton-shimmer 80px,
+                $c-skeleton-block 160px
+            ),
+            linear-gradient(
+                90deg,
+                $c-skeleton-block,
+                $c-skeleton-shimmer 80px,
+                $c-skeleton-block 160px
+            );
+        content: '';
+        height: 100%;
+        left: -160px;
+        position: absolute;
+        width: 160px;
     }
 }
 

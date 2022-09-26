@@ -1,48 +1,16 @@
 @import '../../../styles/variables.scss';
 
 .skeleton {
-    background-color: $c-skeleton-block;
-    border-radius: 4px;
-    color: transparent;
-    cursor: loading;
+    @include skeleton;
+
+    border-radius: $c-skeleton-border-radius;
     display: block;
     height: 1.15em;
     user-select: none;
     width: 10ch;
 
     &.loading {
-        overflow: hidden;
-        position: relative;
-
-        &::after {
-            @keyframes shimmer {
-                from {
-                    transform: translateX(0%);
-                }
-                to {
-                    transform: translateX(500%);
-                }
-            }
-
-            animation: shimmer 1s infinite ease-in-out;
-            background-image: linear-gradient(
-                    100deg,
-                    $c-skeleton-block,
-                    $c-skeleton-shimmer 80px,
-                    $c-skeleton-block 160px
-                ),
-                linear-gradient(
-                    90deg,
-                    $c-skeleton-block,
-                    $c-skeleton-shimmer 80px,
-                    $c-skeleton-block 160px
-                );
-            content: '';
-            height: 100%;
-            left: -160px;
-            position: absolute;
-            width: 160px;
-        }
+        @include skeleton-shimmer;
     }
 
     &.text {
