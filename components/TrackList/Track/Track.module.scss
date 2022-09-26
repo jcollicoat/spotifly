@@ -38,7 +38,7 @@
             right: $s-medium;
             width: 80px;
             top: 0;
-            transition: $t-ease-slow;
+            transition: $tr-ease-slow;
             transition-property: opacity;
         }
 
@@ -72,10 +72,10 @@
                 .name {
                     color: #ffffff;
                     display: block;
-                    height: 1.15em;
+                    height: $t-line-height;
                     margin-bottom: $s-xsmall;
                     text-decoration: none;
-                    transition: $t-ease;
+                    transition: $tr-ease;
                     transition-property: color;
 
                     &:hover {
@@ -92,9 +92,9 @@
 
                     .subdetail {
                         color: $c-gray-b-4;
-                        height: 1.15em;
+                        height: $t-line-height;
                         text-decoration: none;
-                        transition: $t-ease;
+                        transition: $tr-ease;
                         transition-property: color;
 
                         &:hover {
