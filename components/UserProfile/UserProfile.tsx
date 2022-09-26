@@ -20,13 +20,7 @@ const Component: FC<Component> = ({ state, data }) => {
             : `${data.followers.total} Followers`);
 
     return (
-        <div
-            className={classNames(
-                styles.wrapper,
-                state && styles.skeleton,
-                state && styles[state]
-            )}
-        >
+        <div className={classNames(styles.wrapper, state && styles.skeleton)}>
             <h1 className={styles.dashboard}>
                 {state ? (
                     <SkeletonText
