@@ -43,6 +43,7 @@ $color-slate-7: #374151;
 $color-slate-8: #1f2937;
 $color-slate-9: #111827;
 
+$color-error: #ff1e00;
 $color-warning: #ffae00;
 
 // Spacing
@@ -160,6 +161,34 @@ $skeleton-color-shimmer: $color-gray-6;
     display: block;
     user-select: none;
     width: 10ch;
+
+    &.loading {
+        @include skeleton-shimmer;
+    }
+
+    &.error {
+        background: repeating-linear-gradient(
+            135deg,
+            rgba($color-error, 0.05),
+            rgba($color-error, 0.25) 2px,
+            rgba($color-error, 0.25) 2px,
+            rgba($color-error, 0.25) 4px
+        );
+        outline: 2px solid rgba($color-error, 0.1);
+        outline-offset: -2px;
+    }
+
+    &.warning {
+        background: repeating-linear-gradient(
+            135deg,
+            rgba($color-warning, 0.05),
+            rgba($color-warning, 0.25) 2px,
+            rgba($color-warning, 0.25) 2px,
+            rgba($color-warning, 0.25) 4px
+        );
+        outline: 2px solid rgba($color-warning, 0.1);
+        outline-offset: -2px;
+    }
 }
 
 @mixin skeleton-shimmer {
@@ -177,7 +206,7 @@ $skeleton-color-shimmer: $color-gray-6;
             }
         }
 
-        animation: shimmer 1s infinite ease-in-out;
+        animation: shimmer 1.5s infinite ease-in-out;
         background-image: linear-gradient(
                 100deg,
                 $skeleton-color-block,

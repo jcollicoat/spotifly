@@ -1,18 +1,15 @@
 import classNames from 'classnames';
 import { CSSProperties, FC } from 'react';
+import { ISkeleton } from '../../interfaces';
 import styles from './SkeletonText.module.scss';
 
 interface ISkeletonText {
-    loading?: boolean;
+    state?: Pick<ISkeleton, 'state'>;
     text?: string;
     width?: string;
 }
 
-export const SkeletonText: FC<ISkeletonText> = ({
-    loading = false,
-    text,
-    width,
-}) => {
+export const SkeletonText: FC<ISkeletonText> = ({ state, text, width }) => {
     const inlineStyles: CSSProperties = {
         width,
     };
@@ -24,7 +21,8 @@ export const SkeletonText: FC<ISkeletonText> = ({
             aria-hidden
             className={classNames(
                 styles.skeleton,
-                loading && styles.loading,
+                !state && styles.loading,
+                state && styles[state.toString()],
                 showText && styles.text
             )}
             style={inlineStyles}

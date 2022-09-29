@@ -1,3 +1,4 @@
-export enum TimeConstants {
-    HourMS = 36000000,
+export enum TimeMS {
+    Minutes5 = 300000,
+    Hour = 36000000,
 }

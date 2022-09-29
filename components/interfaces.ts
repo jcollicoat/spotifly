@@ -1,5 +1,5 @@
-interface ISkeleton {
-    state: 'loading' | 'error';
+export interface ISkeleton {
+    state?: 'error' | 'warning'; // None treated as loading
     data?: never;
 }
 

@@ -2,8 +2,4 @@
 
 .skeleton {
     @include skeleton;
-
-    &.loading {
-        @include skeleton-shimmer;
-    }
 }

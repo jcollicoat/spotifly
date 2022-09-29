@@ -1,11 +1,11 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { TimeConstants } from '../lib/constants';
+import { TimeMS } from '../lib/constants';
 import { IRecentlyPlayed, ITopTracks } from '../lib/interfaces/spotify';
 import { getRecentlyPlayed, getTopTracks } from '../lib/spotify';
 
 export const useRecentlyPlayed = (): UseQueryResult<IRecentlyPlayed> => {
     return useQuery(['recently-played'], getRecentlyPlayed, {
-        staleTime: TimeConstants.HourMS,
+        staleTime: TimeMS.Minutes5,
     });
 };
 

@@ -1,10 +1,12 @@
 import { FC } from 'react';
 import { useRecentlyPlayed, useTopTracks } from '../../hooks/useSpotify';
+import { appendUUID } from '../../lib/helpers';
 import { ITrack } from '../../lib/interfaces/spotify';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
 import { Spinner } from '../Spinner/Spinner';
 import { Track } from './Track/Track';
+import { TrackSkeleton } from './Track/TrackSkeleton';
 
 type ComponentTypes = 'recently-played' | 'top-tracks';
 
@@ -12,9 +14,15 @@ interface ITracksList {
     subheading: string;
     title: string;
     type: ComponentTypes;
+    isSkeleton?: boolean;
 }
 
-export const TrackList: FC<ITracksList> = ({ subheading, title, type }) => {
+export const TrackList: FC<ITracksList> = ({
+    subheading,
+    title,
+    type,
+    isSkeleton,
+}) => {
     const mapQueryType = () => {
         switch (type) {
             case 'recently-played':
@@ -27,7 +35,11 @@ export const TrackList: FC<ITracksList> = ({ subheading, title, type }) => {
     const { data, isError, isLoading } = query();
 
     const mapTracks = (tracks: ITrack[]) =>
-        tracks.map((track) => <Track key={track.key} track={track} />);
+        isSkeleton
+            ? new Array(20)
+                  .fill('')
+                  .map(() => <TrackSkeleton key={appendUUID('')} />)
+            : tracks.map((track) => <Track key={track.key} track={track} />);
 
     const heading: IPanelHeading = {
         title: title,
