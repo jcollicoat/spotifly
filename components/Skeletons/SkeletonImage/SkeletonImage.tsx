@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 import { CSSProperties, FC } from 'react';
-import { ISkeleton } from '../../interfaces';
+import { SkeletonStates } from '../../interfaces';
 import styles from './SkeletonImage.module.scss';
 
 interface ISkeletonImage {
     height: string;
     width: string;
     rounded?: boolean;
-    state?: Pick<ISkeleton, 'state'>;
+    state?: SkeletonStates;
 }
 
 export const SkeletonImage: FC<ISkeletonImage> = ({
@@ -28,7 +28,7 @@ export const SkeletonImage: FC<ISkeletonImage> = ({
             className={classNames(
                 styles.skeleton,
                 !state && styles.loading,
-                state && styles[state.toString()]
+                state && styles[state]
             )}
             style={inlineStyles}
         ></div>

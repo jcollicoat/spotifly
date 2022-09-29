@@ -1,6 +1,8 @@
+export type SkeletonStates = 'error' | 'warning';
+
 export interface ISkeleton {
-    state?: 'error' | 'warning'; // None treated as loading
     data?: never;
+    state?: SkeletonStates; // None treated as loading
 }
 
 interface ILoaded<T> {
