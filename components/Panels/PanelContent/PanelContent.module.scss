@@ -5,6 +5,7 @@
     border: 1px solid $color-gray-7;
     border-radius: 0 0 $border-radius-panel $border-radius-panel;
     border-top: none;
+    overflow: hidden;
     padding: $panel-padding-small;
 
     &:only-child {
