@@ -35,7 +35,7 @@ export const TrackList: FC<ITracksList> = ({
     const { data, isError, isLoading } = query();
 
     const mapTracks = (tracks: ITrack[]) =>
-        isSkeleton
+        isError || isLoading || isSkeleton
             ? new Array(20)
                   .fill('')
                   .map(() => <TrackSkeleton key={appendUUID('')} />)
