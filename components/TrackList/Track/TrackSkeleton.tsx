@@ -17,7 +17,6 @@ interface ITrackLoaded {
 type TrackSkeleton = IComponent<ITrackLoaded>;
 
 export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => {
-    console.log(data);
     const detailsRef = useRef<HTMLDivElement>(null);
     const noWrapRef = useRef<HTMLDivElement>(null);
     const { width } = useWindowSize();
