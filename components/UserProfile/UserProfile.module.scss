@@ -2,7 +2,7 @@
 
 .wrapper {
     .dashboard {
-        @include panel-heading;
+        @include panel-subheading;
     }
 
     .user {

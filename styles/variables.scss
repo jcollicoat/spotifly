@@ -1,26 +1,27 @@
-/* BREAKPOINTS */
+/* BASE VARIABLES */
+
+// Breakpoints
 
 $breakpoint-1: 600px;
 $breakpoint-2: 1200px;
 
-/* BORDERS */
+// Borders
 
 $border-radius-button: 4px;
 $border-radius-panel: 8px;
 
-/* COLORS */
-
+// Colors
 $color-primary-1: #ff9ecf;
 $color-primary-2: #ff45a2;
-$color-primary-3: #ff007f;
+$color-primary-3: #ff1289;
 $color-primary-4: #bd005e;
 $color-primary-5: #680034;
 
-$color-secondary-1: #e8fdef;
-$color-secondary-2: #76f49d;
-$color-secondary-3: #1aec5c;
-$color-secondary-4: #108e37;
-$color-secondary-5: #031809;
+$color-secondary-1: #c5ffd7;
+$color-secondary-2: #6bff9a;
+$color-secondary-3: #13ff5e;
+$color-secondary-4: #00b238;
+$color-secondary-5: #00541b;
 
 $color-gray-1: #f4f4f5;
 $color-gray-2: #e4e4e7;
@@ -42,11 +43,35 @@ $color-slate-7: #374151;
 $color-slate-8: #1f2937;
 $color-slate-9: #111827;
 
+$color-warning: #ffae00;
+
+// Spacing
+
+$space-xsmall: 4px;
+$space-small: 8px;
+$space-medium: 12px;
+$space-large: 18px;
+$space-xlarge: 24px;
+$space-xxlarge: 36px;
+$space-xxxlarge: 60px;
+
+// Text
+
+$text-line-height: 1.15em;
+
+// Transitions
+
+$transition-ease: 0.15s ease-in-out;
+$transition-ease-slow: 0.3s ease-in-out;
+
+/* ASSIGNED VARIABLES */
+
 $color-skeleton-block: $color-gray-7;
-$color-skeleton-border-radius: 4px;
+$color-skeleton-border-radius: $border-radius-button;
 $color-skeleton-shimmer: $color-gray-6;
 
-$color-warning: #ffae00;
+$padding-panel-small: $space-medium;
+$padding-panel-large: $space-large;
 
 /* MIXINS */
 
@@ -98,7 +123,7 @@ $color-warning: #ffae00;
     width: $space-xxlarge;
 }
 
-@mixin panel-heading {
+@mixin panel-subheading {
     color: $color-gray-4;
     font-size: 0.75rem;
     font-weight: 400;
@@ -172,24 +197,3 @@ $color-warning: #ffae00;
         width: 160px;
     }
 }
-
-/* SPACING */
-
-$space-xsmall: 4px;
-$space-small: 8px;
-$space-medium: 12px;
-$space-large: 24px;
-$space-xlarge: 36px;
-$space-xxlarge: 60px;
-
-$space-panel-padding-small: 12px;
-$space-panel-padding-large: 18px;
-
-/* TEXT */
-
-$text-line-height: 1.15em;
-
-/* TRANSITIONS */
-
-$transition-ease: 0.15s ease-in-out;
-$transition-ease-slow: 0.3s ease-in-out;
