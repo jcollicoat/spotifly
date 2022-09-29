@@ -3,9 +3,9 @@
 .skeleton {
     @include skeleton;
 
-    border-radius: $c-skeleton-border-radius;
+    border-radius: $color-skeleton-border-radius;
     display: block;
-    height: $t-line-height;
+    height: $text-line-height;
     user-select: none;
     width: 10ch;
 

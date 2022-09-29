@@ -9,8 +9,8 @@
         align-items: center;
         display: flex;
         flex-wrap: wrap;
-        gap: $s-medium;
-        margin-top: $s-medium;
+        gap: $space-medium;
+        margin-top: $space-medium;
 
         .image {
             height: 80px;
@@ -33,10 +33,10 @@
             .stats {
                 display: flex;
                 gap: 1em;
-                margin-top: $s-small;
+                margin-top: $space-small;
 
                 .stat {
-                    border-right: 1px solid $c-gray-n-5;
+                    border-right: 1px solid $color-gray-5;
                     padding-right: 1em;
 
                     &:last-of-type {

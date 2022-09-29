@@ -11,22 +11,22 @@
     }
 
     .content {
-        // backdrop-filter: blur($s-small);
+        // backdrop-filter: blur($space-small);
         background: linear-gradient(
             to left,
-            rgba($c-gray-n-9, 1),
-            rgba($c-gray-n-9, 0.9)
+            rgba($color-gray-9, 1),
+            rgba($color-gray-9, 0.9)
         );
         display: flex;
-        gap: $s-medium;
-        padding: $s-medium;
+        gap: $space-medium;
+        padding: $space-medium;
         position: relative;
 
         &::after {
             background: linear-gradient(
                 to left,
-                rgba($c-gray-n-9, 1),
-                rgba($c-gray-n-9, 0)
+                rgba($color-gray-9, 1),
+                rgba($color-gray-9, 0)
             );
             background-position: right;
             content: '';
@@ -35,10 +35,10 @@
             opacity: 0;
             pointer-events: none;
             position: absolute;
-            right: $s-medium;
+            right: $space-medium;
             width: 80px;
             top: 0;
-            transition: $tr-ease-slow;
+            transition: $transition-ease-slow;
             transition-property: opacity;
         }
 
@@ -60,7 +60,7 @@
         }
 
         .details {
-            padding: $s-xsmall 0;
+            padding: $space-xsmall 0;
             overflow: hidden;
             position: relative;
             width: 100%;
@@ -72,33 +72,33 @@
                 .name {
                     color: #ffffff;
                     display: block;
-                    height: $t-line-height;
-                    margin-bottom: $s-xsmall;
+                    height: $text-line-height;
+                    margin-bottom: $space-xsmall;
                     text-decoration: none;
-                    transition: $tr-ease;
+                    transition: $transition-ease;
                     transition-property: color;
 
                     &:hover {
-                        color: $c-primary-3;
+                        color: $color-primary-3;
                     }
                 }
 
                 .subdetails {
-                    color: $c-gray-b-4;
+                    color: $color-slate-4;
                     display: flex;
                     flex-wrap: nowrap;
                     font-size: 0.75em;
-                    gap: $s-small;
+                    gap: $space-small;
 
                     .subdetail {
-                        color: $c-gray-b-4;
-                        height: $t-line-height;
+                        color: $color-slate-4;
+                        height: $text-line-height;
                         text-decoration: none;
-                        transition: $tr-ease;
+                        transition: $transition-ease;
                         transition-property: color;
 
                         &:hover {
-                            color: $c-primary-3;
+                            color: $color-primary-3;
                         }
                     }
                 }

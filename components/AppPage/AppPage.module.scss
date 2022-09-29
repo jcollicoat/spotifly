@@ -5,10 +5,10 @@
 
     align-items: start;
     display: grid;
-    gap: $s-medium;
+    gap: $space-medium;
     grid-template-rows: min-content;
 
-    @media (min-width: $b-app-1) {
+    @media (min-width: $breakpoint-1) {
         grid-template-columns: repeat(6, 1fr);
 
         &.dashboard {
@@ -18,9 +18,9 @@
         }
     }
 
-    @media (min-width: $b-app-2) {
+    @media (min-width: $breakpoint-2) {
         grid-template-columns: repeat(12, 1fr);
-        gap: $s-large;
+        gap: $space-large;
 
         &.dashboard {
             grid-template-areas:

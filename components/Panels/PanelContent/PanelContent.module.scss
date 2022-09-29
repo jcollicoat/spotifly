@@ -1,23 +1,23 @@
 @import '../../../styles/variables.scss';
 
 .wrapper {
-    background-color: $c-gray-n-9;
-    border: 1px solid $c-gray-n-7;
-    border-radius: 0 0 $bo-radius-panel $bo-radius-panel;
+    background-color: $color-gray-9;
+    border: 1px solid $color-gray-7;
+    border-radius: 0 0 $border-radius-panel $border-radius-panel;
     border-top: none;
-    padding: $s-panel-padding-small;
+    padding: $space-panel-padding-small;
 
     &:only-child {
-        background-color: $c-gray-n-8;
-        border-radius: $bo-radius-panel;
-        border-top: 1px solid $c-gray-n-7;
+        background-color: $color-gray-8;
+        border-radius: $border-radius-panel;
+        border-top: 1px solid $color-gray-7;
     }
 
     &.nopadding {
         padding: 0;
     }
 
-    @media (min-width: $b-app-1) {
-        padding: $s-panel-padding-large;
+    @media (min-width: $breakpoint-1) {
+        padding: $space-panel-padding-large;
     }
 }

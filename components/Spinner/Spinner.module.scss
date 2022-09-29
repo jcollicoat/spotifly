@@ -4,15 +4,15 @@
     @include grid-full-width;
 
     &.small {
-        padding: $s-medium 0;
+        padding: $space-medium 0;
     }
 
     &.medium {
-        padding: $s-xlarge 0;
+        padding: $space-xlarge 0;
     }
 
     &.large {
-        padding: $s-xxlarge 0;
+        padding: $space-xxlarge 0;
     }
 
     .spinner {

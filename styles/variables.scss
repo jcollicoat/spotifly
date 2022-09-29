@@ -1,74 +1,74 @@
 /* BREAKPOINTS */
 
-$b-app-1: 600px;
-$b-app-2: 1200px;
+$breakpoint-1: 600px;
+$breakpoint-2: 1200px;
 
 /* BORDERS */
 
-$bo-radius-button: 4px;
-$bo-radius-panel: 8px;
+$border-radius-button: 4px;
+$border-radius-panel: 8px;
 
 /* COLORS */
 
-$c-primary-1: #e8fdef;
-$c-primary-2: #76f49d;
-$c-primary-3: #1aec5c;
-$c-primary-4: #108e37;
-$c-primary-5: #031809;
+$color-primary-1: #ff9ecf;
+$color-primary-2: #ff45a2;
+$color-primary-3: #ff007f;
+$color-primary-4: #bd005e;
+$color-primary-5: #680034;
 
-$c-secondary-1: #ede6ff;
-$c-secondary-2: #9266ff;
-$c-secondary-3: #4a00ff;
-$c-secondary-4: #2c0099;
-$c-secondary-5: #070019;
+$color-secondary-1: #e8fdef;
+$color-secondary-2: #76f49d;
+$color-secondary-3: #1aec5c;
+$color-secondary-4: #108e37;
+$color-secondary-5: #031809;
 
-$c-gray-n-1: #f5f5f5;
-$c-gray-n-2: #e5e5e5;
-$c-gray-n-3: #d4d4d4;
-$c-gray-n-4: #a3a3a3;
-$c-gray-n-5: #737373;
-$c-gray-n-6: #525252;
-$c-gray-n-7: #404040;
-$c-gray-n-8: #262626;
-$c-gray-n-9: #171717;
+$color-gray-1: #f4f4f5;
+$color-gray-2: #e4e4e7;
+$color-gray-3: #d4d4d8;
+$color-gray-4: #a1a1aa;
+$color-gray-5: #71717a;
+$color-gray-6: #52525b;
+$color-gray-7: #3f3f46;
+$color-gray-8: #27272a;
+$color-gray-9: #18181b;
 
-$c-gray-b-1: #f3f4f6;
-$c-gray-b-2: #e5e7eb;
-$c-gray-b-3: #d1d5db;
-$c-gray-b-4: #9ca3af;
-$c-gray-b-5: #6b7280;
-$c-gray-b-6: #4b5563;
-$c-gray-b-7: #374151;
-$c-gray-b-8: #1f2937;
-$c-gray-b-9: #111827;
+$color-slate-1: #f3f4f6;
+$color-slate-2: #e5e7eb;
+$color-slate-3: #d1d5db;
+$color-slate-4: #9ca3af;
+$color-slate-5: #6b7280;
+$color-slate-6: #4b5563;
+$color-slate-7: #374151;
+$color-slate-8: #1f2937;
+$color-slate-9: #111827;
 
-$c-skeleton-block: $c-gray-n-7;
-$c-skeleton-border-radius: 4px;
-$c-skeleton-shimmer: $c-gray-n-6;
+$color-skeleton-block: $color-gray-7;
+$color-skeleton-border-radius: 4px;
+$color-skeleton-shimmer: $color-gray-6;
 
-$c-warning: #ffae00;
+$color-warning: #ffae00;
 
 /* MIXINS */
 
 @mixin app-container {
     margin: 0 auto;
     max-width: 1800px;
-    padding: $s-medium;
+    padding: $space-medium;
 
-    @media (min-width: $b-app-2) {
-        padding: $s-large;
+    @media (min-width: $breakpoint-2) {
+        padding: $space-large;
     }
 }
 
 @mixin app-panel {
-    background-color: $c-gray-n-8;
-    border-radius: $bo-radius-panel;
+    background-color: $color-gray-8;
+    border-radius: $border-radius-panel;
 
     &:last-of-type {
         margin-bottom: 0;
     }
 
-    @media (min-width: $b-app-1) {
+    @media (min-width: $breakpoint-1) {
         margin-bottom: 0;
     }
 }
@@ -84,30 +84,30 @@ $c-warning: #ffae00;
 }
 
 @mixin icon-small {
-    height: $s-large;
-    width: $s-large;
+    height: $space-large;
+    width: $space-large;
 }
 
 @mixin icon-medium {
-    height: $s-xlarge;
-    width: $s-xlarge;
+    height: $space-xlarge;
+    width: $space-xlarge;
 }
 
 @mixin icon-large {
-    height: $s-xxlarge;
-    width: $s-xxlarge;
+    height: $space-xxlarge;
+    width: $space-xxlarge;
 }
 
 @mixin panel-heading {
-    color: $c-gray-n-4;
+    color: $color-gray-4;
     font-size: 0.75rem;
     font-weight: 400;
     letter-spacing: 0.2em;
-    margin: 0 0 $s-xsmall 0;
+    margin: 0 0 $space-xsmall 0;
     text-transform: uppercase;
 
-    @media (min-width: $b-app-1) {
-        margin-bottom: $s-small;
+    @media (min-width: $breakpoint-1) {
+        margin-bottom: $space-small;
     }
 }
 
@@ -119,17 +119,17 @@ $c-warning: #ffae00;
 }
 
 @mixin panel-title-large {
-    @media (min-width: $b-app-1) {
+    @media (min-width: $breakpoint-1) {
         font-size: 2rem;
     }
 
-    @media (min-width: $b-app-2) {
+    @media (min-width: $breakpoint-2) {
         font-size: 2.5rem;
     }
 }
 
 @mixin skeleton {
-    background-color: $c-skeleton-block;
+    background-color: $color-skeleton-block;
     color: transparent;
     cursor: auto;
     display: block;
@@ -155,15 +155,15 @@ $c-warning: #ffae00;
         animation: shimmer 1s infinite ease-in-out;
         background-image: linear-gradient(
                 100deg,
-                $c-skeleton-block,
-                $c-skeleton-shimmer 80px,
-                $c-skeleton-block 160px
+                $color-skeleton-block,
+                $color-skeleton-shimmer 80px,
+                $color-skeleton-block 160px
             ),
             linear-gradient(
                 90deg,
-                $c-skeleton-block,
-                $c-skeleton-shimmer 80px,
-                $c-skeleton-block 160px
+                $color-skeleton-block,
+                $color-skeleton-shimmer 80px,
+                $color-skeleton-block 160px
             );
         content: '';
         height: 100%;
@@ -175,21 +175,21 @@ $c-warning: #ffae00;
 
 /* SPACING */
 
-$s-xsmall: 4px;
-$s-small: 8px;
-$s-medium: 12px;
-$s-large: 24px;
-$s-xlarge: 36px;
-$s-xxlarge: 60px;
+$space-xsmall: 4px;
+$space-small: 8px;
+$space-medium: 12px;
+$space-large: 24px;
+$space-xlarge: 36px;
+$space-xxlarge: 60px;
 
-$s-panel-padding-small: 12px;
-$s-panel-padding-large: 18px;
+$space-panel-padding-small: 12px;
+$space-panel-padding-large: 18px;
 
 /* TEXT */
 
-$t-line-height: 1.15em;
+$text-line-height: 1.15em;
 
 /* TRANSITIONS */
 
-$tr-ease: 0.15s ease-in-out;
-$tr-ease-slow: 0.3s ease-in-out;
+$transition-ease: 0.15s ease-in-out;
+$transition-ease-slow: 0.3s ease-in-out;

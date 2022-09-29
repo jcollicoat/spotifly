@@ -3,13 +3,13 @@
 @mixin button-base {
     align-items: center;
     border: 1px solid transparent;
-    border-radius: $bo-radius-button;
+    border-radius: $border-radius-button;
     cursor: pointer;
     display: inline-flex;
     flex-wrap: nowrap;
     padding: 0.5em 1em;
     text-decoration: none;
-    transition: $tr-ease;
+    transition: $transition-ease;
     transition-property: background-color, border-color, box-shadow, color;
 }
 
@@ -24,33 +24,33 @@
     }
 
     &.primary {
-        background-color: $c-primary-3;
-        color: $c-primary-5;
+        background-color: $color-primary-2;
+        color: $color-slate-9;
 
         &:hover {
-            background-color: $c-primary-2;
-            box-shadow: 0px 4px 12px -4px rgba($c-primary-3, 0.25);
+            background-color: $color-primary-3;
+            box-shadow: 0px 4px 12px -4px rgba($color-primary-3, 0.25);
         }
     }
 
     &.secondary {
-        background-color: $c-gray-b-6;
-        color: $c-gray-b-2;
+        background-color: $color-slate-6;
+        color: $color-slate-1;
 
         &:hover {
-            background-color: $c-gray-b-5;
-            box-shadow: 0px 4px 12px -4px rgba($c-gray-b-5, 0.25);
+            background-color: $color-slate-5;
+            box-shadow: 0px 4px 12px -4px rgba($color-slate-5, 0.25);
         }
     }
 
     &.tertiary {
         background-color: transparent;
-        border: 1px solid $c-gray-n-6;
-        color: $c-gray-n-4;
+        border: 1px solid $color-slate-6;
+        color: $color-slate-4;
 
         &:hover {
-            border-color: $c-gray-b-4;
-            color: $c-gray-n-2;
+            border-color: $color-slate-4;
+            color: $color-slate-2;
         }
     }
 }

@@ -3,29 +3,29 @@
 .container {
     @include grid-full-width;
 
-    padding: $s-xxlarge 0;
+    padding: $space-xxlarge 0;
     text-align: center;
 
     .icon {
         @include icon-medium;
 
         margin: 0 auto;
-        stroke: $c-warning;
+        stroke: $color-warning;
     }
 
     .heading {
         font-size: 1.5em;
         font-weight: 500;
-        margin: $s-medium 0;
+        margin: $space-medium 0;
     }
 
     .body {
-        margin-bottom: $s-large;
+        margin-bottom: $space-large;
     }
 
     .buttons {
         display: flex;
-        gap: $s-medium;
+        gap: $space-medium;
         justify-content: center;
     }
 }
