@@ -66,12 +66,12 @@ $transition-ease-slow: 0.3s ease-in-out;
 
 /* ASSIGNED VARIABLES */
 
-$color-skeleton-block: $color-gray-7;
-$color-skeleton-border-radius: $border-radius-button;
-$color-skeleton-shimmer: $color-gray-6;
+$panel-padding-small: $space-medium;
+$panel-padding-large: $space-large;
 
-$padding-panel-small: $space-medium;
-$padding-panel-large: $space-large;
+$skeleton-border-radius: $border-radius-button;
+$skeleton-color-block: $color-gray-7;
+$skeleton-color-shimmer: $color-gray-6;
 
 /* MIXINS */
 
@@ -154,7 +154,7 @@ $padding-panel-large: $space-large;
 }
 
 @mixin skeleton {
-    background-color: $color-skeleton-block;
+    background-color: $skeleton-color-block;
     color: transparent;
     cursor: auto;
     display: block;
@@ -180,15 +180,15 @@ $padding-panel-large: $space-large;
         animation: shimmer 1s infinite ease-in-out;
         background-image: linear-gradient(
                 100deg,
-                $color-skeleton-block,
-                $color-skeleton-shimmer 80px,
-                $color-skeleton-block 160px
+                $skeleton-color-block,
+                $skeleton-color-shimmer 80px,
+                $skeleton-color-block 160px
             ),
             linear-gradient(
                 90deg,
-                $color-skeleton-block,
-                $color-skeleton-shimmer 80px,
-                $color-skeleton-block 160px
+                $skeleton-color-block,
+                $skeleton-color-shimmer 80px,
+                $skeleton-color-block 160px
             );
         content: '';
         height: 100%;

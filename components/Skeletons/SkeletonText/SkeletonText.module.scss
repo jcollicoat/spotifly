@@ -3,7 +3,7 @@
 .skeleton {
     @include skeleton;
 
-    border-radius: $color-skeleton-border-radius;
+    border-radius: $skeleton-border-radius;
     display: block;
     height: $text-line-height;
     user-select: none;
