@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { useRecentlyPlayed, useTopTracks } from '../../hooks/useSpotify';
 import { appendUUID } from '../../lib/helpers';
 import { ITrack } from '../../lib/interfaces/spotify';
+import { SkeletonStates } from '../interfaces';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
-import { Spinner } from '../Spinner/Spinner';
 import { Track } from './Track/Track';
 import { TrackSkeleton } from './Track/TrackSkeleton';
 
@@ -34,12 +34,23 @@ export const TrackList: FC<ITracksList> = ({
     const query = mapQueryType();
     const { data, isError, isLoading } = query();
 
-    const mapTracks = (tracks: ITrack[]) =>
-        isError || isLoading || isSkeleton
-            ? new Array(20)
-                  .fill('')
-                  .map(() => <TrackSkeleton key={appendUUID('')} />)
-            : tracks.map((track) => <Track key={track.key} track={track} />);
+    const mapTracks = (tracks?: ITrack[] | SkeletonStates) => {
+        if (!tracks || isSkeleton) {
+            return new Array(20)
+                .fill('')
+                .map(() => <TrackSkeleton key={appendUUID('')} />);
+        } else if (tracks === 'warning' || tracks === 'error') {
+            return new Array(20)
+                .fill('')
+                .map(() => (
+                    <TrackSkeleton key={appendUUID('')} state={tracks} />
+                ));
+        } else {
+            return tracks.map((track) => (
+                <Track key={track.key} track={track} />
+            ));
+        }
+    };
 
     const heading: IPanelHeading = {
         title: title,
@@ -54,8 +65,8 @@ export const TrackList: FC<ITracksList> = ({
 
     return (
         <Panel display={display} heading={heading}>
-            {isLoading && <Spinner padding="small" />}
-            {isError && <div>An error occured.</div>}
+            {isLoading && mapTracks()}
+            {isError && mapTracks('error')}
             {data && mapTracks(data.items)}
         </Panel>
     );
