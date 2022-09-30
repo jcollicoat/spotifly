@@ -9,14 +9,14 @@ import { Track, TrackSkeleton } from './Track/Track';
 
 type ComponentTypes = 'recently-played' | 'top-tracks';
 
-interface ITracksList {
+interface ITracksListPanel {
     subheading: string;
     title: string;
     type: ComponentTypes;
     isSkeleton?: boolean;
 }
 
-export const TrackList: FC<ITracksList> = ({
+export const TrackList: FC<ITracksListPanel> = ({
     subheading,
     title,
     type,

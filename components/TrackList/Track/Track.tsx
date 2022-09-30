@@ -126,7 +126,7 @@ export const Track: FC<{ track: ITrack }> = ({ track }) => {
         crossOrigin: 'true',
     });
 
-    const data = {
+    const data: ITrackData = {
         track: {
             album: track.album,
             artists: track.artists,

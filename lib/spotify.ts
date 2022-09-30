@@ -11,6 +11,7 @@ import {
     ITopTracksDTO,
     ITrack,
     ITrackDTO,
+    IUserProfile,
     IUserProfileDTO,
 } from '../lib/interfaces/spotify';
 import { appendUUID, reduceAlbum, reduceItemArtists } from './helpers';
@@ -147,9 +148,19 @@ export const getTopTracks = async (): Promise<ITopTracks> => {
     return buildTopTracks(data);
 };
 
-export const getUserProfile = async (): Promise<IUserProfileDTO> => {
+const buildUserProfile = (data: IUserProfileDTO): IUserProfile => ({
+    country: data.country,
+    display_name: data.display_name,
+    followers: data.followers.total,
+    id: data.id,
+    image: data.images[0].url,
+    product: data.product,
+    type: data.type,
+});
+
+export const getUserProfile = async (): Promise<IUserProfile> => {
     const { data }: { data: IUserProfileDTO } = await axios.get(
         '/api/spotify/getUserProfile'
     );
-    return data;
+    return buildUserProfile(data);
 };
