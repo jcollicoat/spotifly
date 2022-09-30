@@ -1,3 +1,5 @@
+import { ITrack } from '../lib/interfaces/spotify';
+
 export type SkeletonStates = 'error' | 'warning';
 
 export interface ISkeleton {
@@ -14,4 +16,9 @@ export type IComponent<T> = ISkeleton | IData<T>;
 
 export interface ICreatePanel {
     isSkeleton?: true;
+}
+
+export interface ITrackComponentBase {
+    track: Pick<ITrack, 'album' | 'artists' | 'id' | 'name'>;
+    albumColor?: string;
 }

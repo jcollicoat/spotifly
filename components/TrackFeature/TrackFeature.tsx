@@ -1,36 +1,27 @@
+import { useQuery } from '@tanstack/react-query';
 import classNames from 'classnames';
-import { useColor } from 'color-thief-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FC, useEffect, useRef, useState } from 'react';
-import { useWindowSize } from 'react-use';
-import { ITrack } from '../../../lib/interfaces/spotify';
-import { IComponent, ITrackComponentBase } from '../../interfaces';
-import { SkeletonImage } from '../../Skeletons/SkeletonImage/SkeletonImage';
-import { SkeletonText } from '../../Skeletons/SkeletonText/SkeletonText';
-import styles from './Track.module.scss';
+import { FC } from 'react';
+import { ITrack } from '../../lib/interfaces/spotify';
+import { getRecentlyPlayedTrack } from '../../lib/spotify';
+import { IComponent, ICreatePanel, ITrackComponentBase } from '../interfaces';
+import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
+import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
+import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
+import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
+import styles from './TrackFeature.module.scss';
 
-interface ITrackSkeleton extends ITrackComponentBase {
-    detailsRef: React.RefObject<HTMLDivElement>;
-    noWrapRef: React.RefObject<HTMLDivElement>;
-    isOverflowed?: boolean;
-}
+type TrackFeatureSkeleton = IComponent<ITrackComponentBase>;
 
-type TrackSkeleton = IComponent<ITrackSkeleton>;
-
-export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
+const TrackFeatureSkeleton: FC<TrackFeatureSkeleton> = ({ data, state }) => (
     <div
         className={styles.track}
         style={{
             backgroundColor: data && data.albumColor,
         }}
     >
-        <div
-            className={classNames(
-                styles.content,
-                data && data.isOverflowed && styles.overflowed
-            )}
-        >
+        <div className={classNames(styles.content)}>
             <div className={styles.cover}>
                 {data ? (
                     <Image
@@ -43,8 +34,8 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
                     <SkeletonImage height="36px" width="36px" state={state} />
                 )}
             </div>
-            <div className={styles.details} ref={data && data.detailsRef}>
-                <div className={styles.nowrap} ref={data && data.noWrapRef}>
+            <div className={styles.details}>
+                <div className={styles.nowrap}>
                     {data ? (
                         <Link href={`/track/${data.track.id}`} passHref>
                             <a
@@ -96,46 +87,42 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
     </div>
 );
 
-// TODO: Get rid
-export const Track: FC<{ track: ITrack }> = ({ track }) => {
-    const detailsRef = useRef<HTMLDivElement>(null);
-    const noWrapRef = useRef<HTMLDivElement>(null);
-    const { width } = useWindowSize();
-    const [isOverflowed, setIsOverflowed] = useState(false);
+type ComponentTypes = 'recently-played' | 'top-tracks';
 
-    const measureOverflow = (): void => {
-        const detailsWidth = detailsRef.current?.clientWidth;
-        const noWrapWidth = noWrapRef.current?.clientWidth;
+interface ITrackFeaturePanel extends ICreatePanel {
+    track: ComponentTypes;
+    subheading: string;
+    title: string;
+}
 
-        if (!detailsWidth || !noWrapWidth) {
-            setIsOverflowed(false);
-        } else if (detailsWidth > noWrapWidth) {
-            setIsOverflowed(false);
-        } else if (detailsWidth < noWrapWidth) {
-            setIsOverflowed(true);
-        }
-    };
-
-    useEffect(() => {
-        measureOverflow();
-    }, [width]);
-
-    const { data: albumColor } = useColor(track.album.image, 'hex', {
-        crossOrigin: 'true',
+export const TrackFeature: FC<ITrackFeaturePanel> = ({
+    subheading,
+    title,
+    isSkeleton,
+}) => {
+    const {
+        data: track,
+        isError,
+        isLoading,
+    } = useQuery<ITrack>(['track-feature'], getRecentlyPlayedTrack, {
+        staleTime: Infinity,
     });
 
-    const data: ITrackSkeleton = {
-        track: {
-            album: track.album,
-            artists: track.artists,
-            id: track.id,
-            name: track.name,
-        },
-        detailsRef: detailsRef,
-        noWrapRef: noWrapRef,
-        albumColor: albumColor,
-        isOverflowed: isOverflowed,
+    console.log(track);
+
+    const heading: IPanelHeading = {
+        title: title,
+        subheading: subheading,
     };
 
-    return <TrackSkeleton data={data} />;
+    const display: IPanelDisplay = {
+        area: 'track-feature',
+    };
+
+    return (
+        <Panel display={display} heading={heading}>
+            {(isLoading || isError || isSkeleton) && <TrackFeatureSkeleton />}
+            {track && <TrackFeatureSkeleton data={{ track: track }} />}
+        </Panel>
+    );
 };
