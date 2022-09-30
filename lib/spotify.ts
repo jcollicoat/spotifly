@@ -129,6 +129,13 @@ export const getRecentlyPlayed = async (): Promise<IRecentlyPlayed> => {
     return buildRecentlyPlayed(data);
 };
 
+export const getRecentlyPlayedTrack = async (): Promise<ITrack> => {
+    const { data }: { data: IRecentlyPlayedDTO } = await axios.get(
+        '/api/spotify/getRecentlyPlayed'
+    );
+    return buildTrack(data.items[0].track);
+};
+
 const buildTopTracks = (data: ITopTracksDTO): ITopTracks => ({
     items: data.items.map((item) => ({
         album: reduceAlbum(item.album),
