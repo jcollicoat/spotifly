@@ -5,9 +5,9 @@ export interface ISkeleton {
     state?: SkeletonStates; // None treated as loading
 }
 
-interface ILoaded<T> {
+interface IData<T> {
     data: T;
     state?: never;
 }
 
-export type IComponent<T> = ISkeleton | ILoaded<T>;
+export type IComponent<T> = ISkeleton | IData<T>;
