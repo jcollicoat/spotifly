@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { FC } from 'react';
 import { IUserProfile } from '../../lib/interfaces/spotify';
 import { getUserProfile } from '../../lib/spotify';
-import { IComponent } from '../interfaces';
+import { IComponent, ICreatePanel } from '../interfaces';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
@@ -79,12 +79,7 @@ const UserProfileSkeleton: FC<UserProfileSkeleton> = ({ data, state }) => {
     );
 };
 
-interface IUserProfilePanel {
-    user: IUserProfile;
-    isSkeleton?: boolean;
-}
-
-export const UserProfile: FC<IUserProfilePanel> = ({ isSkeleton }) => {
+export const UserProfile: FC<ICreatePanel> = ({ isSkeleton }) => {
     const {
         data: user,
         isError,

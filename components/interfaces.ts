@@ -11,3 +11,7 @@ interface IData<T> {
 }
 
 export type IComponent<T> = ISkeleton | IData<T>;
+
+export interface ICreatePanel {
+    isSkeleton?: true;
+}

@@ -2,28 +2,27 @@ import { FC } from 'react';
 import { useRecentlyPlayed, useTopTracks } from '../../hooks/useSpotify';
 import { appendUUID } from '../../lib/helpers';
 import { ITrack } from '../../lib/interfaces/spotify';
-import { SkeletonStates } from '../interfaces';
+import { ICreatePanel, SkeletonStates } from '../interfaces';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
 import { Track, TrackSkeleton } from './Track/Track';
 
 type ComponentTypes = 'recently-played' | 'top-tracks';
 
-interface ITracksListPanel {
+interface ITracksListPanel extends ICreatePanel {
+    list: ComponentTypes;
     subheading: string;
     title: string;
-    type: ComponentTypes;
-    isSkeleton?: boolean;
 }
 
 export const TrackList: FC<ITracksListPanel> = ({
+    list,
     subheading,
     title,
-    type,
     isSkeleton,
 }) => {
     const mapQueryType = () => {
-        switch (type) {
+        switch (list) {
             case 'recently-played':
                 return useRecentlyPlayed;
             case 'top-tracks':
@@ -58,7 +57,7 @@ export const TrackList: FC<ITracksListPanel> = ({
     };
 
     const display: IPanelDisplay = {
-        area: type,
+        area: list,
         minHeight: isLoading ? 1475 : undefined,
         noPadding: true,
     };
