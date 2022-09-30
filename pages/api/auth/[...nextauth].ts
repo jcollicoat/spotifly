@@ -74,6 +74,7 @@ export default NextAuth({
         }),
     ],
     callbacks: {
+        // TODO: Logic here is wrong for new sign ins
         async jwt({ token, account }) {
             if (account) {
                 token.refresh_token = account.refresh_token;
