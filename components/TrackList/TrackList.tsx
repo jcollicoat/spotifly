@@ -33,6 +33,7 @@ export const TrackList: FC<ITracksList> = ({
     const query = mapQueryType();
     const { data, isError, isLoading } = query();
 
+    // TODO: Fix this ugly ass code
     const mapTracks = (tracks?: ITrack[] | SkeletonStates) => {
         if (!tracks || isSkeleton) {
             return new Array(20)
