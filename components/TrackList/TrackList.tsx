@@ -5,8 +5,7 @@ import { ITrack } from '../../lib/interfaces/spotify';
 import { SkeletonStates } from '../interfaces';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
-import { Track } from './Track/Track';
-import { TrackSkeleton } from './Track/TrackSkeleton';
+import { Track, TrackSkeleton } from './Track/Track';
 
 type ComponentTypes = 'recently-played' | 'top-tracks';
 
