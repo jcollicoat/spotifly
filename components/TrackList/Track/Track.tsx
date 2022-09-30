@@ -98,6 +98,7 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
     </div>
 );
 
+// TODO: Get rid
 export const Track: FC<{ track: ITrack }> = ({ track }) => {
     const detailsRef = useRef<HTMLDivElement>(null);
     const noWrapRef = useRef<HTMLDivElement>(null);
