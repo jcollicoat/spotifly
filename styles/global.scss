@@ -357,6 +357,8 @@ template {
 
 /* TYPOGRAPHY */
 
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap');
+
 @font-face {
     font-family: 'Inter';
     font-style: normal;
@@ -516,6 +518,6 @@ template {
 body {
     background-color: $color-gray-9;
     color: #ffffff;
-    font-family: 'Inter';
+    font-family: 'FigTree', 'Inter';
     font-size: 0.75rem;
 }
