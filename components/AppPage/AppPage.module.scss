@@ -14,7 +14,8 @@
         &.dashboard {
             grid-template-areas:
                 'user user user user user user'
-                'recently-played recently-played recently-played top-tracks top-tracks top-tracks';
+                'recently-played recently-played recently-played top-tracks top-tracks top-tracks'
+                'track-feature track-feature track-feature x x x';
         }
     }
 

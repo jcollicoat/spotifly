@@ -91,8 +91,8 @@ type ComponentTypes = 'recently-played' | 'top-tracks';
 
 interface ITrackFeaturePanel extends ICreatePanel {
     track: ComponentTypes;
-    subheading: string;
-    title: string;
+    subheading?: string;
+    title?: string;
 }
 
 export const TrackFeature: FC<ITrackFeaturePanel> = ({

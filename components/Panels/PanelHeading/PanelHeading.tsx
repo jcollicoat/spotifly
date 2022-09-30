@@ -3,8 +3,8 @@ import { FC } from 'react';
 import styles from './PanelHeading.module.scss';
 
 export interface IPanelHeading {
-    title: string;
-    subheading: string;
+    title?: string;
+    subheading?: string;
     large?: true;
 }
 
@@ -12,11 +12,20 @@ export const PanelHeading: FC<IPanelHeading> = ({
     title,
     subheading,
     large,
-}) => (
-    <header className={styles.wrapper}>
-        <div className={styles.heading}>{subheading}</div>
-        <h2 className={classNames(styles.title, large && styles.large)}>
-            {title}
-        </h2>
-    </header>
-);
+}) => {
+    if (!title && !subheading) {
+        return null;
+    }
+    return (
+        <header className={classNames(styles.wrapper, title && styles.padded)}>
+            {subheading && (
+                <div className={styles.subheading}>{subheading}</div>
+            )}
+            {title && (
+                <h2 className={classNames(styles.title, large && styles.large)}>
+                    {title}
+                </h2>
+            )}
+        </header>
+    );
+};

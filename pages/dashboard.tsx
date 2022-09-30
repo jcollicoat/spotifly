@@ -26,8 +26,7 @@ const TopLists: NextPage = () => (
             />
             <TrackFeature
                 track="recently-played"
-                subheading="Your Last Played"
-                title="Track"
+                subheading="Last Played Track"
             />
         </AppPage>
     </>

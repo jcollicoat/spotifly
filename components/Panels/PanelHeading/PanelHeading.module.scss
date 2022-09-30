@@ -1,16 +1,32 @@
 @import '../../../styles/variables.scss';
 
 .wrapper {
-    background-color: $color-gray-8;
-    border: 1px solid $color-gray-7;
-    border-radius: $border-radius-panel $border-radius-panel 0 0;
     padding: $panel-padding-small;
+    padding-bottom: 0;
 
     @media (min-width: $breakpoint-1) {
         padding: $panel-padding-large;
+        padding-bottom: 0;
     }
 
-    .heading {
+    @media (min-width: $breakpoint-2) {
+        padding: $panel-padding-xlarge;
+        padding-bottom: 0;
+    }
+
+    &.padded {
+        padding-bottom: $panel-padding-small;
+
+        @media (min-width: $breakpoint-1) {
+            padding-bottom: $panel-padding-large;
+        }
+
+        @media (min-width: $breakpoint-2) {
+            padding-bottom: $panel-padding-xlarge;
+        }
+    }
+
+    .subheading {
         @include panel-subheading;
     }
 

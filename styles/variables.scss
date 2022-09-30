@@ -7,8 +7,8 @@ $breakpoint-2: 1200px;
 
 // Borders
 
-$border-radius-button: 4px;
-$border-radius-panel: 8px;
+$border-radius-button: 6px;
+$border-radius-panel: 12px;
 
 // Colors
 $color-primary-1: #ff9ecf;
@@ -67,8 +67,10 @@ $transition-ease-slow: 0.3s ease-in-out;
 
 /* ASSIGNED VARIABLES */
 
+$panel-color-background: rgba($color-gray-8, 0.25);
 $panel-padding-small: $space-medium;
 $panel-padding-large: $space-large;
+$panel-padding-xlarge: $space-xlarge;
 
 $skeleton-border-radius: $border-radius-button;
 $skeleton-color-block: $color-gray-7;
@@ -83,19 +85,6 @@ $skeleton-color-shimmer: $color-gray-6;
 
     @media (min-width: $breakpoint-2) {
         padding: $space-large;
-    }
-}
-
-@mixin app-panel {
-    background-color: $color-gray-8;
-    border-radius: $border-radius-panel;
-
-    &:last-of-type {
-        margin-bottom: 0;
-    }
-
-    @media (min-width: $breakpoint-1) {
-        margin-bottom: 0;
     }
 }
 
@@ -129,11 +118,15 @@ $skeleton-color-shimmer: $color-gray-6;
     font-size: 0.75rem;
     font-weight: 400;
     letter-spacing: 0.2em;
-    margin: 0 0 $space-xsmall 0;
+    margin: 0;
     text-transform: uppercase;
 
-    @media (min-width: $breakpoint-1) {
-        margin-bottom: $space-small;
+    &:not(:only-child) {
+        margin-bottom: $space-xsmall;
+
+        @media (min-width: $breakpoint-1) {
+            margin-bottom: $space-small;
+        }
     }
 }
 
