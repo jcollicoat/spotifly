@@ -54,7 +54,7 @@
             z-index: 2;
 
             span {
-                border-radius: 2px;
+                border-radius: $album-border-radius;
             }
         }
 
@@ -67,6 +67,8 @@
 
             .nowrap {
                 position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
 
                 .name {
                     color: #ffffff;

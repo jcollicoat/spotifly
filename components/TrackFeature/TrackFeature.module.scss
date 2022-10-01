@@ -4,21 +4,14 @@
     background-position: left;
     background-repeat: no-repeat;
     background-size: 100%;
-    margin-bottom: 2px;
 
     &:last-of-type {
         margin-bottom: 0;
     }
 
     .content {
-        background: linear-gradient(
-            to left,
-            rgba($color-gray-9, 1),
-            rgba($color-gray-9, 0.9)
-        );
         display: flex;
         gap: $space-medium;
-        padding: $space-medium;
         position: relative;
 
         &::after {
@@ -34,7 +27,7 @@
             opacity: 0;
             pointer-events: none;
             position: absolute;
-            right: $space-medium;
+            right: 0;
             width: 80px;
             top: 0;
             transition: $transition-ease-slow;
@@ -50,23 +43,26 @@
         .cover {
             position: relative;
             flex-shrink: 0;
-            height: 36px;
+            height: 120px;
             z-index: 2;
 
             span {
-                border-radius: 2px;
+                border-radius: $album-border-radius;
             }
         }
 
         .details {
-            padding: $space-xsmall 0;
+            font-size: 2em;
             overflow: hidden;
+            padding: $space-xsmall 0;
             position: relative;
             width: 100%;
             white-space: nowrap;
 
             .nowrap {
                 position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
 
                 .name {
                     color: #ffffff;
