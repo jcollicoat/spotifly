@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { CSSProperties, FC } from 'react';
-import { SkeletonStates } from '../../interfaces';
+import { SkeletonStates } from '../../types';
 import styles from './SkeletonImage.module.scss';
 
 interface ISkeletonImage {

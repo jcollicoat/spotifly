@@ -2,12 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import classNames from 'classnames';
 import Image from 'next/image';
 import { FC } from 'react';
-import { IUserProfile } from '../../lib/interfaces/spotify';
 import { getUserProfile } from '../../lib/spotify';
-import { IComponent, ICreatePanel } from '../interfaces';
+import { IUserProfile } from '../../lib/types/spotify';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
+import { IComponent, ICreatePanel } from '../types';
 import styles from './UserProfile.module.scss';
 
 type UserProfileSkeleton = IComponent<IUserProfile>;

@@ -1,3 +1,9 @@
+export enum AlbumImageSize {
+    small = 2,
+    medium = 1,
+    large = 0,
+}
+
 interface ISpotifyImageDTO {
     height: number;
     url: string;

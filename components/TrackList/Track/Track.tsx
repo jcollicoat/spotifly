@@ -4,10 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
-import { ITrack } from '../../../lib/interfaces/spotify';
-import { IComponent, ITrackComponentBase } from '../../interfaces';
+import { ITrack } from '../../../lib/types/spotify';
 import { SkeletonImage } from '../../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../../Skeletons/SkeletonText/SkeletonText';
+import { IComponent, ITrackComponentBase } from '../../types';
 import styles from './Track.module.scss';
 
 interface ITrackSkeleton extends ITrackComponentBase {
@@ -28,7 +28,7 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
         <div
             className={classNames(
                 styles.content,
-                data && data.isOverflowed && styles.overflowed
+                data?.isOverflowed && styles.overflowed
             )}
         >
             <div className={styles.cover}>
@@ -43,8 +43,8 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
                     <SkeletonImage height="36px" width="36px" state={state} />
                 )}
             </div>
-            <div className={styles.details} ref={data && data.detailsRef}>
-                <div className={styles.nowrap} ref={data && data.noWrapRef}>
+            <div className={styles.details} ref={data?.detailsRef}>
+                <div className={styles.nowrap} ref={data?.noWrapRef}>
                     {data ? (
                         <Link href={`/track/${data.track.id}`} passHref>
                             <a

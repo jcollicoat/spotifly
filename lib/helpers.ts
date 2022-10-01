@@ -4,13 +4,17 @@ import {
     IAlbumReduced,
     IArtistReduced,
     IAlbumDTO,
-} from './interfaces/spotify';
+    AlbumImageSize,
+} from './types/spotify';
 
 export const appendUUID = (input: string): string => `${input}-${uuidv4()}`;
 
-export const reduceAlbum = (album: IAlbumDTO): IAlbumReduced => ({
+export const reduceAlbum = (
+    album: IAlbumDTO,
+    imageSize?: AlbumImageSize
+): IAlbumReduced => ({
     id: album.id,
-    image: album.images[2].url,
+    image: album.images[imageSize ?? 2].url,
     key: appendUUID(album.id),
     name: album.name,
     release_date: album.release_date,

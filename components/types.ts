@@ -1,4 +1,4 @@
-import { ITrack } from '../lib/interfaces/spotify';
+import { ITrack } from '../lib/types/spotify';
 
 export type SkeletonStates = 'error' | 'warning';
 
