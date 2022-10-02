@@ -3,7 +3,6 @@
 .main {
     @include app-container;
 
-    align-items: start;
     display: grid;
     gap: $space-medium;
     grid-template-rows: min-content;
@@ -13,9 +12,9 @@
 
         &.dashboard {
             grid-template-areas:
-                'user user user user user user'
+                'user user user track-feature track-feature track-feature'
                 'recently-played recently-played recently-played top-tracks top-tracks top-tracks'
-                'track-feature track-feature track-feature x x x';
+                'x x x x x x';
         }
     }
 
@@ -25,8 +24,8 @@
 
         &.dashboard {
             grid-template-areas:
-                'user user user user user user user user user user user user'
-                'recently-played recently-played recently-played recently-played top-tracks top-tracks top-tracks top-tracks track-feature track-feature track-feature track-feature';
+                'user user user user user user user user track-feature track-feature track-feature track-feature'
+                'recently-played recently-played recently-played recently-played top-tracks top-tracks top-tracks top-tracks top-albums top-albums top-albums top-albums';
         }
     }
 }

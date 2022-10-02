@@ -14,6 +14,10 @@ const TopLists: NextPage = () => (
         </Head>
         <AppPage page="dashboard">
             <UserProfile />
+            <TrackFeature
+                track="recently-played"
+                subheading="Last Played Track"
+            />
             <TrackList
                 list="recently-played"
                 subheading="Your music"
@@ -23,10 +27,6 @@ const TopLists: NextPage = () => (
                 list="top-tracks"
                 subheading="Last 6 months"
                 title="Your Top Tracks"
-            />
-            <TrackFeature
-                track="recently-played"
-                subheading="Last Played Track"
             />
         </AppPage>
     </>
