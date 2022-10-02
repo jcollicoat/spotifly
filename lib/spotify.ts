@@ -7,7 +7,7 @@ import {
     ITopTracks,
     ITrack,
     IUserProfile,
-} from './types/spotify';
+} from './spotify-types';
 
 export const getAlbum = async ({
     queryKey,
@@ -87,11 +87,13 @@ export const getRecentlyPlayedNumber = async ({
 };
 
 export const getRecentlyPlayedSingle = async (): Promise<IRecentlyPlayed> => {
-    const { data: recentlyPlayedSingle }: { data: IRecentlyPlayed } =
-        await axios.get('/api/spotify/getRecentlyPlayed', {
+    const { data: recentlyPlayed }: { data: IRecentlyPlayed } = await axios.get(
+        '/api/spotify/getRecentlyPlayed',
+        {
             params: { limit: '1' },
-        });
-    return recentlyPlayedSingle;
+        }
+    );
+    return recentlyPlayed;
 };
 
 export const getTopTracks = async (): Promise<ITopTracks> => {

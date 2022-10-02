@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { AppPage } from '../../components/AppPage/AppPage';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { getArtist } from '../../lib/spotify';
-import { IArtist } from '../../lib/types/spotify';
+import { IArtist } from '../../lib/spotify-types';
 
 const TrackPage: NextPage = () => {
     const router = useRouter();

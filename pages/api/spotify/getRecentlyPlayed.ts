@@ -5,7 +5,7 @@ import { getSession } from 'next-auth/react';
 import {
     IRecentlyPlayedDTO,
     IRecentlyPlayed,
-} from '../../../lib/types/spotify';
+} from '../../../lib/spotify-types';
 import { buildTracks } from './getTrack';
 
 const endpoint = 'https://api.spotify.com/v1/me/player/recently-played';

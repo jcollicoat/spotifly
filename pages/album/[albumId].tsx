@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { AppPage } from '../../components/AppPage/AppPage';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { getAlbum } from '../../lib/spotify';
-import { IAlbum } from '../../lib/types/spotify';
+import { IAlbum } from '../../lib/spotify-types';
 
 const AlbumPage: NextPage = () => {
     const router = useRouter();

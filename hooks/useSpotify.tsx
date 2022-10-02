@@ -5,7 +5,7 @@ import {
     getRecentlyPlayedTrack,
     getTopTracks,
 } from '../lib/spotify';
-import { IRecentlyPlayed, ITopTracks, ITrack } from '../lib/types/spotify';
+import { IRecentlyPlayed, ITopTracks, ITrack } from '../lib/spotify-types';
 
 export const useRecentlyPlayed = (): UseQueryResult<IRecentlyPlayed> => {
     return useQuery(['recently-played'], getRecentlyPlayed, {

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
 import { getRecentlyPlayedSingle } from '../../lib/spotify';
-import { IRecentlyPlayed } from '../../lib/types/spotify';
+import { IRecentlyPlayed } from '../../lib/spotify-types';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';

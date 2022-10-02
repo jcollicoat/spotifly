@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { IItemArtistDTO, IArtistReduced } from './types/spotify';
+import { IArtistReduced, IItemArtistDTO } from '../../lib/spotify-types';
 
 export const appendUUID = (input: string): string => `${input}-${uuidv4()}`;
 

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
-import { ITrack } from '../../../lib/types/spotify';
+import { ITrack } from '../../../lib/spotify-types';
 import { SkeletonImage } from '../../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../../Skeletons/SkeletonText/SkeletonText';
 import { IComponent, ITrackComponentBase } from '../../types';

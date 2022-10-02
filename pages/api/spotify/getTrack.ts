@@ -3,14 +3,14 @@ import axios from 'axios';
 import { getAverageColor } from 'fast-average-color-node';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import { reduceItemArtists, appendUUID } from '../../../lib/helpers';
 import {
     ITrackDTO,
     AlbumImageSize,
     ITrack,
     IAlbumDTO,
     IAlbumReduced,
-} from '../../../lib/types/spotify';
+} from '../../../lib/spotify-types';
+import { reduceItemArtists, appendUUID } from '../api-helpers';
 
 const endpoint = 'https://api.spotify.com/v1/tracks/';
 

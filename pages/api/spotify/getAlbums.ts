@@ -2,8 +2,8 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import { reduceItemArtists, appendUUID } from '../../../lib/helpers';
-import { IAlbumDTO, IAlbum } from '../../../lib/types/spotify';
+import { IAlbumDTO, IAlbum } from '../../../lib/spotify-types';
+import { reduceItemArtists, appendUUID } from '../api-helpers';
 
 const endpoint = 'https://api.spotify.com/v1/albums';
 
