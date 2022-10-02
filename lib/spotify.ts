@@ -7,7 +7,6 @@ import {
     ITopTracks,
     ITrack,
     IUserProfile,
-    IUserProfileDTO,
 } from './types/spotify';
 
 export const getAlbum = async ({
@@ -102,19 +101,9 @@ export const getTopTracks = async (): Promise<ITopTracks> => {
     return topTracks;
 };
 
-const buildUserProfile = (data: IUserProfileDTO): IUserProfile => ({
-    country: data.country,
-    display_name: data.display_name,
-    followers: data.followers.total,
-    id: data.id,
-    image: data.images[0].url,
-    product: data.product,
-    type: data.type,
-});
-
 export const getUserProfile = async (): Promise<IUserProfile> => {
-    const { data }: { data: IUserProfileDTO } = await axios.get(
+    const { data: user }: { data: IUserProfile } = await axios.get(
         '/api/spotify/getUserProfile'
     );
-    return buildUserProfile(data);
+    return user;
 };
