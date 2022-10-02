@@ -43,6 +43,8 @@ $color-slate-7: #374151;
 $color-slate-8: #1f2937;
 $color-slate-9: #111827;
 
+$color-off-black: #101010;
+
 $color-error: #ff1e00;
 $color-warning: #ffae00;
 
@@ -69,7 +71,13 @@ $transition-ease-slow: 0.3s ease-in-out;
 
 $album-border-radius: 5%;
 
-$panel-color-background: rgba($color-gray-8, 0.25);
+$page-color-background: $color-off-black;
+
+$panel-color-blended-background: linear-gradient(
+        rgba($color-slate-9, 0.1),
+        rgba($color-slate-9, 0.1)
+    ),
+    linear-gradient($color-gray-9, $color-gray-9);
 $panel-padding-small: $space-medium;
 $panel-padding-large: $space-large;
 $panel-padding-xlarge: $space-xlarge;
@@ -122,14 +130,6 @@ $skeleton-color-shimmer: $color-gray-6;
     letter-spacing: 0.2em;
     margin: 0;
     text-transform: uppercase;
-
-    &:not(:only-child) {
-        margin-bottom: $space-xsmall;
-
-        @media (min-width: $breakpoint-1) {
-            margin-bottom: $space-small;
-        }
-    }
 }
 
 @mixin panel-title {
@@ -137,6 +137,7 @@ $skeleton-color-shimmer: $color-gray-6;
     font-weight: 600;
     line-height: 1;
     margin: 0;
+    margin-top: $space-xsmall;
 }
 
 @mixin panel-title-large {

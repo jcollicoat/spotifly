@@ -60,7 +60,6 @@ export const TrackList: FC<ITracksListPanel> = ({
     const display: IPanelDisplay = {
         area: list,
         minHeight: isLoading ? 1475 : undefined,
-        noPadding: true,
     };
 
     return (

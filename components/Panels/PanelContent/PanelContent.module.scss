@@ -1,19 +1,7 @@
 @import '../../../styles/variables.scss';
 
 .wrapper {
-    padding: $panel-padding-small;
-
-    &:only-child {
-        background-color: $color-gray-8;
-        border-radius: $border-radius-panel;
-        border-top: 1px solid $color-gray-7;
-    }
-
     &.nopadding {
         padding: 0;
-    }
-
-    @media (min-width: $breakpoint-1) {
-        padding: $panel-padding-large;
     }
 }

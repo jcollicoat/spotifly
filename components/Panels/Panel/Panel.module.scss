@@ -1,8 +1,14 @@
 @import '../../../styles/variables.scss';
 
 .panel {
-    background-color: $panel-color-background;
-    border-bottom: 1px solid $color-gray-8;
+    // background: $panel-color-blended-background;
+    background-color: $color-gray-9;
     border-radius: $border-radius-panel;
+    box-shadow: 0px 12px 24px -12px rgba($color-slate-9, 0.05);
     overflow: hidden;
+    padding: $panel-padding-small;
+
+    @media (min-width: $breakpoint-1) {
+        padding: $panel-padding-large;
+    }
 }

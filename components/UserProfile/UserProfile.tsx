@@ -5,6 +5,7 @@ import { FC } from 'react';
 import { getUserProfile } from '../../lib/spotify';
 import { IUserProfile } from '../../lib/types/spotify';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
+import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
 import { IComponent, ICreatePanel } from '../types';
@@ -21,9 +22,6 @@ const UserProfileSkeleton: FC<UserProfileSkeleton> = ({ data, state }) => {
 
     return (
         <div className={classNames(styles.wrapper, state && styles.skeleton)}>
-            <h1 className={styles.dashboard}>
-                {data ? 'Dashboard' : <SkeletonText text="Dashboard" />}
-            </h1>
             <div className={styles.user}>
                 <div className={styles.image}>
                     {data ? (
@@ -67,6 +65,14 @@ const UserProfileSkeleton: FC<UserProfileSkeleton> = ({ data, state }) => {
                         </span>
                         <span className={styles.stat}>
                             {data ? (
+                                data.product.charAt(0).toUpperCase() +
+                                data.product.slice(1)
+                            ) : (
+                                <SkeletonText state={state} />
+                            )}
+                        </span>
+                        <span className={styles.stat}>
+                            {data ? (
                                 displayFollowers
                             ) : (
                                 <SkeletonText state={state} />
@@ -92,8 +98,13 @@ export const UserProfile: FC<ICreatePanel> = ({ isSkeleton }) => {
         area: 'user',
     };
 
+    const heading: IPanelHeading = {
+        subheading: 'Dashboard',
+        subheadingLevel: 1,
+    };
+
     return (
-        <Panel display={display}>
+        <Panel display={display} heading={heading}>
             {(isLoading || isError || isSkeleton) && <UserProfileSkeleton />}
             {user && <UserProfileSkeleton data={user} />}
         </Panel>

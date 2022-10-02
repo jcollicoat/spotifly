@@ -1,16 +1,11 @@
 @import '../../styles/variables.scss';
 
 .wrapper {
-    .dashboard {
-        @include panel-subheading;
-    }
-
     .user {
         align-items: center;
         display: flex;
         flex-wrap: wrap;
         gap: $space-medium;
-        margin-top: $space-medium;
 
         .image {
             height: 80px;
