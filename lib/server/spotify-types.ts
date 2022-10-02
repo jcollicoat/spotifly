@@ -87,7 +87,7 @@ export interface IRecentlyPlayedDTO {
     href: string;
     items: IRecentlyPlayedTrackDTO[];
     limit: number;
-    next: string;
+    next: string | null;
     cursors: {
         after: string;
     };

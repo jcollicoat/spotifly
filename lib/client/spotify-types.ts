@@ -58,6 +58,12 @@ export interface ITrack {
 
 export interface IRecentlyPlayed {
     items: ITrack[];
+    limit?: number;
+    next?: string | null;
+    cursors?: {
+        after: string;
+    };
+    total?: number;
 }
 
 export interface ITopAlbums {

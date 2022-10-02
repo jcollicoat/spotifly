@@ -107,6 +107,12 @@ export const buildRecentlyPlayed = async (
     data: IRecentlyPlayedDTO
 ): Promise<IRecentlyPlayed> => ({
     items: await buildTracks(data.items.map((item) => item.track)),
+    limit: data.limit,
+    next: data.next,
+    cursors: {
+        after: data.cursors.after,
+    },
+    total: data.total,
 });
 
 const buildArtist = async (

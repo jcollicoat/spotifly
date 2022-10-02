@@ -4,10 +4,10 @@ import { AppPage } from '../components/AppPage/AppPage';
 import { TrackFeature } from '../components/TrackFeature/TrackFeature';
 import { TrackList } from '../components/TrackList/TrackList';
 import { UserProfile } from '../components/UserProfile/UserProfile';
-import { useTopArtists, useTopTracks } from '../hooks/useSpotify';
+import { useRecentlyPlayed } from '../hooks/useSpotify';
 
 const TopLists: NextPage = () => {
-    const { data, isError, isLoading } = useTopTracks();
+    const { data, isError, isLoading } = useRecentlyPlayed();
     console.log(data, `Error: ${isError}`, `Loading: ${isLoading}`);
 
     return (
