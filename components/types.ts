@@ -20,5 +20,4 @@ export interface ICreatePanel {
 
 export interface ITrackComponentBase {
     track: Pick<ITrack, 'album' | 'artists' | 'id' | 'name'>;
-    albumColor?: string;
 }

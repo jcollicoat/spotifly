@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { useColor } from 'color-thief-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -22,7 +21,7 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
     <div
         className={styles.track}
         style={{
-            backgroundColor: data && data.albumColor,
+            backgroundColor: data && data.track.album.color,
         }}
     >
         <div
@@ -109,20 +108,14 @@ export const Track: FC<{ track: ITrack }> = ({ track }) => {
 
         if (!detailsWidth || !noWrapWidth) {
             setIsOverflowed(false);
-        } else if (detailsWidth > noWrapWidth) {
-            setIsOverflowed(false);
-        } else if (detailsWidth < noWrapWidth) {
-            setIsOverflowed(true);
+        } else {
+            setIsOverflowed(detailsWidth < noWrapWidth);
         }
     };
 
     useEffect(() => {
         measureOverflow();
     }, [width]);
-
-    const { data: albumColor } = useColor(track.album.image, 'hex', {
-        crossOrigin: 'true',
-    });
 
     const data: ITrackSkeleton = {
         track: {
@@ -133,7 +126,6 @@ export const Track: FC<{ track: ITrack }> = ({ track }) => {
         },
         detailsRef: detailsRef,
         noWrapRef: noWrapRef,
-        albumColor: albumColor,
         isOverflowed: isOverflowed,
     };
 
