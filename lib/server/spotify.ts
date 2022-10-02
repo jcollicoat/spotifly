@@ -80,15 +80,19 @@ export const buildAlbums = async (
 export const buildTrack = async (
     data: ITrackDTO,
     imageSize?: AlbumImageSize
-): Promise<ITrack> => ({
-    id: data.id,
-    album: await reduceAlbum(data.album, imageSize),
-    artists: reduceItemArtists(data.artists),
-    key: appendUUID(data.id),
-    name: data.name,
-    popularity: data.popularity,
-    type: data.type,
-});
+): Promise<ITrack> => {
+    const color = await getAverageColor(data.album.images[2].url);
+    return {
+        id: data.id,
+        album: await reduceAlbum(data.album, imageSize),
+        artists: reduceItemArtists(data.artists),
+        color: color.hex,
+        key: appendUUID(data.id),
+        name: data.name,
+        popularity: data.popularity,
+        type: data.type,
+    };
+};
 
 export const buildTracks = async (
     trackDTOs: ITrackDTO[],
@@ -105,14 +109,17 @@ export const buildRecentlyPlayed = async (
     items: await buildTracks(data.items.map((item) => item.track)),
 });
 
-const buildArtist = async (artist: IArtistDTO): Promise<ISmallListArtist> => {
+const buildArtist = async (
+    artist: IArtistDTO,
+    imageSize?: AlbumImageSize
+): Promise<ISmallListArtist> => {
     const color = await getAverageColor(artist.images[2].url);
     return {
         id: artist.id,
         color: color.hex,
         followers: artist.followers.total,
         genres: artist.genres,
-        image: artist.images[2].url,
+        image: artist.images[imageSize ?? 2].url,
         key: appendUUID(artist.id),
         name: artist.name,
         popularity: artist.popularity,
@@ -120,10 +127,11 @@ const buildArtist = async (artist: IArtistDTO): Promise<ISmallListArtist> => {
 };
 
 const buildArtists = async (
-    artists: IArtistDTO[]
+    artists: IArtistDTO[],
+    imageSize?: AlbumImageSize
 ): Promise<ISmallListArtist[]> => {
     return await Promise.all(
-        artists.map(async (artist) => await buildArtist(artist))
+        artists.map(async (artist) => await buildArtist(artist, imageSize))
     );
 };
 
@@ -141,6 +149,10 @@ export const buildTopTracks = async (
     data: ITopTracksDTO
 ): Promise<ITopTracks> => ({
     items: await buildTracks(data.items),
+    next: data.next,
+    offset: data.offset,
+    previous: data.previous,
+    total: data.total,
 });
 
 export const buildUserProfile = (data: IUserProfileDTO): IUserProfile => ({

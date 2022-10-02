@@ -34,6 +34,7 @@ export interface IAlbumDTO {
 }
 
 export interface IArtistDTO {
+    id: string;
     external_urls: {
         spotify: string;
     };
@@ -43,7 +44,6 @@ export interface IArtistDTO {
     };
     genres: string[];
     href: string;
-    id: string;
     images: ISpotifyImageDTO[];
     name: string;
     popularity: number;
@@ -52,6 +52,7 @@ export interface IArtistDTO {
 }
 
 export interface ITrackDTO {
+    id: string;
     album: IAlbumDTO;
     artists: IItemArtistDTO[];
     available_markets: string[];
@@ -67,7 +68,6 @@ export interface ITrackDTO {
         spotify: string;
     };
     href: string;
-    id: string;
     is_local: false;
     name: string;
     popularity: number;
@@ -118,9 +118,9 @@ export interface ITopTracksDTO {
     href: string;
     items: ITrackDTO[];
     limit: number;
-    next?: string;
+    next: string | null;
     offset: number;
-    previous?: string;
+    previous: string | null;
     total: number;
 }
 

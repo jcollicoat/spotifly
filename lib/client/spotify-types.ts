@@ -46,9 +46,10 @@ export interface IArtist {
 }
 
 export interface ITrack {
+    id: string;
     album: IAlbumReduced;
     artists: IArtistReduced[];
-    id: string;
+    color: string;
     key: string;
     name: string;
     popularity: number;
@@ -84,6 +85,10 @@ export interface ITopArtists<T> {
 
 export interface ITopTracks {
     items: ITrack[];
+    next?: string | null;
+    offset?: number;
+    previous?: string | null;
+    total?: number;
 }
 
 export interface IUserProfile {
