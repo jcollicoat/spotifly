@@ -1,13 +1,10 @@
 import { QueryKey } from '@tanstack/react-query';
 import axios from 'axios';
 import {
-    AlbumImageSize,
     IAlbum,
     IArtist,
     IRecentlyPlayed,
-    IRecentlyPlayedDTO,
     ITopTracks,
-    ITopTracksDTO,
     ITrack,
     IUserProfile,
     IUserProfileDTO,
@@ -69,35 +66,40 @@ export const getTrack = async ({
     return track;
 };
 
-const buildRecentlyPlayed = async (
-    data: IRecentlyPlayedDTO
-): Promise<IRecentlyPlayed> => ({
-    items: await buildTracks(data.items.map((item) => item.track)), //.map((item) => buildTrack(item.track)),
-});
-
 export const getRecentlyPlayed = async (): Promise<IRecentlyPlayed> => {
-    const { data }: { data: IRecentlyPlayedDTO } = await axios.get(
+    const { data: recentlyPlayed }: { data: IRecentlyPlayed } = await axios.get(
         '/api/spotify/getRecentlyPlayed'
     );
-    return buildRecentlyPlayed(data);
+    return recentlyPlayed;
 };
 
-export const getRecentlyPlayedTrack = async (): Promise<ITrack> => {
-    const { data }: { data: IRecentlyPlayedDTO } = await axios.get(
-        '/api/spotify/getRecentlyPlayed'
+export const getRecentlyPlayedNumber = async ({
+    queryKey,
+}: {
+    queryKey: QueryKey;
+}): Promise<IRecentlyPlayed> => {
+    const { data: recentlyPlayed }: { data: IRecentlyPlayed } = await axios.get(
+        '/api/spotify/getRecentlyPlayed',
+        {
+            params: { limit: queryKey[1] },
+        }
     );
-    return buildTrack(data.items[0].track, AlbumImageSize.medium);
+    return recentlyPlayed;
 };
 
-const buildTopTracks = async (data: ITopTracksDTO): Promise<ITopTracks> => ({
-    items: await buildTracks(data.items), //.map((item) => buildTrack(item.track)),
-});
+export const getRecentlyPlayedSingle = async (): Promise<IRecentlyPlayed> => {
+    const { data: recentlyPlayedSingle }: { data: IRecentlyPlayed } =
+        await axios.get('/api/spotify/getRecentlyPlayed', {
+            params: { limit: '1' },
+        });
+    return recentlyPlayedSingle;
+};
 
 export const getTopTracks = async (): Promise<ITopTracks> => {
-    const { data }: { data: ITopTracksDTO } = await axios.get(
+    const { data: topTracks }: { data: ITopTracks } = await axios.get(
         '/api/spotify/getTopTracks'
     );
-    return buildTopTracks(data);
+    return topTracks;
 };
 
 const buildUserProfile = (data: IUserProfileDTO): IUserProfile => ({

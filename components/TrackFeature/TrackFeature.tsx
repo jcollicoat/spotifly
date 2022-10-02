@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
-import { getRecentlyPlayedTrack } from '../../lib/spotify';
-import { ITrack } from '../../lib/types/spotify';
+import { getRecentlyPlayedSingle } from '../../lib/spotify';
+import { IRecentlyPlayed } from '../../lib/types/spotify';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
@@ -22,12 +22,7 @@ interface ITrackFeatureSkeleton extends ITrackComponentBase {
 type TrackFeatureSkeleton = IComponent<ITrackFeatureSkeleton>;
 
 const TrackFeatureSkeleton: FC<TrackFeatureSkeleton> = ({ data, state }) => (
-    <div
-        className={styles.track}
-        style={{
-            backgroundColor: data && data.albumColor,
-        }}
-    >
+    <div className={styles.track}>
         <div
             className={classNames(
                 styles.content,
@@ -112,9 +107,9 @@ export const TrackFeature: FC<ITrackFeaturePanel> = ({
     title,
     isSkeleton,
 }) => {
-    const { data: track, isLoading } = useQuery<ITrack>(
+    const { data: track, isLoading } = useQuery<IRecentlyPlayed>(
         ['track-feature'],
-        getRecentlyPlayedTrack,
+        getRecentlyPlayedSingle,
         {
             staleTime: Infinity,
         }
@@ -160,10 +155,10 @@ export const TrackFeature: FC<ITrackFeaturePanel> = ({
     } else {
         const data: ITrackFeatureSkeleton = {
             track: {
-                album: track.album,
-                artists: track.artists,
-                id: track.id,
-                name: track.name,
+                album: track.items[0].album,
+                artists: track.items[0].artists,
+                id: track.items[0].id,
+                name: track.items[0].name,
             },
             detailsRef: detailsRef,
             noWrapRef: noWrapRef,
