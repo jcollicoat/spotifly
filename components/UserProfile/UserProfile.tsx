@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import classNames from 'classnames';
 import Image from 'next/image';
 import { FC } from 'react';
 import { getUserProfile } from '../../lib/spotify';
@@ -21,64 +20,50 @@ const UserProfileSkeleton: FC<UserProfileSkeleton> = ({ data, state }) => {
             : `${data.followers} Followers`);
 
     return (
-        <div className={classNames(styles.wrapper, state && styles.skeleton)}>
-            <div className={styles.user}>
-                <div className={styles.image}>
-                    {data ? (
-                        <Image
-                            src={data.image}
-                            alt={`Photo of ${data.display_name}`}
-                            height={80}
-                            width={80}
-                        />
-                    ) : (
-                        <SkeletonImage
-                            height="80px"
-                            rounded={true}
-                            width="80px"
-                        />
-                    )}
-                </div>
-                <div className={styles.details}>
-                    <span className={styles.name}>
+        <div className={styles.user}>
+            <div className={styles.image}>
+                {data ? (
+                    <Image
+                        src={data.image}
+                        alt={`Photo of ${data.display_name}`}
+                        height={80}
+                        width={80}
+                    />
+                ) : (
+                    <SkeletonImage height="80px" rounded={true} width="80px" />
+                )}
+            </div>
+            <div className={styles.details}>
+                <span className={styles.name}>
+                    {data ? data.display_name : <SkeletonText state={state} />}
+                </span>
+                <div className={styles.stats}>
+                    <span className={styles.stat}>
+                        {data ? data.country : <SkeletonText state={state} />}
+                    </span>
+                    <span className={styles.stat}>
                         {data ? (
-                            data.display_name
+                            data.type.charAt(0).toUpperCase() +
+                            data.type.slice(1)
                         ) : (
                             <SkeletonText state={state} />
                         )}
                     </span>
-                    <div className={styles.stats}>
-                        <span className={styles.stat}>
-                            {data ? (
-                                data.country
-                            ) : (
-                                <SkeletonText state={state} />
-                            )}
-                        </span>
-                        <span className={styles.stat}>
-                            {data ? (
-                                data.type.charAt(0).toUpperCase() +
-                                data.type.slice(1)
-                            ) : (
-                                <SkeletonText state={state} />
-                            )}
-                        </span>
-                        <span className={styles.stat}>
-                            {data ? (
-                                data.product.charAt(0).toUpperCase() +
-                                data.product.slice(1)
-                            ) : (
-                                <SkeletonText state={state} />
-                            )}
-                        </span>
-                        <span className={styles.stat}>
-                            {data ? (
-                                displayFollowers
-                            ) : (
-                                <SkeletonText state={state} />
-                            )}
-                        </span>
-                    </div>
+                    <span className={styles.stat}>
+                        {data ? (
+                            data.product.charAt(0).toUpperCase() +
+                            data.product.slice(1)
+                        ) : (
+                            <SkeletonText state={state} />
+                        )}
+                    </span>
+                    <span className={styles.stat}>
+                        {data ? (
+                            displayFollowers
+                        ) : (
+                            <SkeletonText state={state} />
+                        )}
+                    </span>
                 </div>
             </div>
         </div>

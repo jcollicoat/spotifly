@@ -1,56 +1,41 @@
 @import '../../styles/variables.scss';
 
-.wrapper {
-    .user {
-        align-items: center;
-        display: flex;
-        flex-wrap: wrap;
-        gap: $space-medium;
+.user {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-medium;
 
-        .image {
-            height: 80px;
+    .image {
+        height: 80px;
 
-            span {
-                border-radius: 50%;
-            }
-        }
-
-        .details {
-            flex-shrink: 0;
-
-            .name {
-                @include panel-title;
-                @include panel-title-large;
-
-                display: block;
-            }
-
-            .stats {
-                display: flex;
-                gap: 1em;
-                margin-top: $space-small;
-
-                .stat {
-                    border-right: 1px solid $color-gray-5;
-                    padding-right: 1em;
-
-                    &:last-of-type {
-                        border-right: none;
-                        padding-right: 0;
-                    }
-                }
-            }
+        span {
+            border-radius: 50%;
         }
     }
 
-    &.skeleton {
-        .user {
-            .details {
-                .stats {
-                    .stat {
-                        border-right: none;
-                        padding-right: 0;
-                    }
+    .details {
+        flex-shrink: 0;
+
+        .name {
+            @include panel-title;
+            @include panel-title-large;
+
+            display: block;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1em;
+            margin-top: $space-small;
+
+            .stat {
+                border-right: 1px solid $color-gray-5;
+                padding-right: 1em;
+
+                &:last-of-type {
+                    border-right: none;
+                    padding-right: 0;
                 }
             }
         }
