@@ -14,6 +14,7 @@ export const reduceAlbum = (
     imageSize?: AlbumImageSize
 ): IAlbumReduced => ({
     id: album.id,
+    color: 'pink',
     image: album.images[imageSize ?? 2].url,
     key: appendUUID(album.id),
     name: album.name,

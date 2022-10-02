@@ -147,8 +147,9 @@ export interface IUserProfileDTO {
 
 export interface IAlbumReduced {
     id: string;
-    key: string;
+    color: string;
     image: string;
+    key: string;
     name: string;
     release_date: string;
 }
