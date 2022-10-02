@@ -3,8 +3,10 @@ import {
     AlbumImageSize,
     IAlbum,
     IAlbumReduced,
-    IArtist,
+    // IArtist,
     IRecentlyPlayed,
+    ISmallListArtist,
+    ITopArtists,
     ITopTracks,
     ITrack,
     IUserProfile,
@@ -14,6 +16,7 @@ import {
     IAlbumDTO,
     IArtistDTO,
     IRecentlyPlayedDTO,
+    ITopArtistsDTO,
     ITopTracksDTO,
     ITrackDTO,
     IUserProfileDTO,
@@ -63,16 +66,16 @@ export const buildAlbums = async (
     );
 };
 
-export const buildArtist = (data: IArtistDTO): IArtist => ({
-    followers: data.followers.total,
-    genres: data.genres,
-    id: data.id,
-    images: data.images,
-    key: appendUUID(data.id),
-    name: data.name,
-    popularity: data.popularity,
-    type: data.type,
-});
+// export const buildArtist = (data: IArtistDTO): IArtist => ({
+//     followers: data.followers.total,
+//     genres: data.genres,
+//     id: data.id,
+//     images: data.images,
+//     key: appendUUID(data.id),
+//     name: data.name,
+//     popularity: data.popularity,
+//     type: data.type,
+// });
 
 export const buildTrack = async (
     data: ITrackDTO,
@@ -100,6 +103,38 @@ export const buildRecentlyPlayed = async (
     data: IRecentlyPlayedDTO
 ): Promise<IRecentlyPlayed> => ({
     items: await buildTracks(data.items.map((item) => item.track)),
+});
+
+const buildArtist = async (artist: IArtistDTO): Promise<ISmallListArtist> => {
+    const color = await getAverageColor(artist.images[2].url);
+    return {
+        id: artist.id,
+        color: color.hex,
+        followers: artist.followers.total,
+        genres: artist.genres,
+        image: artist.images[2].url,
+        key: appendUUID(artist.id),
+        name: artist.name,
+        popularity: artist.popularity,
+    };
+};
+
+const buildArtists = async (
+    artists: IArtistDTO[]
+): Promise<ISmallListArtist[]> => {
+    return await Promise.all(
+        artists.map(async (artist) => await buildArtist(artist))
+    );
+};
+
+export const buildTopArtists = async (
+    data: ITopArtistsDTO
+): Promise<ITopArtists<ISmallListArtist>> => ({
+    artists: await buildArtists(data.items),
+    next: data.next,
+    offset: data.offset,
+    previous: data.previous,
+    total: data.total,
 });
 
 export const buildTopTracks = async (

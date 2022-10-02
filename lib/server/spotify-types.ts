@@ -1,4 +1,4 @@
-interface ISpotifyImageDTO {
+export interface ISpotifyImageDTO {
     height: number;
     url: string;
     width: number;
@@ -44,13 +44,7 @@ export interface IArtistDTO {
     genres: string[];
     href: string;
     id: string;
-    images: [
-        {
-            url: string;
-            height: number;
-            width: number;
-        }
-    ];
+    images: ISpotifyImageDTO[];
     name: string;
     popularity: number;
     type: string;
@@ -107,6 +101,16 @@ export interface ITopAlbumsDTO {
     next?: string;
     offset: number;
     previous?: string;
+    total: number;
+}
+
+export interface ITopArtistsDTO {
+    href: string;
+    items: IArtistDTO[];
+    limit: number;
+    next: string | null;
+    offset: number;
+    previous: string | null;
     total: number;
 }
 

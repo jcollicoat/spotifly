@@ -1,3 +1,5 @@
+import { ISpotifyImageDTO } from '../server/spotify-types';
+
 export enum AlbumImageSize {
     small = 2,
     medium = 1,
@@ -59,6 +61,25 @@ export interface IRecentlyPlayed {
 
 export interface ITopAlbums {
     items: IAlbum[];
+}
+
+export interface ISmallListArtist {
+    id: string;
+    color: string;
+    followers: number;
+    genres: string[];
+    image: string;
+    key: string;
+    name: string;
+    popularity: number;
+}
+
+export interface ITopArtists<T> {
+    artists: T[];
+    next?: string | null;
+    offset?: number;
+    previous?: string | null;
+    total?: number;
 }
 
 export interface ITopTracks {
