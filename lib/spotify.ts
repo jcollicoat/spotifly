@@ -4,7 +4,6 @@ import { appendUUID, reduceAlbum, reduceItemArtists } from './helpers';
 import {
     AlbumImageSize,
     IAlbum,
-    IAlbumDTO,
     IArtist,
     IArtistDTO,
     IRecentlyPlayed,
@@ -17,57 +16,32 @@ import {
     IUserProfileDTO,
 } from './types/spotify';
 
-const buildAlbum = (data: IAlbumDTO): IAlbum => ({
-    album_type: data.album_type,
-    artists: reduceItemArtists(data.artists),
-    id: data.id,
-    images: data.images,
-    key: appendUUID(data.id),
-    name: data.name,
-    release_date: data.release_date,
-    total_tracks: data.total_tracks,
-    type: data.type,
-});
-
 export const getAlbum = async ({
     queryKey,
 }: {
     queryKey: QueryKey;
 }): Promise<IAlbum> => {
-    const { data }: { data: IAlbumDTO } = await axios.get(
+    const { data: album }: { data: IAlbum } = await axios.get(
         '/api/spotify/getAlbum',
         {
             params: { albumId: queryKey[1] },
         }
     );
-    return buildAlbum(data);
+    return album;
 };
-
-const buildAlbums = (data: IAlbumDTO[]): IAlbum[] =>
-    data.map((item) => ({
-        album_type: item.album_type,
-        artists: reduceItemArtists(item.artists),
-        id: item.id,
-        images: item.images,
-        key: appendUUID(item.id),
-        name: item.name,
-        release_date: item.release_date,
-        total_tracks: item.total_tracks,
-        type: item.type,
-    }));
 
 export const getAlbums = async ({
     queryKey,
 }: {
     queryKey: QueryKey;
 }): Promise<IAlbum[]> => {
-    const { data }: { data: IAlbumDTO[] } = await axios.get(
+    const { data: albums }: { data: IAlbum[] } = await axios.get(
         '/api/spotify/getAlbums',
         {
             params: { albumIds: queryKey[1] },
         }
     );
-    return buildAlbums(data);
+    return albums;
 };
 
 const buildArtist = (data: IArtistDTO): IArtist => ({
