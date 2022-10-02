@@ -5,7 +5,6 @@ import {
     AlbumImageSize,
     IAlbum,
     IArtist,
-    IArtistDTO,
     IRecentlyPlayed,
     IRecentlyPlayedDTO,
     ITopTracks,
@@ -44,29 +43,18 @@ export const getAlbums = async ({
     return albums;
 };
 
-const buildArtist = (data: IArtistDTO): IArtist => ({
-    followers: data.followers.total,
-    genres: data.genres,
-    id: data.id,
-    images: data.images,
-    key: appendUUID(data.id),
-    name: data.name,
-    popularity: data.popularity,
-    type: data.type,
-});
-
 export const getArtist = async ({
     queryKey,
 }: {
     queryKey: QueryKey;
 }): Promise<IArtist> => {
-    const { data }: { data: IArtistDTO } = await axios.get(
+    const { data: artist }: { data: IArtist } = await axios.get(
         '/api/spotify/getArtist',
         {
             params: { artistId: queryKey[1] },
         }
     );
-    return buildArtist(data);
+    return artist;
 };
 
 const buildTrack = async (
