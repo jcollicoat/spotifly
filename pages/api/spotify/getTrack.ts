@@ -1,54 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
-import { getAverageColor } from 'fast-average-color-node';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import {
-    AlbumImageSize,
-    ITrack,
-    IAlbumReduced,
-} from '../../../lib/client/spotify-types';
-import { reduceItemArtists, appendUUID } from '../../../lib/server/helpers';
-import { IAlbumDTO, ITrackDTO } from '../../../lib/server/spotify-types';
+import { buildTrack } from '../../../lib/server/spotify';
 
 const endpoint = 'https://api.spotify.com/v1/tracks/';
-
-export const reduceAlbum = async (
-    album: IAlbumDTO,
-    imageSize?: AlbumImageSize
-): Promise<IAlbumReduced> => {
-    const color = await getAverageColor(album.images[2].url);
-    return {
-        id: album.id,
-        color: color.hex,
-        image: album.images[imageSize ?? 2].url,
-        key: appendUUID(album.id),
-        name: album.name,
-        release_date: album.release_date,
-    };
-};
-
-const buildTrack = async (
-    data: ITrackDTO,
-    imageSize?: AlbumImageSize
-): Promise<ITrack> => ({
-    id: data.id,
-    album: await reduceAlbum(data.album, imageSize),
-    artists: reduceItemArtists(data.artists),
-    key: appendUUID(data.id),
-    name: data.name,
-    popularity: data.popularity,
-    type: data.type,
-});
-
-export const buildTracks = async (
-    trackDTOs: ITrackDTO[],
-    imageSize?: AlbumImageSize
-): Promise<ITrack[]> => {
-    return await Promise.all(
-        trackDTOs.map(async (track) => await buildTrack(track, imageSize))
-    );
-};
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getSession({ req });

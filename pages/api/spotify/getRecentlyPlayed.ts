@@ -2,17 +2,10 @@
 import axios, { AxiosResponse } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import { IRecentlyPlayed } from '../../../lib/client/spotify-types';
+import { buildRecentlyPlayed } from '../../../lib/server/spotify';
 import { IRecentlyPlayedDTO } from '../../../lib/server/spotify-types';
-import { buildTracks } from './getTrack';
 
 const endpoint = 'https://api.spotify.com/v1/me/player/recently-played';
-
-const buildRecentlyPlayed = async (
-    data: IRecentlyPlayedDTO
-): Promise<IRecentlyPlayed> => ({
-    items: await buildTracks(data.items.map((item) => item.track)),
-});
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getSession({ req });
