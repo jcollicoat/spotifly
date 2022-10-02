@@ -1,6 +1,5 @@
 import { QueryKey } from '@tanstack/react-query';
 import axios from 'axios';
-import { appendUUID, reduceAlbum, reduceItemArtists } from './helpers';
 import {
     AlbumImageSize,
     IAlbum,
@@ -10,7 +9,6 @@ import {
     ITopTracks,
     ITopTracksDTO,
     ITrack,
-    ITrackDTO,
     IUserProfile,
     IUserProfileDTO,
 } from './types/spotify';
@@ -57,40 +55,18 @@ export const getArtist = async ({
     return artist;
 };
 
-const buildTrack = async (
-    data: ITrackDTO,
-    imageSize?: AlbumImageSize
-): Promise<ITrack> => ({
-    id: data.id,
-    album: await reduceAlbum(data.album, imageSize),
-    artists: reduceItemArtists(data.artists),
-    key: appendUUID(data.id),
-    name: data.name,
-    popularity: data.popularity,
-    type: data.type,
-});
-
 export const getTrack = async ({
     queryKey,
 }: {
     queryKey: QueryKey;
 }): Promise<ITrack> => {
-    const { data }: { data: ITrackDTO } = await axios.get(
+    const { data: track }: { data: ITrack } = await axios.get(
         '/api/spotify/getTrack',
         {
             params: { trackId: queryKey[1] },
         }
     );
-    return buildTrack(data);
-};
-
-const buildTracks = async (
-    trackDTOs: ITrackDTO[],
-    imageSize?: AlbumImageSize
-): Promise<ITrack[]> => {
-    return await Promise.all(
-        trackDTOs.map(async (track) => await buildTrack(track, imageSize))
-    );
+    return track;
 };
 
 const buildRecentlyPlayed = async (
