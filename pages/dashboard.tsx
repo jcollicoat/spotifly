@@ -1,13 +1,14 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { AppPage } from '../components/AppPage/AppPage';
+import { ArtistList } from '../components/ArtistList/ArtistList';
 import { TrackFeature } from '../components/TrackFeature/TrackFeature';
 import { TrackList } from '../components/TrackList/TrackList';
 import { UserProfile } from '../components/UserProfile/UserProfile';
-import { useRecentlyPlayed } from '../hooks/useSpotify';
+import { useTopArtists } from '../hooks/useSpotify';
 
 const TopLists: NextPage = () => {
-    const { data, isError, isLoading } = useRecentlyPlayed();
+    const { data, isError, isLoading } = useTopArtists();
     console.log(data, `Error: ${isError}`, `Loading: ${isLoading}`);
 
     return (
@@ -32,6 +33,11 @@ const TopLists: NextPage = () => {
                     list="top-tracks"
                     subheading="Last 6 months"
                     title="Your Top Tracks"
+                />
+                <ArtistList
+                    list="top-artists"
+                    subheading="Last 6 months"
+                    title="Your Top Artists"
                 />
             </AppPage>
         </>

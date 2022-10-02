@@ -14,7 +14,7 @@
             grid-template-areas:
                 'user user user track-feature track-feature track-feature'
                 'recently-played recently-played recently-played top-tracks top-tracks top-tracks'
-                'x x x x x x';
+                'top-artists top-artists top-artists x x x';
         }
     }
 
@@ -25,7 +25,7 @@
         &.dashboard {
             grid-template-areas:
                 'user user user user user user user user track-feature track-feature track-feature track-feature'
-                'recently-played recently-played recently-played recently-played top-tracks top-tracks top-tracks top-tracks top-albums top-albums top-albums top-albums';
+                'recently-played recently-played recently-played recently-played top-tracks top-tracks top-tracks top-tracks top-artists top-artists top-artists top-artists';
         }
     }
 }
