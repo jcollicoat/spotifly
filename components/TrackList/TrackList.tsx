@@ -52,9 +52,9 @@ export const TrackList: FC<ITracksListPanel> = ({
     };
 
     const heading: IPanelHeading = {
-        title: title,
         subheading: subheading,
-        large: true,
+        title: title,
+        titleLarge: true,
     };
 
     const display: IPanelDisplay = {
