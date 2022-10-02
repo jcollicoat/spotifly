@@ -4,6 +4,7 @@ import {
     IAlbum,
     IArtist,
     IRecentlyPlayed,
+    ITopAlbums,
     ITopTracks,
     ITrack,
     IUserProfile,
@@ -94,6 +95,13 @@ export const getRecentlyPlayedSingle = async (): Promise<IRecentlyPlayed> => {
         }
     );
     return recentlyPlayed;
+};
+
+export const getTopAlbums = async (): Promise<ITopAlbums> => {
+    const { data: topAlbums }: { data: ITopAlbums } = await axios.get(
+        '/api/spotify/getTopAlbums'
+    );
+    return topAlbums;
 };
 
 export const getTopTracks = async (): Promise<ITopTracks> => {

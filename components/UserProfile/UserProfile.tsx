@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { FC } from 'react';
-import { getUserProfile } from '../../lib/spotify';
-import { IUserProfile } from '../../lib/spotify-types';
+import { getUserProfile } from '../../lib/client/spotify';
+import { IUserProfile } from '../../lib/client/spotify-types';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';

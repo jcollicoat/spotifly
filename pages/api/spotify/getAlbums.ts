@@ -2,23 +2,9 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import { IAlbumDTO, IAlbum } from '../../../lib/spotify-types';
-import { reduceItemArtists, appendUUID } from '../api-helpers';
+import { buildAlbums } from './getAlbum';
 
 const endpoint = 'https://api.spotify.com/v1/albums';
-
-const buildAlbums = (data: IAlbumDTO[]): IAlbum[] =>
-    data.map((item) => ({
-        album_type: item.album_type,
-        artists: reduceItemArtists(item.artists),
-        id: item.id,
-        images: item.images,
-        key: appendUUID(item.id),
-        name: item.name,
-        release_date: item.release_date,
-        total_tracks: item.total_tracks,
-        type: item.type,
-    }));
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getSession({ req });

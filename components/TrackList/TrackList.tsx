@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useRecentlyPlayed, useTopTracks } from '../../hooks/useSpotify';
-import { ITrack } from '../../lib/spotify-types';
-import { appendUUID } from '../../pages/api/api-helpers';
+import { ITrack } from '../../lib/client/spotify-types';
+import { appendUUID } from '../../lib/server/helpers';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
 import { ICreatePanel, SkeletonStates } from '../types';

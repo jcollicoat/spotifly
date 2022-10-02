@@ -106,6 +106,16 @@ export interface IRecentlyPlayedDTO {
     total: number;
 }
 
+export interface ITopAlbumsDTO {
+    href: string;
+    items: IAlbumDTO[];
+    limit: number;
+    next?: string;
+    offset: number;
+    previous?: string;
+    total: number;
+}
+
 export interface ITopTracksDTO {
     href: string;
     items: ITrackDTO[];
@@ -163,8 +173,9 @@ export interface IArtistReduced {
 export interface IAlbum {
     album_type: string;
     artists: IArtistReduced[];
+    color: string;
     id: string;
-    images: ISpotifyImageDTO[];
+    image: string;
     key: string;
     name: string;
     release_date: string;
@@ -195,6 +206,10 @@ export interface ITrack {
 
 export interface IRecentlyPlayed {
     items: ITrack[];
+}
+
+export interface ITopAlbums {
+    items: IAlbum[];
 }
 
 export interface ITopTracks {

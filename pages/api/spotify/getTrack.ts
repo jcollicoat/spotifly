@@ -9,8 +9,8 @@ import {
     ITrack,
     IAlbumDTO,
     IAlbumReduced,
-} from '../../../lib/spotify-types';
-import { reduceItemArtists, appendUUID } from '../api-helpers';
+} from '../../../lib/client/spotify-types';
+import { reduceItemArtists, appendUUID } from '../../../lib/server/helpers';
 
 const endpoint = 'https://api.spotify.com/v1/tracks/';
 
