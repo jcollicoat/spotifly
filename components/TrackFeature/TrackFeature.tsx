@@ -146,6 +146,10 @@ export const TrackFeature: FC<ITrackFeaturePanel> = ({
         measureOverflow();
     }, [width]);
 
+    useEffect(() => {
+        measureOverflow();
+    }, []);
+
     if (!track) {
         return (
             <Panel display={display} heading={heading}>
