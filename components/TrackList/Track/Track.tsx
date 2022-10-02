@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
-import { ITrack } from '../../../lib/client/spotify-types';
+import { ISmallListTrack } from '../../../lib/client/spotify-types';
 import { SkeletonImage } from '../../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../../Skeletons/SkeletonText/SkeletonText';
 import { IComponent, ITrackComponentBase } from '../../types';
@@ -21,7 +21,7 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
     <div
         className={styles.track}
         style={{
-            backgroundColor: data && data.track.album.color,
+            backgroundColor: data && data.track.color,
         }}
     >
         <div
@@ -33,7 +33,7 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
             <div className={styles.cover}>
                 {data ? (
                     <Image
-                        src={data.track.album.image}
+                        src={data.track.image}
                         alt=""
                         height={36}
                         width={36}
@@ -96,7 +96,7 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
 );
 
 // TODO: Get rid
-export const Track: FC<{ track: ITrack }> = ({ track }) => {
+export const Track: FC<{ track: ISmallListTrack }> = ({ track }) => {
     const detailsRef = useRef<HTMLDivElement>(null);
     const noWrapRef = useRef<HTMLDivElement>(null);
     const { width } = useWindowSize();
@@ -121,7 +121,9 @@ export const Track: FC<{ track: ITrack }> = ({ track }) => {
         track: {
             album: track.album,
             artists: track.artists,
+            color: track.color,
             id: track.id,
+            image: track.image,
             name: track.name,
         },
         detailsRef: detailsRef,

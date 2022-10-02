@@ -2,13 +2,13 @@ import { getAverageColor } from 'fast-average-color-node';
 import {
     AlbumImageSize,
     IAlbum,
-    IAlbumReduced,
+    IAlbumMinimum,
     // IArtist,
     IRecentlyPlayed,
     ISmallListArtist,
+    ISmallListTrack,
     ITopArtists,
     ITopTracks,
-    ITrack,
     IUserProfile,
 } from '../client/spotify-types';
 import { reduceItemArtists, appendUUID } from './helpers';
@@ -22,18 +22,11 @@ import {
     IUserProfileDTO,
 } from './spotify-types';
 
-export const reduceAlbum = async (
-    album: IAlbumDTO,
-    imageSize?: AlbumImageSize
-): Promise<IAlbumReduced> => {
-    const color = await getAverageColor(album.images[2].url);
+export const reduceAlbum = (album: IAlbumDTO): IAlbumMinimum => {
     return {
         id: album.id,
-        color: color.hex,
-        image: album.images[imageSize ?? 2].url,
         key: appendUUID(album.id),
         name: album.name,
-        release_date: album.release_date,
     };
 };
 
@@ -79,41 +72,66 @@ export const buildAlbums = async (
 
 export const buildTrack = async (
     data: ITrackDTO,
-    imageSize?: AlbumImageSize
-): Promise<ITrack> => {
+    imageSize?: AlbumImageSize,
+    type?: 'list-small'
+): Promise<ISmallListTrack> => {
     const color = await getAverageColor(data.album.images[2].url);
-    return {
+    if (type === 'list-small') {
+        const track: ISmallListTrack = {
+            id: data.id,
+            album: reduceAlbum(data.album),
+            artists: reduceItemArtists(data.artists),
+            color: color.hex,
+            image: data.album.images[imageSize ?? 2].url,
+            key: appendUUID(data.id),
+            name: data.name,
+            popularity: data.popularity,
+            type: data.type,
+        };
+        return track;
+    }
+    const track: ISmallListTrack = {
         id: data.id,
-        album: await reduceAlbum(data.album, imageSize),
+        album: reduceAlbum(data.album),
         artists: reduceItemArtists(data.artists),
         color: color.hex,
+        image: data.album.images[imageSize ?? 2].url,
         key: appendUUID(data.id),
         name: data.name,
         popularity: data.popularity,
         type: data.type,
     };
+    return track;
 };
 
 export const buildTracks = async (
     trackDTOs: ITrackDTO[],
-    imageSize?: AlbumImageSize
-): Promise<ITrack[]> => {
+    imageSize?: AlbumImageSize,
+    type?: 'list-small'
+): Promise<ISmallListTrack[]> => {
     return await Promise.all(
-        trackDTOs.map(async (track) => await buildTrack(track, imageSize))
+        trackDTOs.map(async (track) => await buildTrack(track, imageSize, type))
     );
 };
 
 export const buildRecentlyPlayed = async (
     data: IRecentlyPlayedDTO
-): Promise<IRecentlyPlayed> => ({
-    items: await buildTracks(data.items.map((item) => item.track)),
-    limit: data.limit,
-    next: data.next,
-    cursors: {
-        after: data.cursors.after,
-    },
-    total: data.total,
-});
+): Promise<IRecentlyPlayed<ISmallListTrack>> => {
+    const items: ISmallListTrack[] = await buildTracks(
+        data.items.map((item) => item.track),
+        AlbumImageSize.small,
+        'list-small'
+    );
+    return {
+        items: items,
+        limit: data.limit,
+        next: data.next,
+        cursors: {
+            after: data.cursors.after,
+        },
+        total: data.total,
+    };
+};
 
 const buildArtist = async (
     artist: IArtistDTO,
@@ -153,8 +171,8 @@ export const buildTopArtists = async (
 
 export const buildTopTracks = async (
     data: ITopTracksDTO
-): Promise<ITopTracks> => ({
-    items: await buildTracks(data.items),
+): Promise<ITopTracks<ISmallListTrack>> => ({
+    items: await buildTracks(data.items, AlbumImageSize.small, 'list-small'),
     next: data.next,
     offset: data.offset,
     previous: data.previous,

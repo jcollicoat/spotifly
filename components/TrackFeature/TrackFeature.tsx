@@ -5,7 +5,10 @@ import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
 import { getRecentlyPlayedSingle } from '../../lib/client/spotify';
-import { IRecentlyPlayed } from '../../lib/client/spotify-types';
+import {
+    IRecentlyPlayed,
+    ISmallListTrack,
+} from '../../lib/client/spotify-types';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
@@ -32,7 +35,7 @@ const TrackFeatureSkeleton: FC<TrackFeatureSkeleton> = ({ data, state }) => (
             <div className={styles.cover}>
                 {data ? (
                     <Image
-                        src={data.track.album.image}
+                        src={data.track.image}
                         alt=""
                         height={120}
                         width={120}
@@ -107,13 +110,11 @@ export const TrackFeature: FC<ITrackFeaturePanel> = ({
     title,
     isSkeleton,
 }) => {
-    const { data: track, isLoading } = useQuery<IRecentlyPlayed>(
-        ['track-feature'],
-        getRecentlyPlayedSingle,
-        {
-            staleTime: Infinity,
-        }
-    );
+    const { data: track, isLoading } = useQuery<
+        IRecentlyPlayed<ISmallListTrack>
+    >(['track-feature'], getRecentlyPlayedSingle, {
+        staleTime: Infinity,
+    });
 
     const heading: IPanelHeading = {
         title: title,
@@ -159,9 +160,11 @@ export const TrackFeature: FC<ITrackFeaturePanel> = ({
     } else {
         const data: ITrackFeatureSkeleton = {
             track: {
+                id: track.items[0].id,
                 album: track.items[0].album,
                 artists: track.items[0].artists,
-                id: track.items[0].id,
+                color: track.items[0].color,
+                image: track.items[0].image,
                 name: track.items[0].name,
             },
             detailsRef: detailsRef,

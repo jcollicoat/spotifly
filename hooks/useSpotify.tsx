@@ -9,6 +9,7 @@ import {
 import {
     IRecentlyPlayed,
     ISmallListArtist,
+    ISmallListTrack,
     ITopAlbums,
     ITopArtists,
     ITopTracks,
@@ -16,7 +17,9 @@ import {
 } from '../lib/client/spotify-types';
 import { TimeMS } from '../lib/constants';
 
-export const useRecentlyPlayed = (): UseQueryResult<IRecentlyPlayed> => {
+export const useRecentlyPlayed = (): UseQueryResult<
+    IRecentlyPlayed<ISmallListTrack>
+> => {
     return useQuery(['recently-played'], getRecentlyPlayed, {
         staleTime: TimeMS.Minutes5,
     });
@@ -42,7 +45,7 @@ export const useTopArtists = (): UseQueryResult<
     });
 };
 
-export const useTopTracks = (): UseQueryResult<ITopTracks> => {
+export const useTopTracks = (): UseQueryResult<ITopTracks<ISmallListTrack>> => {
     return useQuery(['top-tracks'], getTopTracks, {
         staleTime: Infinity,
     });

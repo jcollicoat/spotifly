@@ -1,4 +1,4 @@
-import { IAlbum, ITrack } from '../lib/client/spotify-types';
+import { IAlbum, ISmallListTrack } from '../lib/client/spotify-types';
 
 export type SkeletonStates = 'error' | 'warning';
 
@@ -19,9 +19,12 @@ export interface ICreatePanel {
 }
 
 export interface IAlbumComponentBase {
-    album: Pick<IAlbum, 'artists' | 'color' | 'id' | 'image' | 'name'>;
+    album: Pick<IAlbum, 'id' | 'artists' | 'color' | 'image' | 'name'>;
 }
 
 export interface ITrackComponentBase {
-    track: Pick<ITrack, 'album' | 'artists' | 'id' | 'name'>;
+    track: Pick<
+        ISmallListTrack,
+        'id' | 'album' | 'artists' | 'color' | 'image' | 'name'
+    >;
 }

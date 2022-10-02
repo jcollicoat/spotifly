@@ -6,16 +6,13 @@ export enum AlbumImageSize {
     large = 0,
 }
 
-export interface IAlbumReduced {
+export interface IAlbumMinimum {
     id: string;
-    color: string;
-    image: string;
     key: string;
     name: string;
-    release_date: string;
 }
 
-export interface IArtistReduced {
+export interface IArtistMinimum {
     id: string;
     key: string;
     name: string;
@@ -23,7 +20,7 @@ export interface IArtistReduced {
 
 export interface IAlbum {
     album_type: string;
-    artists: IArtistReduced[];
+    artists: IArtistMinimum[];
     color: string;
     id: string;
     image: string;
@@ -47,8 +44,8 @@ export interface IArtist {
 
 export interface ITrack {
     id: string;
-    album: IAlbumReduced;
-    artists: IArtistReduced[];
+    album: IAlbumMinimum;
+    artists: IArtistMinimum[];
     color: string;
     key: string;
     name: string;
@@ -56,8 +53,8 @@ export interface ITrack {
     type: string;
 }
 
-export interface IRecentlyPlayed {
-    items: ITrack[];
+export interface IRecentlyPlayed<T> {
+    items: T[];
     limit?: number;
     next?: string | null;
     cursors?: {
@@ -89,8 +86,20 @@ export interface ITopArtists<T> {
     total?: number;
 }
 
-export interface ITopTracks {
-    items: ITrack[];
+export interface ISmallListTrack {
+    id: string;
+    album: IAlbumMinimum;
+    artists: IArtistMinimum[];
+    color: string;
+    image: string;
+    key: string;
+    name: string;
+    popularity: number;
+    type: string;
+}
+
+export interface ITopTracks<T> {
+    items: T[];
     next?: string | null;
     offset?: number;
     previous?: string | null;
