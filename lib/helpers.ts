@@ -1,3 +1,4 @@
+import { FastAverageColor } from 'fast-average-color';
 import { v4 as uuidv4 } from 'uuid';
 import {
     IItemArtistDTO,
@@ -9,17 +10,21 @@ import {
 
 export const appendUUID = (input: string): string => `${input}-${uuidv4()}`;
 
-export const reduceAlbum = (
+export const reduceAlbum = async (
     album: IAlbumDTO,
     imageSize?: AlbumImageSize
-): IAlbumReduced => ({
-    id: album.id,
-    color: 'pink',
-    image: album.images[imageSize ?? 2].url,
-    key: appendUUID(album.id),
-    name: album.name,
-    release_date: album.release_date,
-});
+): Promise<IAlbumReduced> => {
+    const fac = new FastAverageColor();
+    const color = await fac.getColorAsync(album.images[2].url);
+    return {
+        id: album.id,
+        color: color.hex,
+        image: album.images[imageSize ?? 2].url,
+        key: appendUUID(album.id),
+        name: album.name,
+        release_date: album.release_date,
+    };
+};
 
 export const reduceItemArtists = (
     artists: IItemArtistDTO[]

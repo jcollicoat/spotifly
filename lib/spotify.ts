@@ -95,10 +95,13 @@ export const getArtist = async ({
     return buildArtist(data);
 };
 
-const buildTrack = (data: ITrackDTO, imageSize?: AlbumImageSize): ITrack => ({
-    album: reduceAlbum(data.album, imageSize),
-    artists: reduceItemArtists(data.artists),
+const buildTrack = async (
+    data: ITrackDTO,
+    imageSize?: AlbumImageSize
+): Promise<ITrack> => ({
     id: data.id,
+    album: await reduceAlbum(data.album, imageSize),
+    artists: reduceItemArtists(data.artists),
     key: appendUUID(data.id),
     name: data.name,
     popularity: data.popularity,
@@ -119,8 +122,19 @@ export const getTrack = async ({
     return buildTrack(data);
 };
 
-const buildRecentlyPlayed = (data: IRecentlyPlayedDTO): IRecentlyPlayed => ({
-    items: data.items.map((item) => buildTrack(item.track)),
+const buildTracks = async (
+    trackDTOs: ITrackDTO[],
+    imageSize?: AlbumImageSize
+): Promise<ITrack[]> => {
+    return await Promise.all(
+        trackDTOs.map(async (track) => await buildTrack(track, imageSize))
+    );
+};
+
+const buildRecentlyPlayed = async (
+    data: IRecentlyPlayedDTO
+): Promise<IRecentlyPlayed> => ({
+    items: await buildTracks(data.items.map((item) => item.track)), //.map((item) => buildTrack(item.track)),
 });
 
 export const getRecentlyPlayed = async (): Promise<IRecentlyPlayed> => {
@@ -137,16 +151,8 @@ export const getRecentlyPlayedTrack = async (): Promise<ITrack> => {
     return buildTrack(data.items[0].track, AlbumImageSize.medium);
 };
 
-const buildTopTracks = (data: ITopTracksDTO): ITopTracks => ({
-    items: data.items.map((item) => ({
-        album: reduceAlbum(item.album),
-        artists: reduceItemArtists(item.artists),
-        id: item.id,
-        key: appendUUID(item.id),
-        name: item.name,
-        popularity: item.popularity,
-        type: item.type,
-    })),
+const buildTopTracks = async (data: ITopTracksDTO): Promise<ITopTracks> => ({
+    items: await buildTracks(data.items), //.map((item) => buildTrack(item.track)),
 });
 
 export const getTopTracks = async (): Promise<ITopTracks> => {
