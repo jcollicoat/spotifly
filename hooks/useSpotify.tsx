@@ -3,11 +3,14 @@ import {
     getRecentlyPlayed,
     getRecentlyPlayedSingle,
     getTopAlbums,
+    getTopArtists,
     getTopTracks,
 } from '../lib/client/spotify';
 import {
     IRecentlyPlayed,
+    ISmallListArtist,
     ITopAlbums,
+    ITopArtists,
     ITopTracks,
     ITrack,
 } from '../lib/client/spotify-types';
@@ -27,6 +30,14 @@ export const useRecentlyPlayedSingle = (): UseQueryResult<ITrack> => {
 
 export const useTopAlbums = (): UseQueryResult<ITopAlbums> => {
     return useQuery(['top-albums'], getTopAlbums, {
+        staleTime: Infinity,
+    });
+};
+
+export const useTopArtists = (): UseQueryResult<
+    ITopArtists<ISmallListArtist>
+> => {
+    return useQuery(['top-artists'], getTopArtists, {
         staleTime: Infinity,
     });
 };
