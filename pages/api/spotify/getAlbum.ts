@@ -3,12 +3,9 @@ import axios from 'axios';
 // import { getAverageColor } from 'fast-average-color-node';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import {
-    AlbumImageSize,
-    IAlbum,
-    IAlbumDTO,
-} from '../../../lib/client/spotify-types';
+import { AlbumImageSize, IAlbum } from '../../../lib/client/spotify-types';
 import { appendUUID, reduceItemArtists } from '../../../lib/server/helpers';
+import { IAlbumDTO } from '../../../lib/server/spotify-types';
 
 const endpoint = 'https://api.spotify.com/v1/albums/';
 

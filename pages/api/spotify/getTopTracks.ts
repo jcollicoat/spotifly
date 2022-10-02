@@ -2,7 +2,8 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import { ITopTracksDTO, ITopTracks } from '../../../lib/client/spotify-types';
+import { ITopTracks } from '../../../lib/client/spotify-types';
+import { ITopTracksDTO } from '../../../lib/server/spotify-types';
 import { buildTracks } from './getTrack';
 
 const endpoint = 'https://api.spotify.com/v1/me/top/tracks';

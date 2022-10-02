@@ -4,13 +4,12 @@ import { getAverageColor } from 'fast-average-color-node';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import {
-    ITrackDTO,
     AlbumImageSize,
     ITrack,
-    IAlbumDTO,
     IAlbumReduced,
 } from '../../../lib/client/spotify-types';
 import { reduceItemArtists, appendUUID } from '../../../lib/server/helpers';
+import { IAlbumDTO, ITrackDTO } from '../../../lib/server/spotify-types';
 
 const endpoint = 'https://api.spotify.com/v1/tracks/';
 
