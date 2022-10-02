@@ -27,7 +27,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const access_token = session.access_token;
         const limit =
             typeof req.query.limit === 'string' ? Number(req.query.limit) : 20;
-        console.log(limit);
 
         const response: AxiosResponse<IRecentlyPlayedDTO> = await axios.get(
             endpoint,
