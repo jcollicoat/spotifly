@@ -12,7 +12,7 @@ type ComponentTypes = 'recently-played' | 'top-tracks';
 interface ITracksListPanel extends ICreatePanel {
     list: ComponentTypes;
     subheading: string;
-    title: string;
+    title?: string;
 }
 
 export const TrackList: FC<ITracksListPanel> = ({

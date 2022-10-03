@@ -12,7 +12,7 @@ type ComponentTypes = 'top-artists';
 interface IArtistListPanel extends ICreatePanel {
     list: ComponentTypes;
     subheading: string;
-    title: string;
+    title?: string;
 }
 
 export const ArtistList: FC<IArtistListPanel> = ({
