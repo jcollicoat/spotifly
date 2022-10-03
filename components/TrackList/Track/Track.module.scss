@@ -19,33 +19,6 @@
         padding: $space-medium;
         position: relative;
 
-        &::after {
-            background: linear-gradient(
-                to left,
-                rgba($color-gray-9, 1) 0px,
-                rgba($color-gray-9, 1) $space-medium,
-                rgba($color-gray-9, 0)
-            );
-            background-position: right;
-            content: '';
-            cursor: none;
-            height: 100%;
-            opacity: 0;
-            pointer-events: none;
-            position: absolute;
-            right: 0;
-            width: 80px;
-            top: 0;
-            transition: $transition-ease-slow;
-            transition-property: opacity;
-        }
-
-        &.overflowed {
-            &::after {
-                opacity: 1;
-            }
-        }
-
         .cover {
             position: relative;
             flex-shrink: 0;
@@ -58,6 +31,12 @@
         }
 
         .details {
+            mask-image: linear-gradient(
+                to left,
+                transparent 0,
+                rgba(#000000, 1) $space-xlarge,
+                rgba(#000000, 1)
+            );
             padding: $space-xsmall 0;
             overflow: hidden;
             position: relative;
