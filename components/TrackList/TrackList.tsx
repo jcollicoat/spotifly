@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useRecentlyPlayed, useTopTracks } from '../../hooks/useSpotify';
-import { ITrack } from '../../lib/client/spotify-types';
+import { ISmallListTrack } from '../../lib/client/spotify-types';
 import { appendUUID } from '../../lib/server/helpers';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
@@ -33,7 +33,7 @@ export const TrackList: FC<ITracksListPanel> = ({
     const { data, isError, isLoading } = query();
 
     // TODO: Fix this ugly ass code
-    const mapTracks = (tracks?: ITrack[] | SkeletonStates) => {
+    const mapTracks = (tracks?: ISmallListTrack[] | SkeletonStates) => {
         if (!tracks || isSkeleton) {
             return new Array(20)
                 .fill('')
