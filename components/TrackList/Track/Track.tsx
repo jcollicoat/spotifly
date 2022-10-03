@@ -48,9 +48,7 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
                         data?.overflow && data.overflow < 0
                             ? {
                                   left: `${data.overflow}px`,
-                                  transform: `translate(${
-                                      data.overflow * -1
-                                  }px, -50%)`,
+                                  transform: `translate(${-data.overflow}px, -50%)`,
                               }
                             : undefined
                     }
