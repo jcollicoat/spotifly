@@ -40,9 +40,7 @@ export const PanelHeading: FC<IPanelHeading> = ({
                 case 6:
                     return <h6 className={styles.subheading}>{subheading}</h6>;
                 default:
-                    return (
-                        <div className={styles.subheading}>{subheading}</div>
-                    );
+                    return <h2 className={styles.subheading}>{subheading}</h2>;
             }
         }
         return <div className={styles.subheading}>{subheading}</div>;
