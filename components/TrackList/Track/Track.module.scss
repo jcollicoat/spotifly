@@ -22,7 +22,8 @@
         &::after {
             background: linear-gradient(
                 to left,
-                rgba($color-gray-9, 1),
+                rgba($color-gray-9, 1) 0px,
+                rgba($color-gray-9, 1) $space-medium,
                 rgba($color-gray-9, 0)
             );
             background-position: right;

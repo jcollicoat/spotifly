@@ -114,7 +114,5 @@ export const Artist: FC<{ artist: ISmallListArtist }> = ({ artist }) => {
         isOverflowed: isOverflowed,
     };
 
-    console.log(data.artist);
-
     return <ArtistSkeleton data={data} />;
 };
