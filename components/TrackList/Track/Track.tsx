@@ -12,7 +12,7 @@ import styles from './Track.module.scss';
 interface ITrackSkeleton extends ITrackComponentBase {
     detailsRef: React.RefObject<HTMLDivElement>;
     noWrapRef: React.RefObject<HTMLDivElement>;
-    isOverflowed?: boolean;
+    overflow?: number;
 }
 
 type TrackSkeleton = IComponent<ITrackSkeleton>;
@@ -24,12 +24,7 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
             backgroundColor: data && data.track.color,
         }}
     >
-        <div
-            className={classNames(
-                styles.content,
-                data?.isOverflowed && styles.overflowed
-            )}
-        >
+        <div className={styles.content}>
             <div className={styles.cover}>
                 {data ? (
                     <Image
@@ -43,7 +38,23 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
                 )}
             </div>
             <div className={styles.details} ref={data?.detailsRef}>
-                <div className={styles.nowrap} ref={data?.noWrapRef}>
+                <div
+                    className={classNames(
+                        styles.nowrap,
+                        data?.overflow && data.overflow < 0 && styles.overflowed
+                    )}
+                    ref={data?.noWrapRef}
+                    style={
+                        data?.overflow && data.overflow < 0
+                            ? {
+                                  left: `${data.overflow}px`,
+                                  transform: `translate(${
+                                      data.overflow * -1
+                                  }px, -50%)`,
+                              }
+                            : undefined
+                    }
+                >
                     {data ? (
                         <Link href={`/track/${data.track.id}`} passHref>
                             <a
@@ -100,17 +111,13 @@ export const Track: FC<{ track: ISmallListTrack }> = ({ track }) => {
     const detailsRef = useRef<HTMLDivElement>(null);
     const noWrapRef = useRef<HTMLDivElement>(null);
     const { width } = useWindowSize();
-    const [isOverflowed, setIsOverflowed] = useState(false);
+    const [overflow, setOverflow] = useState<number | undefined>(undefined);
 
     const measureOverflow = (): void => {
         const detailsWidth = detailsRef.current?.clientWidth;
         const noWrapWidth = noWrapRef.current?.clientWidth;
-
-        if (!detailsWidth || !noWrapWidth) {
-            setIsOverflowed(false);
-        } else {
-            setIsOverflowed(detailsWidth < noWrapWidth);
-        }
+        if (detailsWidth && noWrapWidth)
+            setOverflow(detailsWidth - noWrapWidth);
     };
 
     useEffect(() => {
@@ -128,7 +135,7 @@ export const Track: FC<{ track: ISmallListTrack }> = ({ track }) => {
         },
         detailsRef: detailsRef,
         noWrapRef: noWrapRef,
-        isOverflowed: isOverflowed,
+        overflow: overflow,
     };
 
     return <TrackSkeleton data={data} />;

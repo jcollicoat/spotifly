@@ -86,6 +86,8 @@ $skeleton-border-radius: $border-radius-button;
 $skeleton-color-block: $color-gray-7;
 $skeleton-color-shimmer: $color-gray-6;
 
+$textscroller-speed: 3s ease-in-out;
+
 /* MIXINS */
 
 @mixin app-container {
