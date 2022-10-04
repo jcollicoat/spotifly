@@ -9,7 +9,9 @@ const ENV = process.env.ENV;
 const endpoint = 'https://api.spotify.com/v1/me/top/tracks';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    if (ENV === 'local') {
+    const session = await getSession({ req });
+
+    if (!session && ENV === 'local') {
         const accessTokenWithPrefix = req.rawHeaders[1];
 
         const response = await axios.get(endpoint, {
@@ -20,25 +22,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const built = await buildTopTracks(response.data);
 
         res.status(response.status).json(built);
+    } else if (!session) {
+        res.status(401).send(
+            'No session data found. User is likely not logged in.'
+        );
     } else {
-        const session = await getSession({ req });
+        const access_token = session.access_token;
 
-        if (!session) {
-            res.status(401).send(
-                'No session data found. User is likely not logged in.'
-            );
-        } else {
-            const access_token = session.access_token;
+        const response = await axios.get(endpoint, {
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+            },
+        });
+        const built = await buildTopTracks(response.data);
 
-            const response = await axios.get(endpoint, {
-                headers: {
-                    Authorization: `Bearer ${access_token}`,
-                },
-            });
-            const built = await buildTopTracks(response.data);
-
-            res.status(response.status).json(built);
-        }
+        res.status(response.status).json(built);
     }
 };
 
