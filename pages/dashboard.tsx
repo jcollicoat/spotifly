@@ -5,11 +5,11 @@ import { ArtistList } from '../components/ArtistList/ArtistList';
 import { TrackFeature } from '../components/TrackFeature/TrackFeature';
 import { TrackList } from '../components/TrackList/TrackList';
 import { UserProfile } from '../components/UserProfile/UserProfile';
-import { useTopArtists } from '../hooks/useSpotify';
+// import { useTopArtists } from '../hooks/useSpotify';
 
 const TopLists: NextPage = () => {
-    const { data, isError, isLoading } = useTopArtists();
-    console.log(data, `Error: ${isError}`, `Loading: ${isLoading}`);
+    // const { data, isError, isLoading } = useTopArtists();
+    // console.log(data, `Error: ${isError}`, `Loading: ${isLoading}`);
 
     return (
         <>
