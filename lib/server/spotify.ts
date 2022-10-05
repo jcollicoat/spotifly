@@ -14,6 +14,7 @@ import {
 import { reduceItemArtists, appendUUID } from './helpers';
 import {
     IAlbumDTO,
+    IAlbumsDTO,
     IArtistDTO,
     IRecentlyPlayedDTO,
     ITopArtistsDTO,
@@ -51,11 +52,13 @@ export const buildAlbum = async (
 };
 
 export const buildAlbums = async (
-    albumDTOs: IAlbumDTO[],
+    albumsDTO: IAlbumsDTO,
     imageSize?: AlbumImageSize
 ): Promise<IAlbum[]> => {
     return await Promise.all(
-        albumDTOs.map(async (track) => await buildAlbum(track, imageSize))
+        albumsDTO.albums.map(
+            async (track) => await buildAlbum(track, imageSize)
+        )
     );
 };
 

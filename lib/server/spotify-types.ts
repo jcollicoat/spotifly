@@ -33,6 +33,10 @@ export interface IAlbumDTO {
     uri: string;
 }
 
+export interface IAlbumsDTO {
+    albums: IAlbumDTO[];
+}
+
 export interface IArtistDTO {
     id: string;
     external_urls: {
