@@ -8,7 +8,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const basic = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64');
 
-const scope = 'user-top-read';
+const scope = 'user-top-read user-read-recently-played';
 
 /**
  * Takes a token, and returns a new token with updated
