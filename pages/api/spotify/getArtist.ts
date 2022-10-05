@@ -15,8 +15,8 @@ const getArtist = async (
         return access_token;
     }
 
-    const artistId = req.query.artistId;
-    return await axios.get<IArtistDTO>(endpoint + artistId, {
+    const artistID = req.query.artistID;
+    return await axios.get<IArtistDTO>(endpoint + artistID, {
         headers: {
             Authorization: access_token,
         },

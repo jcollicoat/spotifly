@@ -9,13 +9,13 @@ import { ITrack } from '../../lib/client/spotify-types';
 
 const TrackPage: NextPage = () => {
     const router = useRouter();
-    const { trackId } = router.query;
+    const { trackId: trackID } = router.query;
 
     const {
         data: track,
         isError,
         isLoading,
-    } = useQuery<ITrack>(['tracks', trackId], getTrack, {
+    } = useQuery<ITrack>(['tracks', trackID], getTrack, {
         staleTime: Infinity,
     });
 

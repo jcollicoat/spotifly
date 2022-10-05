@@ -15,8 +15,8 @@ const getAlbum = async (
         return access_token;
     }
 
-    const albumId = req.query.albumId;
-    return await axios.get<IAlbumDTO>(endpoint + albumId, {
+    const albumID = req.query.albumID;
+    return await axios.get<IAlbumDTO>(endpoint + albumID, {
         headers: {
             Authorization: access_token,
         },

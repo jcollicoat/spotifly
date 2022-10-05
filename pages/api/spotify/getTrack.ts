@@ -1,32 +1,39 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
+import { determineAccessToken } from '../../../lib/server/auth';
 import { buildTrack } from '../../../lib/server/spotify';
+import { ITrackDTO } from '../../../lib/server/spotify-types';
 
 const endpoint = 'https://api.spotify.com/v1/tracks/';
 
+const getTrack = async (
+    req: NextApiRequest
+): Promise<AxiosResponse<ITrackDTO> | null> => {
+    const access_token = await determineAccessToken(req);
+    if (access_token === null) {
+        return access_token;
+    }
+
+    const trackID = req.query.trackID;
+    return await axios.get<ITrackDTO>(endpoint + trackID, {
+        headers: {
+            Authorization: access_token,
+        },
+    });
+};
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const session = await getSession({ req });
-    const trackId = req.query.trackId;
+    const api = await getTrack(req);
 
-    if (typeof trackId !== 'string') {
-        res.status(400).send(`Bad trackID supplied: ${trackId}`);
-    } else if (!session) {
-        res.status(401).send(
-            'No session data found. User is likely not logged in.'
-        );
+    if (!api) {
+        res.status(401).send('Invalid Spotify access_token provided.');
     } else {
-        const access_token = session.access_token;
-
-        const response = await axios.get(endpoint + trackId, {
-            headers: {
-                Authorization: `Bearer ${access_token}`,
-            },
-        });
-        const built = await buildTrack(response.data);
-
-        res.status(response.status).json(built);
+        if (api.status !== 200) {
+            res.status(api.status).json(api.data);
+        }
+        const built = await buildTrack(api.data);
+        res.status(200).json(built);
     }
 };
 

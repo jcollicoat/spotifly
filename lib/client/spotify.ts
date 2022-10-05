@@ -21,7 +21,7 @@ export const getAlbum = async ({
     const { data: album }: { data: IAlbum } = await axios.get(
         '/api/spotify/getAlbum',
         {
-            params: { albumId: queryKey[1] },
+            params: { albumID: queryKey[1] },
         }
     );
     return album;
@@ -35,7 +35,7 @@ export const getAlbums = async ({
     const { data: albums }: { data: IAlbum[] } = await axios.get(
         '/api/spotify/getAlbums',
         {
-            params: { albumIds: queryKey[1] },
+            params: { albumIDs: queryKey[1] },
         }
     );
     return albums;
@@ -49,7 +49,7 @@ export const getArtist = async ({
     const { data: artist }: { data: IArtist } = await axios.get(
         '/api/spotify/getArtist',
         {
-            params: { artistId: queryKey[1] },
+            params: { artistID: queryKey[1] },
         }
     );
     return artist;
@@ -63,7 +63,7 @@ export const getTrack = async ({
     const { data: track }: { data: ITrack } = await axios.get(
         '/api/spotify/getTrack',
         {
-            params: { trackId: queryKey[1] },
+            params: { trackID: queryKey[1] },
         }
     );
     return track;

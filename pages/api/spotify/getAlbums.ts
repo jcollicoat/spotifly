@@ -15,13 +15,13 @@ const getAlbums = async (
         return access_token;
     }
 
-    const albumIds = req.query.albumIds?.toString();
+    const albumIDs = req.query.albumIDs?.toString();
     return await axios.get<IAlbumsDTO>(endpoint, {
         headers: {
             Authorization: access_token,
         },
         params: {
-            ids: albumIds,
+            ids: albumIDs,
         },
     });
 };

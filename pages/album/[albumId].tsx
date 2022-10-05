@@ -9,13 +9,13 @@ import { IAlbum } from '../../lib/client/spotify-types';
 
 const AlbumPage: NextPage = () => {
     const router = useRouter();
-    const { albumId } = router.query;
+    const { albumId: albumID } = router.query;
 
     const {
         data: album,
         isError,
         isLoading,
-    } = useQuery<IAlbum>(['albums', albumId], getAlbum, {
+    } = useQuery<IAlbum>(['albums', albumID], getAlbum, {
         staleTime: Infinity,
     });
 

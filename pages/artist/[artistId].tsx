@@ -9,13 +9,13 @@ import { IArtist } from '../../lib/client/spotify-types';
 
 const TrackPage: NextPage = () => {
     const router = useRouter();
-    const { artistId } = router.query;
+    const { artistId: artistID } = router.query;
 
     const {
         data: artist,
         isError,
         isLoading,
-    } = useQuery<IArtist>(['artists', artistId], getArtist, {
+    } = useQuery<IArtist>(['artists', artistID], getArtist, {
         staleTime: Infinity,
     });
 
