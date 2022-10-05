@@ -10,20 +10,17 @@ const endpoint = 'https://api.spotify.com/v1/artists/';
 const getArtist = async (
     req: NextApiRequest
 ): Promise<AxiosResponse<IArtistDTO> | null> => {
-    const artistId = req.query.artistId;
-
     const access_token = await determineAccessToken(req);
     if (access_token === null) {
         return access_token;
     }
 
-    const api = await axios.get<IArtistDTO>(endpoint + artistId, {
+    const artistId = req.query.artistId;
+    return await axios.get<IArtistDTO>(endpoint + artistId, {
         headers: {
             Authorization: access_token,
         },
     });
-
-    return api;
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

@@ -15,13 +15,11 @@ const getTopTracks = async (
         return access_token;
     }
 
-    const api = await axios.get<ITopTracksDTO>(endpoint, {
+    return await axios.get<ITopTracksDTO>(endpoint, {
         headers: {
             Authorization: access_token,
         },
     });
-
-    return api;
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
