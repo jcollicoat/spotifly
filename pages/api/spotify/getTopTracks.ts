@@ -1,42 +1,50 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { buildTopTracks } from '../../../lib/server/spotify';
+import { ITopTracksDTO } from '../../../lib/server/spotify-types';
 
 const ENV = process.env.ENV;
 
 const endpoint = 'https://api.spotify.com/v1/me/top/tracks';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const getTopTracks = async (
+    req: NextApiRequest
+): Promise<AxiosResponse<ITopTracksDTO> | null> => {
     const session = await getSession({ req });
 
-    if (!session && ENV === 'local') {
-        const accessTokenWithPrefix = req.rawHeaders[1];
-
-        const response = await axios.get(endpoint, {
-            headers: {
-                Authorization: accessTokenWithPrefix,
-            },
-        });
-        const built = await buildTopTracks(response.data);
-
-        res.status(response.status).json(built);
-    } else if (!session) {
-        res.status(401).send(
-            'No session data found. User is likely not logged in.'
-        );
+    let access_token: string;
+    if (session) {
+        access_token = `Bearer ${session.access_token}`;
+    } else if (ENV === 'local' && req.rawHeaders[1].match(/Bearer /g)) {
+        // Header Prefix in Postmand Auth
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        access_token = req.rawHeaders[1];
     } else {
-        const access_token = session.access_token;
+        return null;
+    }
 
-        const response = await axios.get(endpoint, {
-            headers: {
-                Authorization: `Bearer ${access_token}`,
-            },
-        });
-        const built = await buildTopTracks(response.data);
+    const api = await axios.get<ITopTracksDTO>(endpoint, {
+        headers: {
+            Authorization: access_token,
+        },
+    });
 
-        res.status(response.status).json(built);
+    return api;
+};
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    const api = await getTopTracks(req);
+
+    if (!api) {
+        res.status(401).send('Invalid Spotify access_token provided.');
+    } else {
+        if (api.status !== 200) {
+            res.status(api.status).json(api.data);
+        }
+        const built = await buildTopTracks(api.data);
+        res.status(200).json(built);
     }
 };
 
