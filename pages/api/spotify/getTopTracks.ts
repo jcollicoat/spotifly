@@ -1,28 +1,18 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios, { AxiosResponse } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
+import { determineAccessToken } from '../../../lib/server/auth';
 import { buildTopTracks } from '../../../lib/server/spotify';
 import { ITopTracksDTO } from '../../../lib/server/spotify-types';
-
-const ENV = process.env.ENV;
 
 const endpoint = 'https://api.spotify.com/v1/me/top/tracks';
 
 const getTopTracks = async (
     req: NextApiRequest
 ): Promise<AxiosResponse<ITopTracksDTO> | null> => {
-    const session = await getSession({ req });
-
-    let access_token: string;
-    if (session) {
-        access_token = `Bearer ${session.access_token}`;
-    } else if (ENV === 'local' && req.rawHeaders[1].match(/Bearer /g)) {
-        // Header Prefix in Postmand Auth
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        access_token = req.rawHeaders[1];
-    } else {
-        return null;
+    const access_token = await determineAccessToken(req);
+    if (access_token === null) {
+        return access_token;
     }
 
     const api = await axios.get<ITopTracksDTO>(endpoint, {

@@ -1,32 +1,42 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
+import { determineAccessToken } from '../../../lib/server/auth';
 import { buildAlbum } from '../../../lib/server/spotify';
+import { IAlbumDTO } from '../../../lib/server/spotify-types';
 
 const endpoint = 'https://api.spotify.com/v1/albums/';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const session = await getSession({ req });
+const getAlbum = async (
+    req: NextApiRequest
+): Promise<AxiosResponse<IAlbumDTO> | null> => {
     const albumId = req.query.albumId;
 
-    if (typeof albumId !== 'string') {
-        res.status(400).send(`Bad albumID supplied: ${albumId}`);
-    } else if (!session) {
-        res.status(401).send(
-            'No session data found. User is likely not logged in.'
-        );
+    const access_token = await determineAccessToken(req);
+    if (access_token === null) {
+        return access_token;
+    }
+
+    const api = await axios.get<IAlbumDTO>(endpoint + albumId, {
+        headers: {
+            Authorization: access_token,
+        },
+    });
+
+    return api;
+};
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    const api = await getAlbum(req);
+
+    if (!api) {
+        res.status(401).send('Invalid Spotify access_token provided.');
     } else {
-        const access_token = session.access_token;
-
-        const response = await axios.get(endpoint + albumId, {
-            headers: {
-                Authorization: `Bearer ${access_token}`,
-            },
-        });
-        const built = buildAlbum(response.data);
-
-        res.status(response.status).json(built);
+        if (api.status !== 200) {
+            res.status(api.status).json(api.data);
+        }
+        const built = await buildAlbum(api.data);
+        res.status(200).json(built);
     }
 };
 
