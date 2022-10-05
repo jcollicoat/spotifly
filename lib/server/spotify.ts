@@ -136,7 +136,7 @@ export const buildRecentlyPlayed = async (
     };
 };
 
-const buildArtist = async (
+export const buildArtist = async (
     artist: IArtistDTO,
     imageSize?: AlbumImageSize
 ): Promise<ISmallListArtist> => {

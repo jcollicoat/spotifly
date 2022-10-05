@@ -1,32 +1,42 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
+import { determineAccessToken } from '../../../lib/server/auth';
 import { buildArtist } from '../../../lib/server/spotify';
+import { IArtistDTO } from '../../../lib/server/spotify-types';
 
 const endpoint = 'https://api.spotify.com/v1/artists/';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const session = await getSession({ req });
+const getArtist = async (
+    req: NextApiRequest
+): Promise<AxiosResponse<IArtistDTO> | null> => {
     const artistId = req.query.artistId;
 
-    if (typeof artistId !== 'string') {
-        res.status(400).send(`Bad artistID supplied: ${artistId}`);
-    } else if (!session) {
-        res.status(401).send(
-            'No session data found. User is likely not logged in.'
-        );
+    const access_token = await determineAccessToken(req);
+    if (access_token === null) {
+        return access_token;
+    }
+
+    const api = await axios.get<IArtistDTO>(endpoint + artistId, {
+        headers: {
+            Authorization: access_token,
+        },
+    });
+
+    return api;
+};
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    const api = await getArtist(req);
+
+    if (!api) {
+        res.status(401).send('Invalid Spotify access_token provided.');
     } else {
-        const access_token = session.access_token;
-
-        const response = await axios.get(endpoint + artistId, {
-            headers: {
-                Authorization: `Bearer ${access_token}`,
-            },
-        });
-        const built = buildArtist(response.data);
-
-        res.status(response.status).json(built);
+        if (api.status !== 200) {
+            res.status(api.status).json(api.data);
+        }
+        const built = await buildArtist(api.data);
+        res.status(200).json(built);
     }
 };
 
