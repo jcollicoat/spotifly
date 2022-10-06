@@ -23,25 +23,15 @@ $color-secondary-3: #13ff5e;
 $color-secondary-4: #00b238;
 $color-secondary-5: #00541b;
 
-$color-gray-1: #f4f4f5;
-$color-gray-2: #e4e4e7;
-$color-gray-3: #d4d4d8;
-$color-gray-4: #a1a1aa;
-$color-gray-5: #71717a;
-$color-gray-6: #52525b;
-$color-gray-7: #3f3f46;
-$color-gray-8: #27272a;
-$color-gray-9: #18181b;
-
-$color-slate-1: #f3f4f6;
-$color-slate-2: #e5e7eb;
-$color-slate-3: #d1d5db;
-$color-slate-4: #9ca3af;
-$color-slate-5: #6b7280;
-$color-slate-6: #4b5563;
-$color-slate-7: #374151;
-$color-slate-8: #1f2937;
-$color-slate-9: #111827;
+$color-gray-1: #eff6f8;
+$color-gray-2: #dbe9ee;
+$color-gray-3: #c0d6df;
+$color-gray-4: #96b1bd;
+$color-gray-5: #4f6d7a;
+$color-gray-6: #3d4e56;
+$color-gray-7: #28383e;
+$color-gray-8: #20272b;
+$color-gray-9: #121414;
 
 $color-off-black: #101010;
 
@@ -71,13 +61,6 @@ $transition-ease-slow: 0.3s ease-in-out;
 
 $album-border-radius: 5%;
 
-$page-color-background: $color-off-black;
-
-$panel-color-blended-background: linear-gradient(
-        rgba($color-slate-9, 0.1),
-        rgba($color-slate-9, 0.1)
-    ),
-    linear-gradient($color-gray-9, $color-gray-9);
 $panel-padding-small: $space-medium;
 $panel-padding-large: $space-large;
 $panel-padding-xlarge: $space-xlarge;
@@ -126,7 +109,7 @@ $textscroller-speed: 3s ease-in-out;
 }
 
 @mixin panel-subheading {
-    color: $color-slate-4;
+    color: $color-gray-4;
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.2em;

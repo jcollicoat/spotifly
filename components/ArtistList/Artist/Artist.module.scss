@@ -63,14 +63,14 @@
                 }
 
                 .subdetails {
-                    color: $color-slate-4;
+                    color: $color-gray-4;
                     display: flex;
                     flex-wrap: nowrap;
                     font-size: 0.75em;
                     gap: $space-small;
 
                     .subdetail {
-                        color: $color-slate-4;
+                        color: $color-gray-4;
                         height: $text-line-height;
 
                         &a {
