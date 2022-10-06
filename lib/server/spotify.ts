@@ -3,22 +3,27 @@ import {
     AlbumImageSize,
     IAlbum,
     IAlbumMinimum,
+    IAudioFeatures,
     // IArtist,
     IRecentlyPlayed,
     ISmallListArtist,
     ISmallListTrack,
     ITopArtists,
     ITopTracks,
+    ITrack,
     IUserProfile,
 } from '../client/spotify-types';
 import { reduceItemArtists, appendUUID } from './helpers';
 import {
+    IAddonsTopTracksAPI,
     IAlbumDTO,
     IAlbumsDTO,
     IArtistDTO,
+    IAudioFeaturesDTO,
     IRecentlyPlayedDTO,
     ITopArtistsDTO,
-    ITopTracksDTO,
+    ITopTracksAPI,
+    ITrackAPI,
     ITrackDTO,
     IUserProfileDTO,
 } from './spotify-types';
@@ -30,6 +35,26 @@ export const reduceAlbum = (album: IAlbumDTO): IAlbumMinimum => {
         name: album.name,
     };
 };
+
+const reduceAudioFeatures = (
+    audioFeaturesDTO: IAudioFeaturesDTO
+): IAudioFeatures => ({
+    acousticness: audioFeaturesDTO.acousticness,
+    danceability: audioFeaturesDTO.danceability,
+    duration_ms: audioFeaturesDTO.duration_ms,
+    energy: audioFeaturesDTO.energy,
+    id: audioFeaturesDTO.id,
+    instrumentalness: audioFeaturesDTO.instrumentalness,
+    key: appendUUID(audioFeaturesDTO.id),
+    liveness: audioFeaturesDTO.liveness,
+    loudness: audioFeaturesDTO.loudness,
+    mode: audioFeaturesDTO.mode,
+    song_key: audioFeaturesDTO.key,
+    speechiness: audioFeaturesDTO.speechiness,
+    tempo: audioFeaturesDTO.tempo,
+    time_signature: audioFeaturesDTO.time_signature,
+    valence: audioFeaturesDTO.valence,
+});
 
 export const buildAlbum = async (
     album: IAlbumDTO,
@@ -62,58 +87,60 @@ export const buildAlbums = async (
     );
 };
 
-// export const buildArtist = (data: IArtistDTO): IArtist => ({
-//     followers: data.followers.total,
-//     genres: data.genres,
-//     id: data.id,
-//     images: data.images,
-//     key: appendUUID(data.id),
-//     name: data.name,
-//     popularity: data.popularity,
-//     type: data.type,
-// });
-
 export const buildTrack = async (
-    data: ITrackDTO,
-    imageSize?: AlbumImageSize,
-    type?: 'list-small'
-): Promise<ISmallListTrack> => {
-    const color = await getAverageColor(data.album.images[2].url);
-    if (type === 'list-small') {
-        const track: ISmallListTrack = {
-            id: data.id,
-            album: reduceAlbum(data.album),
-            artists: reduceItemArtists(data.artists),
+    trackDTO: ITrackDTO,
+    addons?: IAddonsTopTracksAPI,
+    imageSize?: AlbumImageSize
+): Promise<ITrack> => {
+    const color = await getAverageColor(trackDTO.album.images[2].url);
+
+    if (addons) {
+        const audio_features = addons.audio_features?.audio_features.find(
+            (set) => set.id === trackDTO.id
+        );
+
+        const track: ITrack = {
+            id: trackDTO.id,
+            album: reduceAlbum(trackDTO.album),
+            artists: reduceItemArtists(trackDTO.artists),
+            audio_features:
+                audio_features && reduceAudioFeatures(audio_features),
             color: color.hex,
-            image: data.album.images[imageSize ?? 2].url,
-            key: appendUUID(data.id),
-            name: data.name,
-            popularity: data.popularity,
-            type: data.type,
+            image: trackDTO.album.images[imageSize ?? 2].url,
+            key: appendUUID(trackDTO.id),
+            name: trackDTO.name,
+            popularity: trackDTO.popularity,
+            type: trackDTO.type,
         };
         return track;
     }
-    const track: ISmallListTrack = {
-        id: data.id,
-        album: reduceAlbum(data.album),
-        artists: reduceItemArtists(data.artists),
+
+    const track: ITrack = {
+        id: trackDTO.id,
+        album: reduceAlbum(trackDTO.album),
+        artists: reduceItemArtists(trackDTO.artists),
+        audio_features:
+            trackDTO.audio_features &&
+            reduceAudioFeatures(trackDTO.audio_features),
         color: color.hex,
-        image: data.album.images[imageSize ?? 2].url,
-        key: appendUUID(data.id),
-        name: data.name,
-        popularity: data.popularity,
-        type: data.type,
+        image: trackDTO.album.images[imageSize ?? 2].url,
+        key: appendUUID(trackDTO.id),
+        name: trackDTO.name,
+        popularity: trackDTO.popularity,
+        type: trackDTO.type,
     };
     return track;
 };
 
 export const buildTracks = async (
-    trackDTOs: ITrackDTO[],
-    imageSize?: AlbumImageSize,
-    type?: 'list-small'
+    trackAPIs: ITrackAPI[],
+    addons?: IAddonsTopTracksAPI,
+    imageSize?: AlbumImageSize
 ): Promise<ISmallListTrack[]> => {
     return await Promise.all(
-        trackDTOs.map(async (track) => await buildTrack(track, imageSize, type))
+        trackAPIs.map(
+            async (track) => await buildTrack(track, addons, imageSize)
+        )
     );
 };
 
@@ -122,8 +149,8 @@ export const buildRecentlyPlayed = async (
 ): Promise<IRecentlyPlayed<ISmallListTrack>> => {
     const items: ISmallListTrack[] = await buildTracks(
         data.items.map((item) => item.track),
-        AlbumImageSize.small,
-        'list-small'
+        undefined,
+        AlbumImageSize.small
     );
     return {
         items: items,
@@ -173,14 +200,21 @@ export const buildTopArtists = async (
 });
 
 export const buildTopTracks = async (
-    data: ITopTracksDTO
-): Promise<ITopTracks<ISmallListTrack>> => ({
-    items: await buildTracks(data.items, AlbumImageSize.small, 'list-small'),
-    next: data.next,
-    offset: data.offset,
-    previous: data.previous,
-    total: data.total,
-});
+    topTracksAPI: ITopTracksAPI,
+    addons: IAddonsTopTracksAPI
+): Promise<ITopTracks<ITrack>> => {
+    return {
+        items: await buildTracks(
+            topTracksAPI.items,
+            addons,
+            AlbumImageSize.medium
+        ),
+        next: topTracksAPI.next,
+        offset: topTracksAPI.offset,
+        previous: topTracksAPI.previous,
+        total: topTracksAPI.total,
+    };
+};
 
 export const buildUserProfile = (data: IUserProfileDTO): IUserProfile => ({
     country: data.country,

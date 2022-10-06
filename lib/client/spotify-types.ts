@@ -18,6 +18,28 @@ export interface IArtistMinimum {
     name: string;
 }
 
+export interface IAudioFeatures {
+    acousticness: number;
+    danceability: number;
+    duration_ms: number;
+    energy: number;
+    id: string;
+    instrumentalness: number;
+    key: string;
+    liveness: number;
+    loudness: number;
+    mode: number;
+    song_key: number;
+    speechiness: number;
+    tempo: number;
+    time_signature: number;
+    valence: number;
+}
+
+export interface IAddonsTrack {
+    audio_features: IAudioFeatures;
+}
+
 export interface IAlbum {
     album_type: string;
     artists: IArtistMinimum[];
@@ -42,15 +64,8 @@ export interface IArtist {
     type: string;
 }
 
-export interface ITrack {
-    id: string;
-    album: IAlbumMinimum;
-    artists: IArtistMinimum[];
-    color: string;
-    key: string;
-    name: string;
-    popularity: number;
-    type: string;
+export interface ITrackInjections {
+    audio_features: IAudioFeatures;
 }
 
 export interface IRecentlyPlayed<T> {
@@ -90,12 +105,27 @@ export interface ISmallListTrack {
     id: string;
     album: IAlbumMinimum;
     artists: IArtistMinimum[];
+    audio_features?: IAudioFeatures;
     color: string;
     image: string;
     key: string;
     name: string;
     popularity: number;
     type: string;
+}
+
+export interface ITrack {
+    id: string;
+    album: IAlbumMinimum;
+    artists: IArtistMinimum[];
+    audio_features?: IAudioFeatures;
+    color: string;
+    image: string;
+    key: string;
+    name: string;
+    popularity: number;
+    type: string;
+    addons?: IAddonsTrack;
 }
 
 export interface ITopTracks<T> {

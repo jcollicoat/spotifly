@@ -55,7 +55,36 @@ export interface IArtistDTO {
     uri: string;
 }
 
-export interface ITrackDTO {
+export interface IAudioFeaturesDTO {
+    acousticness: number;
+    analysis_url: string;
+    danceability: number;
+    duration_ms: number;
+    energy: number;
+    id: string;
+    instrumentalness: number;
+    key: number;
+    liveness: number;
+    loudness: number;
+    mode: number;
+    speechiness: number;
+    tempo: number;
+    time_signature: number;
+    track_href: string;
+    type: string;
+    uri: string;
+    valence: number;
+}
+
+export interface IAudioFeaturesAPI {
+    audio_features: IAudioFeaturesDTO[];
+}
+
+export interface ITrackInjectionsDTO {
+    audio_features?: IAudioFeaturesDTO;
+}
+
+export interface ITrackAPI {
     id: string;
     album: IAlbumDTO;
     artists: IItemArtistDTO[];
@@ -81,10 +110,14 @@ export interface ITrackDTO {
     uri: string;
 }
 
+export interface ITrackDTO extends ITrackAPI {
+    audio_features?: IAudioFeaturesDTO;
+}
+
 export interface IRecentlyPlayedTrackDTO {
     context?: string;
     href: string;
-    track: ITrackDTO;
+    track: ITrackAPI;
 }
 
 export interface IRecentlyPlayedDTO {
@@ -118,14 +151,23 @@ export interface ITopArtistsDTO {
     total: number;
 }
 
-export interface ITopTracksDTO {
+export interface ITopTracksAPI {
     href: string;
-    items: ITrackDTO[];
+    items: ITrackAPI[];
     limit: number;
     next: string | null;
     offset: number;
     previous: string | null;
     total: number;
+}
+
+export interface IAddonsTopTracksAPI {
+    audio_features?: IAudioFeaturesAPI;
+}
+
+export interface ITopTracksDTO {
+    topTracksAPI: ITopTracksAPI;
+    addons: IAddonsTopTracksAPI;
 }
 
 export interface IUserProfileDTO {

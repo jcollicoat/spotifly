@@ -3,20 +3,20 @@ import axios, { AxiosResponse } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { determineAccessToken } from '../../../lib/server/auth';
 import { buildTrack } from '../../../lib/server/spotify';
-import { ITrackDTO } from '../../../lib/server/spotify-types';
+import { ITrackAPI } from '../../../lib/server/spotify-types';
 
 const endpoint = 'https://api.spotify.com/v1/tracks/';
 
 const getTrack = async (
     req: NextApiRequest
-): Promise<AxiosResponse<ITrackDTO> | null> => {
+): Promise<AxiosResponse<ITrackAPI> | null> => {
     const access_token = await determineAccessToken(req);
     if (access_token === null) {
         return access_token;
     }
 
     const trackID = req.query.trackID;
-    return await axios.get<ITrackDTO>(endpoint + trackID, {
+    return await axios.get<ITrackAPI>(endpoint + trackID, {
         headers: {
             Authorization: access_token,
         },
