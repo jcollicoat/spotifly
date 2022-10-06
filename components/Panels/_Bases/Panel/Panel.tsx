@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useMediaQueries } from '../../../hooks/useMediaQueries';
+import { useMediaQueries } from '../../../../hooks/useMediaQueries';
 import { PanelContent } from '../PanelContent/PanelContent';
 import { IPanelHeading, PanelHeading } from '../PanelHeading/PanelHeading';
 import styles from './Panel.module.scss';

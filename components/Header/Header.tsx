@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { HiOutlineHome, HiOutlineMusicNote } from 'react-icons/hi';
 import { Button, ButtonSignInOut } from '../Button/Button';
-import { Panel } from '../Panels/Panel/Panel';
+import { Panel } from '../Panels/_Bases/Panel/Panel';
 import { SpotiflyLogo } from '../SpotiflyLogo/SpotiflyLogo';
 import styles from './Header.module.scss';
 

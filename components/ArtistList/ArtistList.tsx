@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { useTopArtists } from '../../hooks/useSpotify';
 import { ISmallListArtist } from '../../lib/client/spotify-types';
 import { appendUUID } from '../../lib/server/helpers';
-import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
-import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
+import { IPanelDisplay, Panel } from '../Panels/_Bases/Panel/Panel';
+import { IPanelHeading } from '../Panels/_Bases/PanelHeading/PanelHeading';
 import { ICreatePanel, SkeletonStates } from '../types';
 import { Artist, ArtistSkeleton } from './Artist/Artist';
 

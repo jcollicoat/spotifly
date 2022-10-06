@@ -9,8 +9,8 @@ import {
     IRecentlyPlayed,
     ISmallListTrack,
 } from '../../lib/client/spotify-types';
-import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
-import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
+import { IPanelDisplay, Panel } from '../Panels/_Bases/Panel/Panel';
+import { IPanelHeading } from '../Panels/_Bases/PanelHeading/PanelHeading';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
 import { IComponent, ICreatePanel, ITrackComponentBase } from '../types';

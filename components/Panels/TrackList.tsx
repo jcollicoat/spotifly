@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { useRecentlyPlayed, useTopTracks } from '../../hooks/useSpotify';
 import { ITrack } from '../../lib/client/spotify-types';
 import { appendUUID } from '../../lib/server/helpers';
-import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
-import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
+import { ListTrack } from '../ListTrack/ListTrack';
 import { ICreatePanel, SkeletonStates } from '../types';
-import { ListTrack } from './ListTrack';
+import { IPanelDisplay, Panel } from './_Bases/Panel/Panel';
+import { IPanelHeading } from './_Bases/PanelHeading/PanelHeading';
 
 type ComponentTypes = 'recently-played' | 'top-tracks';
 

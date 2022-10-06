@@ -2,8 +2,8 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import { AppPage } from '../components/AppPage/AppPage';
 import { ArtistList } from '../components/ArtistList/ArtistList';
+import { TrackList } from '../components/Panels/TrackList';
 import { TrackFeature } from '../components/TrackFeature/TrackFeature';
-import { TrackList } from '../components/TrackList/TrackList';
 import { UserProfile } from '../components/UserProfile/UserProfile';
 // import { useTopArtists } from '../hooks/useSpotify';
 
