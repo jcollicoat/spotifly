@@ -46,16 +46,6 @@
             width: 100%;
             white-space: nowrap;
 
-            &:hover {
-                mask-image: linear-gradient(
-                    to left,
-                    transparent 0,
-                    rgba(#000000, 1) $space-xlarge,
-                    rgba(#000000, 1) calc(100% - $space-xlarge),
-                    transparent
-                );
-            }
-
             .nowrap {
                 position: absolute;
                 top: 50%;
@@ -66,7 +56,10 @@
                     transition-property: transform;
 
                     &:hover {
-                        transform: translate(0, -50%) !important;
+                        transform: translate(
+                            -$space-xlarge,
+                            calc(-50%)
+                        ) !important;
                     }
                 }
 
