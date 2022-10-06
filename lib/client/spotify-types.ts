@@ -128,8 +128,8 @@ export interface ITrack {
     addons?: IAddonsTrack;
 }
 
-export interface ITopTracks<T> {
-    items: T[];
+export interface ITopTracks {
+    items: ITrack[];
     next?: string | null;
     offset?: number;
     previous?: string | null;

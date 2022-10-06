@@ -45,7 +45,7 @@ export const useTopArtists = (): UseQueryResult<
     });
 };
 
-export const useTopTracks = (): UseQueryResult<ITopTracks<ITrack>> => {
+export const useTopTracks = (): UseQueryResult<ITopTracks> => {
     return useQuery(['top-tracks'], getTopTracks, {
         staleTime: Infinity,
     });

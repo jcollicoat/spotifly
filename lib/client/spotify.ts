@@ -114,8 +114,8 @@ export const getTopArtists = async (): Promise<
     return topArtists;
 };
 
-export const getTopTracks = async (): Promise<ITopTracks<ITrack>> => {
-    const { data: topTracks }: { data: ITopTracks<ITrack> } = await axios.get(
+export const getTopTracks = async (): Promise<ITopTracks> => {
+    const { data: topTracks }: { data: ITopTracks } = await axios.get(
         '/api/spotify/getTopTracks'
     );
     return topTracks;

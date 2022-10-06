@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {
-    ITopTracks,
-    ITrack,
-    AlbumImageSize,
-} from '../../../lib/client/spotify-types';
+import { ITopTracks, AlbumImageSize } from '../../../lib/client/spotify-types';
 import { determineAccessToken } from '../../../lib/server/auth';
 import { buildTracks } from '../../../lib/server/spotify';
 import {
@@ -38,7 +34,7 @@ export interface ITopTracksDTO {
 const buildTopTracks = async (
     topTracksAPI: ITopTracksAPI,
     addons: IAddonsTopTracksAPI
-): Promise<ITopTracks<ITrack>> => {
+): Promise<ITopTracks> => {
     return {
         items: await buildTracks(
             topTracksAPI.items,
