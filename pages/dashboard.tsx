@@ -30,11 +30,7 @@ const TopLists: NextPage = () => {
                     subheading="Recently Played"
                     isSkeleton
                 />
-                <TrackList
-                    list="top-tracks"
-                    subheading="Your Top Tracks"
-                    isSkeleton
-                />
+                <TrackList list="top-tracks" subheading="Your Top Tracks" />
                 <ArtistList list="top-artists" subheading="Your Top Artists" />
             </AppPage>
         </>

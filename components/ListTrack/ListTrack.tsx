@@ -35,7 +35,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                 backgroundColor: track && track.color,
             }}
         >
-            <div className={styles.content}>
+            <div className={classNames(styles.content, track && styles.loaded)}>
                 <div className={styles.cover}>
                     {track ? (
                         <Image
@@ -97,7 +97,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                                     <SkeletonText state={state} />
                                 </a>
                             )}
-                            •
+                            {track && '•'}
                             {track ? (
                                 <Link
                                     href={`/album/${track.album.id}`}
