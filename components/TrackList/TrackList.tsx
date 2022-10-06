@@ -5,7 +5,7 @@ import { appendUUID } from '../../lib/server/helpers';
 import { IPanelDisplay, Panel } from '../Panels/Panel/Panel';
 import { IPanelHeading } from '../Panels/PanelHeading/PanelHeading';
 import { ICreatePanel, SkeletonStates } from '../types';
-import { Track, TrackSkeleton } from './Track/Track';
+import { ListTrack } from './ListTrack';
 
 type ComponentTypes = 'recently-played' | 'top-tracks';
 
@@ -37,16 +37,14 @@ export const TrackList: FC<ITracksListPanel> = ({
         if (!tracks || isSkeleton) {
             return new Array(20)
                 .fill('')
-                .map(() => <TrackSkeleton key={appendUUID('')} />);
+                .map(() => <ListTrack key={appendUUID('')} />);
         } else if (tracks === 'warning' || tracks === 'error') {
             return new Array(20)
                 .fill('')
-                .map(() => (
-                    <TrackSkeleton key={appendUUID('')} state={tracks} />
-                ));
+                .map(() => <ListTrack key={appendUUID('')} state={tracks} />);
         } else {
             return tracks.map((track) => (
-                <Track key={track.key} track={track} />
+                <ListTrack key={track.key} data={track} />
             ));
         }
     };
