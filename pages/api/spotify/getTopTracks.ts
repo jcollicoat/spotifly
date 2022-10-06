@@ -94,7 +94,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 addons
             );
 
-            res.status(200).json({ builtTopTracks, addons });
+            res.status(200).json(builtTopTracks);
         }
     }
 };

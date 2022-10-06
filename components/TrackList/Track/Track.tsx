@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
-import { ISmallListTrack } from '../../../lib/client/spotify-types';
+import { ITrack } from '../../../lib/client/spotify-types';
 import { SkeletonImage } from '../../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../../Skeletons/SkeletonText/SkeletonText';
 import { IComponent, ITrackComponentBase } from '../../types';
@@ -105,7 +105,7 @@ export const TrackSkeleton: FC<TrackSkeleton> = ({ data, state }) => (
 );
 
 // TODO: Get rid
-export const Track: FC<{ track: ISmallListTrack }> = ({ track }) => {
+export const Track: FC<{ track: ITrack }> = ({ track }) => {
     const detailsRef = useRef<HTMLDivElement>(null);
     const noWrapRef = useRef<HTMLDivElement>(null);
     const { width } = useWindowSize();
@@ -126,6 +126,7 @@ export const Track: FC<{ track: ISmallListTrack }> = ({ track }) => {
         track: {
             album: track.album,
             artists: track.artists,
+            audio_features: track.audio_features,
             color: track.color,
             id: track.id,
             image: track.image,

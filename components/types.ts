@@ -1,8 +1,4 @@
-import {
-    IAlbum,
-    ISmallListArtist,
-    ISmallListTrack,
-} from '../lib/client/spotify-types';
+import { IAlbum, ISmallListArtist, ITrack } from '../lib/client/spotify-types';
 
 export type SkeletonStates = 'error' | 'warning';
 
@@ -32,7 +28,13 @@ export interface IArtistComponentBase {
 
 export interface ITrackComponentBase {
     track: Pick<
-        ISmallListTrack,
-        'id' | 'album' | 'artists' | 'color' | 'image' | 'name'
+        ITrack,
+        | 'id'
+        | 'album'
+        | 'artists'
+        | 'audio_features'
+        | 'color'
+        | 'image'
+        | 'name'
     >;
 }
