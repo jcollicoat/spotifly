@@ -37,8 +37,8 @@ const TrackFeatureSkeleton: FC<TrackFeatureSkeleton> = ({ data, state }) => (
                     <Image
                         src={data.track.image}
                         alt=""
-                        height={120}
-                        width={120}
+                        height={80}
+                        width={80}
                     />
                 ) : (
                     <SkeletonImage height="120px" width="120px" state={state} />
