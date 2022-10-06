@@ -1,16 +1,56 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { determineAccessToken } from '../../../lib/server/auth';
-import { buildTopTracks } from '../../../lib/server/spotify';
 import {
-    IAddonsTopTracksAPI,
+    ITopTracks,
+    ITrack,
+    AlbumImageSize,
+} from '../../../lib/client/spotify-types';
+import { determineAccessToken } from '../../../lib/server/auth';
+import { buildTracks } from '../../../lib/server/spotify';
+import {
     IAudioFeaturesAPI,
-    ITopTracksAPI,
+    ITrackAPI,
 } from '../../../lib/server/spotify-types';
 
 const endpoint = 'https://api.spotify.com/v1/me/top/tracks';
 const endpoint_audio_features = 'https://api.spotify.com/v1/audio-features';
+
+export interface ITopTracksAPI {
+    href: string;
+    items: ITrackAPI[];
+    limit: number;
+    next: string | null;
+    offset: number;
+    previous: string | null;
+    total: number;
+}
+
+export interface IAddonsTopTracksAPI {
+    audio_features?: IAudioFeaturesAPI;
+}
+
+export interface ITopTracksDTO {
+    topTracksAPI: ITopTracksAPI;
+    addons: IAddonsTopTracksAPI;
+}
+
+const buildTopTracks = async (
+    topTracksAPI: ITopTracksAPI,
+    addons: IAddonsTopTracksAPI
+): Promise<ITopTracks<ITrack>> => {
+    return {
+        items: await buildTracks(
+            topTracksAPI.items,
+            addons,
+            AlbumImageSize.medium
+        ),
+        next: topTracksAPI.next,
+        offset: topTracksAPI.offset,
+        previous: topTracksAPI.previous,
+        total: topTracksAPI.total,
+    };
+};
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const access_token = await determineAccessToken(req);

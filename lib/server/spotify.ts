@@ -1,4 +1,5 @@
 import { getAverageColor } from 'fast-average-color-node';
+import { IAddonsTopTracksAPI } from '../../pages/api/spotify/getTopTracks';
 import {
     AlbumImageSize,
     IAlbum,
@@ -9,20 +10,17 @@ import {
     ISmallListArtist,
     ISmallListTrack,
     ITopArtists,
-    ITopTracks,
     ITrack,
     IUserProfile,
 } from '../client/spotify-types';
 import { reduceItemArtists, appendUUID } from './helpers';
 import {
-    IAddonsTopTracksAPI,
     IAlbumDTO,
     IAlbumsDTO,
     IArtistDTO,
     IAudioFeaturesDTO,
     IRecentlyPlayedDTO,
     ITopArtistsDTO,
-    ITopTracksAPI,
     ITrackAPI,
     ITrackDTO,
     IUserProfileDTO,
@@ -198,23 +196,6 @@ export const buildTopArtists = async (
     previous: data.previous,
     total: data.total,
 });
-
-export const buildTopTracks = async (
-    topTracksAPI: ITopTracksAPI,
-    addons: IAddonsTopTracksAPI
-): Promise<ITopTracks<ITrack>> => {
-    return {
-        items: await buildTracks(
-            topTracksAPI.items,
-            addons,
-            AlbumImageSize.medium
-        ),
-        next: topTracksAPI.next,
-        offset: topTracksAPI.offset,
-        previous: topTracksAPI.previous,
-        total: topTracksAPI.total,
-    };
-};
 
 export const buildUserProfile = (data: IUserProfileDTO): IUserProfile => ({
     country: data.country,
