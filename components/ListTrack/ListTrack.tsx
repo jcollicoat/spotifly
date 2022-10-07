@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FC, useEffect, useRef, useState } from 'react';
-import { useWindowSize } from 'react-use';
+import { FC } from 'react';
 import { ITrack } from '../../lib/client/spotify-types';
+import { Scroller } from '../Scroller/Scroller';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
 import { IComponent } from '../types';
@@ -12,21 +12,7 @@ import styles from './ListTrack.module.scss';
 type ListTrackSkeleton = IComponent<ITrack>;
 
 export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
-    const detailsRef = useRef<HTMLDivElement>(null);
-    const noWrapRef = useRef<HTMLDivElement>(null);
-    const { width } = useWindowSize();
-    const [overflow, setOverflow] = useState<number | undefined>(undefined);
-
-    const measureOverflow = (): void => {
-        const detailsWidth = detailsRef.current?.clientWidth;
-        const noWrapWidth = noWrapRef.current?.clientWidth;
-        if (detailsWidth && noWrapWidth)
-            setOverflow(detailsWidth - noWrapWidth);
-    };
-
-    useEffect(() => {
-        measureOverflow();
-    }, [width]);
+    console.log(track?.audio_features);
 
     return (
         <div
@@ -52,22 +38,8 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                         />
                     )}
                 </div>
-                <div className={styles.details} ref={detailsRef}>
-                    <div
-                        className={classNames(
-                            styles.nowrap,
-                            overflow && overflow < 0 && styles.overflowed
-                        )}
-                        ref={noWrapRef}
-                        style={
-                            overflow && overflow < 0
-                                ? {
-                                      left: `${overflow}px`,
-                                      transform: `translate(${-overflow}px, -50%)`,
-                                  }
-                                : undefined
-                        }
-                    >
+                <Scroller>
+                    <div className={styles.details}>
                         {track ? (
                             <Link href={`/track/${track.id}`} passHref>
                                 <a
@@ -114,7 +86,19 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                             )}
                         </div>
                     </div>
-                </div>
+                </Scroller>
+                {track?.audio_features && (
+                    <div className={styles.audio_features}>
+                        <span>
+                            {Math.floor(
+                                track.audio_features.danceability * 100
+                            )}
+                        </span>
+                        <span>
+                            {Math.floor(track.audio_features.energy * 100)}
+                        </span>
+                    </div>
+                )}
             </div>
         </div>
     );

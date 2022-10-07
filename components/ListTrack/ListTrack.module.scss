@@ -34,40 +34,32 @@
         }
 
         .details {
-            mask-image: linear-gradient(
-                to left,
-                transparent 0,
-                rgba(#000000, 1) $space-xlarge,
-                rgba(#000000, 1)
-            );
             padding: $space-xsmall 0;
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-            white-space: nowrap;
 
-            .nowrap {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
+            .name {
+                color: #ffffff;
+                display: block;
+                height: $text-line-height;
+                margin-bottom: $space-xsmall;
+                text-decoration: none;
+                transition: $transition-ease;
+                transition-property: color;
 
-                &.overflowed {
-                    transition: $textscroller-speed;
-                    transition-property: transform;
-
-                    &:hover {
-                        transform: translate(
-                            -$space-xlarge,
-                            calc(-50%)
-                        ) !important;
-                    }
+                &:hover {
+                    color: $color-primary-3;
                 }
+            }
 
-                .name {
-                    color: #ffffff;
-                    display: block;
+            .subdetails {
+                color: $color-gray-4;
+                display: flex;
+                flex-wrap: nowrap;
+                font-size: 0.75em;
+                gap: $space-xsmall;
+
+                .subdetail {
+                    color: $color-gray-4;
                     height: $text-line-height;
-                    margin-bottom: $space-xsmall;
                     text-decoration: none;
                     transition: $transition-ease;
                     transition-property: color;
@@ -76,26 +68,20 @@
                         color: $color-primary-3;
                     }
                 }
+            }
+        }
 
-                .subdetails {
-                    color: $color-gray-4;
-                    display: flex;
-                    flex-wrap: nowrap;
-                    font-size: 0.75em;
-                    gap: $space-xsmall;
+        .audio_features {
+            align-items: center;
+            border-radius: $border-radius-button;
+            display: flex;
+            gap: $space-xsmall;
+            padding: $space-small;
+            transition: $transition-ease;
+            transition-property: background-color;
 
-                    .subdetail {
-                        color: $color-gray-4;
-                        height: $text-line-height;
-                        text-decoration: none;
-                        transition: $transition-ease;
-                        transition-property: color;
-
-                        &:hover {
-                            color: $color-primary-3;
-                        }
-                    }
-                }
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.05);
             }
         }
     }

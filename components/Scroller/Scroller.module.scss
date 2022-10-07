@@ -1,0 +1,32 @@
+@import '../../styles/variables.scss';
+
+.mask {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    white-space: nowrap;
+
+    &.overflowed {
+        mask-image: linear-gradient(
+            to left,
+            transparent 0,
+            rgba(#000000, 1) $space-xlarge,
+            rgba(#000000, 1)
+        );
+    }
+
+    .content {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &.overflowed {
+            transition: $textscroller-speed;
+            transition-property: transform;
+
+            &:hover {
+                transform: translate(-$space-xlarge, calc(-50%)) !important;
+            }
+        }
+    }
+}
