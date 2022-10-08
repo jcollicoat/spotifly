@@ -1,11 +1,10 @@
 import { getAverageColor } from 'fast-average-color-node';
 import { IAlbumAPI } from '../../pages/api/spotify/getAlbum';
 import { buildArtist, IArtistAPI } from '../../pages/api/spotify/getArtist';
-import { ITopArtistsAPI } from '../../pages/api/spotify/getTopArtists';
 import { IUserProfileAPI } from '../../pages/api/spotify/getUserProfile';
 import { IAlbumMinimum, AlbumImageSize } from '../client/types/_simple';
 import { IAudioFeatures } from '../client/types/addons';
-import { IArtist, ITopArtists } from '../client/types/artists';
+import { IArtist } from '../client/types/artists';
 import { ITrack } from '../client/types/tracks';
 import { IUserProfile } from '../client/types/user';
 import { reduceItemArtists, appendUUID } from './helpers';
@@ -126,7 +125,7 @@ export const buildTracks = async (
     );
 };
 
-const buildArtists = async (
+export const buildArtists = async (
     artists: IArtistAPI[],
     imageSize?: AlbumImageSize
 ): Promise<IArtist[]> => {
@@ -134,16 +133,6 @@ const buildArtists = async (
         artists.map(async (artist) => await buildArtist(artist, imageSize))
     );
 };
-
-export const buildTopArtists = async (
-    data: ITopArtistsAPI
-): Promise<ITopArtists> => ({
-    artists: await buildArtists(data.items),
-    next: data.next,
-    offset: data.offset,
-    previous: data.previous,
-    total: data.total,
-});
 
 export const buildUserProfile = (data: IUserProfileAPI): IUserProfile => ({
     country: data.country,

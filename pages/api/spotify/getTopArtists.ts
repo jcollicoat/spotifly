@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { ITopArtists } from '../../../lib/client/types/artists';
 import { determineAccessToken } from '../../../lib/server/auth';
-import { buildTopArtists } from '../../../lib/server/spotify';
-import { IArtistAPI } from '../../../lib/server/types/artists';
+import { handleError } from '../../../lib/server/helpers';
+import { buildArtists } from '../../../lib/server/spotify';
+import { IArtistAPI } from './getArtist';
 
 const endpoint = 'https://api.spotify.com/v1/me/top/artists';
 
@@ -17,32 +19,32 @@ export interface ITopArtistsAPI {
     total: number;
 }
 
-const getTopArtists = async (
-    req: NextApiRequest
-): Promise<AxiosResponse<ITopArtistsAPI> | null> => {
-    const access_token = await determineAccessToken(req);
-    if (access_token === null) {
-        return access_token;
-    }
-
-    return await axios.get<ITopArtistsAPI>(endpoint, {
-        headers: {
-            Authorization: access_token,
-        },
-    });
-};
+export const buildTopArtists = async (
+    data: ITopArtistsAPI
+): Promise<ITopArtists> => ({
+    artists: await buildArtists(data.items),
+    next: data.next,
+    offset: data.offset,
+    previous: data.previous,
+    total: data.total,
+});
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const api = await getTopArtists(req);
+    try {
+        const access_token = await determineAccessToken(req);
 
-    if (!api) {
-        res.status(401).send('Invalid Spotify access_token provided.');
-    } else {
-        if (api.status !== 200) {
-            res.status(api.status).json(api.data);
-        }
-        const built = await buildTopArtists(api.data);
-        res.status(200).json(built);
+        const topArtistsAPI = await axios.get<ITopArtistsAPI>(endpoint, {
+            headers: {
+                Authorization: access_token,
+            },
+        });
+
+        const builtTopArtists = await buildTopArtists(topArtistsAPI.data);
+
+        res.status(200).json(builtTopArtists);
+    } catch (error) {
+        const { status, message } = handleError(error);
+        res.status(status).send(message);
     }
 };
 
