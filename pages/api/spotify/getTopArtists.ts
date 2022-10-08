@@ -3,10 +3,11 @@ import axios, { AxiosResponse } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { determineAccessToken } from '../../../lib/server/auth';
 import { buildTopArtists } from '../../../lib/server/spotify';
+import { IArtistDTO } from '../../../lib/server/types/artists';
 
 const endpoint = 'https://api.spotify.com/v1/me/top/artists';
 
-interface ITopArtistsAPI {
+export interface ITopArtistsAPI {
     href: string;
     items: IArtistDTO[];
     limit: number;

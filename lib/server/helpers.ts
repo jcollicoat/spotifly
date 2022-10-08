@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { IArtistMinimum } from '../client/spotify-types';
-import { IItemArtistDTO } from './spotify-types';
+import { IArtistMinimum } from '../client/types/_simple';
+import { IItemArtistDTO } from './types/_simple';
 
 export const appendUUID = (input: string): string => `${input}-${uuidv4()}`;
 

@@ -12,3 +12,7 @@ export interface IAlbum {
     total_tracks: number;
     type: string;
 }
+
+export interface ITopAlbums {
+    items: IAlbum[];
+}

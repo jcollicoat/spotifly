@@ -6,7 +6,7 @@ import { buildUserProfile } from '../../../lib/server/spotify';
 
 const endpoint = 'https://api.spotify.com/v1/me';
 
-interface IUserProfileAPI {
+export interface IUserProfileAPI {
     country: string;
     display_name: string;
     email: string;

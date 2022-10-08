@@ -1,28 +1,17 @@
 import { getAverageColor } from 'fast-average-color-node';
-import {
-    AlbumImageSize,
-    IAlbum,
-    IAlbumMinimum,
-    IAudioFeatures,
-    // IArtist,
-    ISmallListArtist,
-    ISmallListTrack,
-    ITopArtists,
-    ITrack,
-    IUserProfile,
-} from '../client/spotify-types';
+import { ITopArtistsAPI } from '../../pages/api/spotify/getTopArtists';
+import { IUserProfileAPI } from '../../pages/api/spotify/getUserProfile';
+import { IAlbumMinimum, AlbumImageSize } from '../client/types/_simple';
+import { IAudioFeatures } from '../client/types/addons';
+import { IAlbum } from '../client/types/albums';
+import { IArtist, ITopArtists } from '../client/types/artists';
+import { ITrack } from '../client/types/tracks';
+import { IUserProfile } from '../client/types/user';
 import { reduceItemArtists, appendUUID } from './helpers';
-import {
-    IAddonsTracksAPI,
-    IAlbumDTO,
-    IAlbumsDTO,
-    IArtistDTO,
-    IAudioFeaturesAPI,
-    ITopArtistsDTO,
-    ITrackAPI,
-    ITrackDTO,
-    IUserProfileDTO,
-} from './spotify-types';
+import { IAddonsTracksDTO, IAudioFeaturesAPI } from './types/addons';
+import { IAlbumDTO, IAlbumsDTO } from './types/albums';
+import { IArtistDTO } from './types/artists';
+import { ITrackDTO } from './types/tracks';
 
 export const reduceAlbum = (album: IAlbumDTO): IAlbumMinimum => {
     return {
@@ -112,7 +101,7 @@ export const buildAlbums = async (
 
 export const buildTrack = async (
     trackDTO: ITrackDTO,
-    addons?: IAddonsTracksAPI,
+    addons?: IAddonsTracksDTO,
     imageSize?: AlbumImageSize
 ): Promise<ITrack> => {
     const color = await getAverageColor(trackDTO.album.images[2].url);
@@ -147,9 +136,6 @@ export const buildTrack = async (
         id: trackDTO.id,
         album: reduceAlbum(trackDTO.album),
         artists: reduceItemArtists(trackDTO.artists),
-        audio_features:
-            trackDTO.audio_features &&
-            reduceAudioFeatures(trackDTO.audio_features),
         color: color.hex,
         image: trackDTO.album.images[imageSize ?? 2].url,
         key: appendUUID(trackDTO.id),
@@ -161,10 +147,10 @@ export const buildTrack = async (
 };
 
 export const buildTracks = async (
-    trackAPIs: ITrackAPI[],
-    addons?: IAddonsTracksAPI,
+    trackAPIs: ITrackDTO[],
+    addons?: IAddonsTracksDTO,
     imageSize?: AlbumImageSize
-): Promise<ISmallListTrack[]> => {
+): Promise<ITrack[]> => {
     return await Promise.all(
         trackAPIs.map(
             async (track) => await buildTrack(track, addons, imageSize)
@@ -175,7 +161,7 @@ export const buildTracks = async (
 export const buildArtist = async (
     artist: IArtistDTO,
     imageSize?: AlbumImageSize
-): Promise<ISmallListArtist> => {
+): Promise<IArtist> => {
     const color = await getAverageColor(artist.images[2].url);
     return {
         id: artist.id,
@@ -186,21 +172,22 @@ export const buildArtist = async (
         key: appendUUID(artist.id),
         name: artist.name,
         popularity: artist.popularity,
+        type: artist.type,
     };
 };
 
 const buildArtists = async (
     artists: IArtistDTO[],
     imageSize?: AlbumImageSize
-): Promise<ISmallListArtist[]> => {
+): Promise<IArtist[]> => {
     return await Promise.all(
         artists.map(async (artist) => await buildArtist(artist, imageSize))
     );
 };
 
 export const buildTopArtists = async (
-    data: ITopArtistsDTO
-): Promise<ITopArtists<ISmallListArtist>> => ({
+    data: ITopArtistsAPI
+): Promise<ITopArtists> => ({
     artists: await buildArtists(data.items),
     next: data.next,
     offset: data.offset,
@@ -208,7 +195,7 @@ export const buildTopArtists = async (
     total: data.total,
 });
 
-export const buildUserProfile = (data: IUserProfileDTO): IUserProfile => ({
+export const buildUserProfile = (data: IUserProfileAPI): IUserProfile => ({
     country: data.country,
     display_name: data.display_name,
     followers: data.followers.total,

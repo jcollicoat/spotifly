@@ -1,7 +1,8 @@
 export interface IArtist {
+    id: string;
+    color: string;
     followers: number;
     genres: string[];
-    id: string;
     image: string;
     key: string;
     name: string;
