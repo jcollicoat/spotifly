@@ -28,11 +28,11 @@ export interface IAudioFeatures {
     key: string;
     liveness: number;
     loudness: number;
-    mode: number;
-    song_key: number;
+    mode: 'Major' | 'Minor';
+    music_key: string;
     speechiness: number;
     tempo: number;
-    time_signature: number;
+    time_signature: string;
     valence: number;
 }
 

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ITopTracks, AlbumImageSize } from '../../../lib/client/spotify-types';
 import { determineAccessToken } from '../../../lib/server/auth';
@@ -33,7 +33,7 @@ export interface ITopTracksDTO {
 
 const buildTopTracks = async (
     topTracksAPI: ITopTracksAPI,
-    addons: IAddonsTopTracksAPI
+    addons?: IAddonsTopTracksAPI
 ): Promise<ITopTracks> => {
     return {
         items: await buildTracks(
@@ -48,24 +48,46 @@ const buildTopTracks = async (
     };
 };
 
+type ErrorResponse = {
+    status: number;
+    message: string;
+};
+
+const handleError = (error: unknown): ErrorResponse => {
+    if (error instanceof AxiosError)
+        return {
+            status: error.response?.status ?? 400,
+            message: `Error fetching Spotify API endpoint ${
+                error.request.path ?? '[apiPathNotFound]'
+            } | ${
+                error.response?.data.error.message ?? '[errorMessageNotFound]'
+            }.`,
+        };
+    if (error instanceof Error)
+        return {
+            status: 400,
+            message: error.message,
+        };
+    return {
+        status: 500,
+        message: `Unknown error occured: ${error}`,
+    };
+};
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const access_token = await determineAccessToken(req);
-    if (access_token === null) {
-        res.status(401).send('Invalid Spotify access_token provided.');
-    } else {
+    try {
+        const access_token = await determineAccessToken(req);
+
         const topTracksAPI = await axios.get<ITopTracksAPI>(endpoint, {
             headers: {
                 Authorization: access_token,
             },
         });
 
-        if (topTracksAPI.status !== 200) {
-            res.status(topTracksAPI.status).json(topTracksAPI.data);
-        } else {
+        try {
             const ids = topTracksAPI.data.items
                 .map((track) => track.id)
                 .join(',');
-
             const audioFeaturesAPI = await axios.get<IAudioFeaturesAPI>(
                 endpoint_audio_features,
                 {
@@ -77,9 +99,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     },
                 }
             );
-            if (audioFeaturesAPI.status !== 200) {
-                res.status(audioFeaturesAPI.status).json(audioFeaturesAPI.data);
-            }
 
             const addons: IAddonsTopTracksAPI = {
                 audio_features: audioFeaturesAPI.data,
@@ -91,7 +110,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             );
 
             res.status(200).json(builtTopTracks);
+        } catch (error) {
+            const { status, message } = handleError(error);
+            console.warn({
+                summary: 'Error fetching topTracks addons.',
+                status: status,
+                message: message,
+            });
+
+            const builtTopTracks = await buildTopTracks(topTracksAPI.data);
+
+            res.status(200).json(builtTopTracks);
         }
+    } catch (error) {
+        const { status, message } = handleError(error);
+        res.status(status).send(message);
     }
 };
 

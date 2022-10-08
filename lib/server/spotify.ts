@@ -34,24 +34,51 @@ export const reduceAlbum = (album: IAlbumDTO): IAlbumMinimum => {
     };
 };
 
+const normalizeFloat = (value: number) => Math.floor(value * 100);
+
+const mapMusicKey = (value: number) => {
+    const scale = [
+        'C',
+        'C#',
+        'D',
+        'D#',
+        'E',
+        'F',
+        'F#',
+        'G',
+        'G#',
+        'A',
+        'A#',
+        'B',
+    ];
+    return scale[value] ?? 'Unknown';
+};
+
+const normalizeTimeSig = (value: number) => {
+    if (value < 3 || value > 7) {
+        return '4/4';
+    }
+    return `${value}/4`;
+};
+
 const reduceAudioFeatures = (
     audioFeaturesDTO: IAudioFeaturesDTO
 ): IAudioFeatures => ({
-    acousticness: audioFeaturesDTO.acousticness,
-    danceability: audioFeaturesDTO.danceability,
+    acousticness: normalizeFloat(audioFeaturesDTO.acousticness),
+    danceability: normalizeFloat(audioFeaturesDTO.danceability),
     duration_ms: audioFeaturesDTO.duration_ms,
-    energy: audioFeaturesDTO.energy,
+    energy: normalizeFloat(audioFeaturesDTO.energy),
     id: audioFeaturesDTO.id,
-    instrumentalness: audioFeaturesDTO.instrumentalness,
+    instrumentalness: normalizeFloat(audioFeaturesDTO.instrumentalness),
     key: appendUUID(audioFeaturesDTO.id),
-    liveness: audioFeaturesDTO.liveness,
-    loudness: audioFeaturesDTO.loudness,
-    mode: audioFeaturesDTO.mode,
-    song_key: audioFeaturesDTO.key,
-    speechiness: audioFeaturesDTO.speechiness,
-    tempo: audioFeaturesDTO.tempo,
-    time_signature: audioFeaturesDTO.time_signature,
-    valence: audioFeaturesDTO.valence,
+    liveness: normalizeFloat(audioFeaturesDTO.liveness),
+    loudness: Math.floor(((audioFeaturesDTO.loudness + 60) / 60) * 100),
+    mode: audioFeaturesDTO.mode === 1 ? 'Major' : 'Minor',
+    music_key: mapMusicKey(audioFeaturesDTO.key),
+    speechiness: normalizeFloat(audioFeaturesDTO.speechiness),
+    tempo: Math.floor(audioFeaturesDTO.tempo),
+    time_signature: normalizeTimeSig(audioFeaturesDTO.time_signature),
+    valence: normalizeFloat(audioFeaturesDTO.valence),
 });
 
 export const buildAlbum = async (
@@ -91,10 +118,15 @@ export const buildTrack = async (
     imageSize?: AlbumImageSize
 ): Promise<ITrack> => {
     const color = await getAverageColor(trackDTO.album.images[2].url);
+    if (!color) {
+        throw new Error(
+            `Error getting color for track: ${trackDTO.id} (${trackDTO.name}).`
+        );
+    }
 
     if (addons) {
         const audio_features = addons.audio_features?.audio_features.find(
-            (set) => set.id === trackDTO.id
+            (featureSet) => featureSet.id === trackDTO.id
         );
 
         const track: ITrack = {
