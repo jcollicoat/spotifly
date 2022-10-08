@@ -1,7 +1,6 @@
 import { IAlbumAPI } from '../../pages/api/spotify/getAlbum';
 import { buildArtist, IArtistAPI } from '../../pages/api/spotify/getArtist';
 import { buildTrack, ITrackAPI } from '../../pages/api/spotify/getTrack';
-import { IUserProfileAPI } from '../../pages/api/spotify/getUserProfile';
 import {
     IAlbumMinimum,
     AlbumImageSize,
@@ -10,7 +9,6 @@ import {
 import { IAudioFeatures } from '../client/types/addons';
 import { IArtist } from '../client/types/artists';
 import { ITrack } from '../client/types/tracks';
-import { IUserProfile } from '../client/types/user';
 import { appendUUID } from './helpers';
 import { ITrackArtistDTO } from './types/_simple';
 import { IAddonsTracksDTO, IAudioFeaturesAPI } from './types/addons';
@@ -99,13 +97,3 @@ export const buildArtists = async (
         artists.map(async (artist) => await buildArtist(artist, imageSize))
     );
 };
-
-export const buildUserProfile = (data: IUserProfileAPI): IUserProfile => ({
-    country: data.country,
-    display_name: data.display_name,
-    followers: data.followers.total,
-    id: data.id,
-    image: data.images[0].url,
-    product: data.product,
-    type: data.type,
-});

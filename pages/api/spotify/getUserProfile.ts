@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { IUserProfile } from '../../../lib/client/types/user';
 import { determineAccessToken } from '../../../lib/server/auth';
-import { buildUserProfile } from '../../../lib/server/spotify';
+import { handleError } from '../../../lib/server/helpers';
 
 const endpoint = 'https://api.spotify.com/v1/me';
 
@@ -35,32 +36,32 @@ export interface IUserProfileAPI {
     uri: string;
 }
 
-const getUserProfile = async (
-    req: NextApiRequest
-): Promise<AxiosResponse<IUserProfileAPI> | null> => {
-    const access_token = await determineAccessToken(req);
-    if (access_token === null) {
-        return access_token;
-    }
-
-    return await axios.get<IUserProfileAPI>(endpoint, {
-        headers: {
-            Authorization: access_token,
-        },
-    });
-};
+export const buildUserProfile = (data: IUserProfileAPI): IUserProfile => ({
+    country: data.country,
+    display_name: data.display_name,
+    followers: data.followers.total,
+    id: data.id,
+    image: data.images[0].url,
+    product: data.product,
+    type: data.type,
+});
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const api = await getUserProfile(req);
+    try {
+        const access_token = await determineAccessToken(req);
 
-    if (!api) {
-        res.status(401).send('Invalid Spotify access_token provided.');
-    } else {
-        if (api.status !== 200) {
-            res.status(api.status).json(api.data);
-        }
-        const built = buildUserProfile(api.data);
-        res.status(200).json(built);
+        const userProfileAPI = await axios.get<IUserProfileAPI>(endpoint, {
+            headers: {
+                Authorization: access_token,
+            },
+        });
+
+        const builtUserProfile = await buildUserProfile(userProfileAPI.data);
+
+        res.status(200).json(builtUserProfile);
+    } catch (error) {
+        const { status, message } = handleError(error);
+        res.status(status).send(message);
     }
 };
 
