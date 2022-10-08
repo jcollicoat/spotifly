@@ -1,39 +1,74 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
+import { getAverageColor } from 'fast-average-color-node';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { AlbumImageSize } from '../../../lib/client/types/_simple';
+import { IArtist } from '../../../lib/client/types/artists';
 import { determineAccessToken } from '../../../lib/server/auth';
-import { buildArtist } from '../../../lib/server/spotify';
-import { IArtistDTO } from '../../../lib/server/spotify-types';
+import { appendUUID, handleError } from '../../../lib/server/helpers';
+import { IImageDTO } from '../../../lib/server/types/_simple';
 
 const endpoint = 'https://api.spotify.com/v1/artists/';
 
-const getArtist = async (
-    req: NextApiRequest
-): Promise<AxiosResponse<IArtistDTO> | null> => {
-    const access_token = await determineAccessToken(req);
-    if (access_token === null) {
-        return access_token;
+export interface IArtistAPI {
+    id: string;
+    external_urls: {
+        spotify: string;
+    };
+    followers: {
+        href: string;
+        total: number;
+    };
+    genres: string[];
+    href: string;
+    images: IImageDTO[];
+    name: string;
+    popularity: number;
+    type: string;
+    uri: string;
+}
+
+export const buildArtist = async (
+    artistAPI: IArtistAPI,
+    imageSize?: AlbumImageSize
+): Promise<IArtist> => {
+    const color = await getAverageColor(artistAPI.images[2].url);
+    if (!color.hex) {
+        throw new Error(
+            `Error getting color for track: ${artistAPI.id} (${artistAPI.name}).`
+        );
     }
 
-    const artistID = req.query.artistID;
-    return await axios.get<IArtistDTO>(endpoint + artistID, {
-        headers: {
-            Authorization: access_token,
-        },
-    });
+    return {
+        id: artistAPI.id,
+        color: color.hex,
+        followers: artistAPI.followers.total,
+        genres: artistAPI.genres,
+        image: artistAPI.images[imageSize ?? 2].url,
+        key: appendUUID(artistAPI.id),
+        name: artistAPI.name,
+        popularity: artistAPI.popularity,
+        type: artistAPI.type,
+    };
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const api = await getArtist(req);
+    try {
+        const access_token = await determineAccessToken(req);
 
-    if (!api) {
-        res.status(401).send('Invalid Spotify access_token provided.');
-    } else {
-        if (api.status !== 200) {
-            res.status(api.status).json(api.data);
-        }
-        const built = await buildArtist(api.data);
-        res.status(200).json(built);
+        const artistID = req.query.artistID;
+        const artistAPI = await axios.get<IArtistAPI>(endpoint + artistID, {
+            headers: {
+                Authorization: access_token,
+            },
+        });
+
+        const builtArtist = await buildArtist(artistAPI.data);
+
+        res.status(200).json(builtArtist);
+    } catch (error) {
+        const { status, message } = handleError(error);
+        res.status(status).send(message);
     }
 };
 

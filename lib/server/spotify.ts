@@ -1,5 +1,6 @@
 import { getAverageColor } from 'fast-average-color-node';
 import { IAlbumAPI } from '../../pages/api/spotify/getAlbum';
+import { buildArtist, IArtistAPI } from '../../pages/api/spotify/getArtist';
 import { ITopArtistsAPI } from '../../pages/api/spotify/getTopArtists';
 import { IUserProfileAPI } from '../../pages/api/spotify/getUserProfile';
 import { IAlbumMinimum, AlbumImageSize } from '../client/types/_simple';
@@ -9,7 +10,6 @@ import { ITrack } from '../client/types/tracks';
 import { IUserProfile } from '../client/types/user';
 import { reduceItemArtists, appendUUID } from './helpers';
 import { IAddonsTracksDTO, IAudioFeaturesAPI } from './types/addons';
-import { IArtistDTO } from './types/artists';
 import { ITrackDTO } from './types/tracks';
 
 export const reduceAlbum = (album: IAlbumAPI): IAlbumMinimum => {
@@ -126,26 +126,8 @@ export const buildTracks = async (
     );
 };
 
-export const buildArtist = async (
-    artist: IArtistDTO,
-    imageSize?: AlbumImageSize
-): Promise<IArtist> => {
-    const color = await getAverageColor(artist.images[2].url);
-    return {
-        id: artist.id,
-        color: color.hex,
-        followers: artist.followers.total,
-        genres: artist.genres,
-        image: artist.images[imageSize ?? 2].url,
-        key: appendUUID(artist.id),
-        name: artist.name,
-        popularity: artist.popularity,
-        type: artist.type,
-    };
-};
-
 const buildArtists = async (
-    artists: IArtistDTO[],
+    artists: IArtistAPI[],
     imageSize?: AlbumImageSize
 ): Promise<IArtist[]> => {
     return await Promise.all(

@@ -11,14 +11,14 @@ import {
     reduceItemArtists,
 } from '../../../lib/server/helpers';
 import { IImageDTO } from '../../../lib/server/types/_simple';
-import { IArtistDTO } from '../../../lib/server/types/artists';
 import { ITrackDTO } from '../../../lib/server/types/tracks';
+import { IArtistAPI } from './getArtist';
 
 const endpoint = 'https://api.spotify.com/v1/albums/';
 
 export interface IAlbumAPI {
     album_type: string;
-    artists: IArtistDTO[];
+    artists: IArtistAPI[];
     available_markets: string[];
     external_urls: {
         spotify: string;
