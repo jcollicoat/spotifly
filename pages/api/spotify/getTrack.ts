@@ -3,9 +3,36 @@ import axios, { AxiosResponse } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { determineAccessToken } from '../../../lib/server/auth';
 import { buildTrack } from '../../../lib/server/spotify';
-import { ITrackAPI } from '../../../lib/server/spotify-types';
+import { IItemArtistDTO } from '../../../lib/server/types/_simple';
+import { IAlbumAPI } from './getAlbum';
 
 const endpoint = 'https://api.spotify.com/v1/tracks/';
+
+export interface ITrackAPI {
+    id: string;
+    album: IAlbumAPI;
+    artists: IItemArtistDTO[];
+    available_markets: string[];
+    disc_number: number;
+    duration_ms: number;
+    explicit: boolean;
+    external_ids: {
+        ean: string;
+        isrc: string;
+        upc: string;
+    };
+    external_urls: {
+        spotify: string;
+    };
+    href: string;
+    is_local: false;
+    name: string;
+    popularity: number;
+    preview_url: string;
+    track_number: number;
+    type: string;
+    uri: string;
+}
 
 const getTrack = async (
     req: NextApiRequest

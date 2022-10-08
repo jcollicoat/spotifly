@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { ITopTracks } from '../../../lib/client/spotify-types';
+import { ITopTracks } from '../../../lib/client/types/tracks';
 import { determineAccessToken } from '../../../lib/server/auth';
 import { handleError } from '../../../lib/server/helpers';
 import { buildTracks } from '../../../lib/server/spotify';
 import {
-    IAddonsTracksAPI,
+    IAddonsTracksDTO,
     IAudioFeaturesListAPI,
-    ITrackAPI,
-} from '../../../lib/server/spotify-types';
+} from '../../../lib/server/types/addons';
+import { ITrackAPI } from './getTrack';
 
 const endpoint = 'https://api.spotify.com/v1/me/top/tracks';
 const endpoint_audio_features = 'https://api.spotify.com/v1/audio-features';
@@ -26,7 +26,7 @@ export interface ITopTracksAPI {
 
 const buildTopTracks = async (
     topTracksAPI: ITopTracksAPI,
-    addons?: IAddonsTracksAPI
+    addons?: IAddonsTracksDTO
 ): Promise<ITopTracks> => {
     return {
         items: await buildTracks(topTracksAPI.items, addons),
@@ -63,7 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 }
             );
 
-            const addons: IAddonsTracksAPI = {
+            const addons: IAddonsTracksDTO = {
                 audio_features: audioFeaturesAPI.data,
             };
 
