@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
+import { getAverageColor } from 'fast-average-color-node';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { AlbumImageSize } from '../../../lib/client/types/_simple';
 import { IAlbum } from '../../../lib/client/types/albums';
@@ -46,22 +47,27 @@ export interface IAlbumAPI {
 }
 
 export const buildAlbum = async (
-    album: IAlbumAPI,
+    albumAPI: IAlbumAPI,
     imageSize?: AlbumImageSize
 ): Promise<IAlbum> => {
-    // const color = await getAverageColor(album.images[2].url);
-    await setTimeout(() => null, 200);
+    const color = await getAverageColor(albumAPI.images[2].url);
+    if (!color.hex) {
+        throw new Error(
+            `Error getting color for track: ${albumAPI.id} (${albumAPI.name}).`
+        );
+    }
+
     return {
-        album_type: album.album_type,
-        artists: reduceItemArtists(album.artists),
-        color: 'red',
-        id: album.id,
-        image: album.images[imageSize ?? 2].url,
-        key: appendUUID(album.id),
-        name: album.name,
-        release_date: album.release_date,
-        total_tracks: album.total_tracks,
-        type: album.type,
+        album_type: albumAPI.album_type,
+        artists: reduceItemArtists(albumAPI.artists),
+        color: color.hex,
+        id: albumAPI.id,
+        image: albumAPI.images[imageSize ?? 2].url,
+        key: appendUUID(albumAPI.id),
+        name: albumAPI.name,
+        release_date: albumAPI.release_date,
+        total_tracks: albumAPI.total_tracks,
+        type: albumAPI.type,
     };
 };
 
