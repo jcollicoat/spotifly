@@ -16,7 +16,12 @@
         display: flex;
         gap: $space-medium;
         padding: $space-medium;
-        position: relative;
+
+        &:hover {
+            .audio_features {
+                background-color: rgba(255, 255, 255, 0.05);
+            }
+        }
 
         &.loaded {
             background: $color-overlay-gradient;
@@ -75,13 +80,43 @@
             align-items: center;
             border-radius: $border-radius-button;
             display: flex;
-            gap: $space-xsmall;
+            gap: $space-small;
             padding: $space-small;
             transition: $transition-ease;
             transition-property: background-color;
 
-            &:hover {
-                background-color: rgba(255, 255, 255, 0.05);
+            .feature {
+                color: $color-gray-4;
+                height: 1rem;
+                position: relative;
+                transition: $transition-ease;
+                transition-property: color;
+                width: 1rem;
+
+                &:hover {
+                    color: $color-secondary-3;
+
+                    .label {
+                        opacity: 1;
+                    }
+                }
+
+                .icon {
+                    height: 100%;
+                    width: 100%;
+                }
+
+                .label {
+                    font-size: 0.75em;
+                    left: 50%;
+                    position: absolute;
+                    opacity: 0;
+                    top: -$space-large;
+                    transform: translateX(-50%);
+                    transition: $transition-ease;
+                    transition-property: opacity;
+                    white-space: nowrap;
+                }
             }
         }
     }

@@ -1,3 +1,11 @@
+import { faFaceSmile } from '@fortawesome/free-regular-svg-icons';
+import {
+    faBolt,
+    faGuitar,
+    faHeartPulse,
+    faVolumeHigh,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,8 +20,6 @@ import styles from './ListTrack.module.scss';
 type ListTrackSkeleton = IComponent<ITrack>;
 
 export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
-    console.log(track?.audio_features);
-
     return (
         <div
             className={styles.track}
@@ -89,14 +95,56 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                 </Scroller>
                 {track?.audio_features && (
                     <div className={styles.audio_features}>
-                        <span>
-                            {Math.floor(
-                                track.audio_features.danceability * 100
-                            )}
-                        </span>
-                        <span>
-                            {Math.floor(track.audio_features.energy * 100)}
-                        </span>
+                        <div className={styles.feature}>
+                            <FontAwesomeIcon
+                                className={styles.icon}
+                                icon={faFaceSmile}
+                                title={`Happiness: ${track.audio_features.valence}`}
+                            />
+                            <span aria-hidden className={styles.label}>
+                                {`Happiness: ${track.audio_features.valence}`}
+                            </span>
+                        </div>
+                        <div className={styles.feature}>
+                            <FontAwesomeIcon
+                                className={styles.icon}
+                                icon={faVolumeHigh}
+                                title={`Loudness: ${track.audio_features.loudness}`}
+                            />
+                            <span aria-hidden className={styles.label}>
+                                {`Loudness: ${track.audio_features.loudness}`}
+                            </span>
+                        </div>
+                        <div className={styles.feature}>
+                            <FontAwesomeIcon
+                                className={styles.icon}
+                                icon={faGuitar}
+                                title={`Acousticness: ${track.audio_features.acousticness}`}
+                            />
+                            <span aria-hidden className={styles.label}>
+                                {`Acousticness: ${track.audio_features.acousticness}`}
+                            </span>
+                        </div>
+                        <div className={styles.feature}>
+                            <FontAwesomeIcon
+                                className={styles.icon}
+                                icon={faHeartPulse}
+                                title={`Danceability: ${track.audio_features.danceability}`}
+                            />
+                            <span aria-hidden className={styles.label}>
+                                {`Danceability: ${track.audio_features.danceability}`}
+                            </span>
+                        </div>
+                        <div className={styles.feature}>
+                            <FontAwesomeIcon
+                                className={styles.icon}
+                                icon={faBolt}
+                                title={`Energy: ${track.audio_features.energy}`}
+                            />
+                            <span aria-hidden className={styles.label}>
+                                {`Energy: ${track.audio_features.energy}`}
+                            </span>
+                        </div>
                     </div>
                 )}
             </div>
