@@ -3,19 +3,47 @@ import axios, { AxiosResponse } from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { determineAccessToken } from '../../../lib/server/auth';
 import { buildUserProfile } from '../../../lib/server/spotify';
-import { IUserProfileDTO } from '../../../lib/server/spotify-types';
 
 const endpoint = 'https://api.spotify.com/v1/me';
 
+interface IUserProfileAPI {
+    country: string;
+    display_name: string;
+    email: string;
+    explicit_content: {
+        filter_enabled: true;
+        filter_locked: true;
+    };
+    external_urls: {
+        spotify: string;
+    };
+    followers: {
+        href: string;
+        total: number;
+    };
+    href: string;
+    id: string;
+    images: [
+        {
+            url: string;
+            height: number;
+            width: number;
+        }
+    ];
+    product: string;
+    type: string;
+    uri: string;
+}
+
 const getUserProfile = async (
     req: NextApiRequest
-): Promise<AxiosResponse<IUserProfileDTO> | null> => {
+): Promise<AxiosResponse<IUserProfileAPI> | null> => {
     const access_token = await determineAccessToken(req);
     if (access_token === null) {
         return access_token;
     }
 
-    return await axios.get<IUserProfileDTO>(endpoint, {
+    return await axios.get<IUserProfileAPI>(endpoint, {
         headers: {
             Authorization: access_token,
         },

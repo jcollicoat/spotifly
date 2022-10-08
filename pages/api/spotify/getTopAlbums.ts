@@ -7,6 +7,16 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 // const endpoint = 'https://api.spotify.com/v1/me/top/albums';
 
+interface ITopAlbumsAPI {
+    href: string;
+    items: IAlbumDTO[];
+    limit: number;
+    next?: string;
+    offset: number;
+    previous?: string;
+    total: number;
+}
+
 // const builtTopAlbums = async (data: ITopAlbumsDTO): Promise<ITopAlbums> => ({
 //     items: await buildAlbums(data.items),
 // });
