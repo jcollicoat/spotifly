@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { ITopTracks, AlbumImageSize } from '../../../lib/client/spotify-types';
+import { ITopTracks } from '../../../lib/client/spotify-types';
 import { determineAccessToken } from '../../../lib/server/auth';
+import { handleError } from '../../../lib/server/helpers';
 import { buildTracks } from '../../../lib/server/spotify';
 import {
-    IAudioFeaturesAPI,
+    IAddonsTracksAPI,
+    IAudioFeaturesListAPI,
     ITrackAPI,
 } from '../../../lib/server/spotify-types';
 
@@ -22,55 +24,16 @@ export interface ITopTracksAPI {
     total: number;
 }
 
-export interface IAddonsTopTracksAPI {
-    audio_features?: IAudioFeaturesAPI;
-}
-
-export interface ITopTracksDTO {
-    topTracksAPI: ITopTracksAPI;
-    addons: IAddonsTopTracksAPI;
-}
-
 const buildTopTracks = async (
     topTracksAPI: ITopTracksAPI,
-    addons?: IAddonsTopTracksAPI
+    addons?: IAddonsTracksAPI
 ): Promise<ITopTracks> => {
     return {
-        items: await buildTracks(
-            topTracksAPI.items,
-            addons,
-            AlbumImageSize.medium
-        ),
+        items: await buildTracks(topTracksAPI.items, addons),
         next: topTracksAPI.next,
         offset: topTracksAPI.offset,
         previous: topTracksAPI.previous,
         total: topTracksAPI.total,
-    };
-};
-
-type ErrorResponse = {
-    status: number;
-    message: string;
-};
-
-const handleError = (error: unknown): ErrorResponse => {
-    if (error instanceof AxiosError)
-        return {
-            status: error.response?.status ?? 400,
-            message: `Error fetching Spotify API endpoint ${
-                error.request.path ?? '[apiPathNotFound]'
-            } | ${
-                error.response?.data.error.message ?? '[errorMessageNotFound]'
-            }.`,
-        };
-    if (error instanceof Error)
-        return {
-            status: 400,
-            message: error.message,
-        };
-    return {
-        status: 500,
-        message: `Unknown error occured: ${error}`,
     };
 };
 
@@ -88,7 +51,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             const ids = topTracksAPI.data.items
                 .map((track) => track.id)
                 .join(',');
-            const audioFeaturesAPI = await axios.get<IAudioFeaturesAPI>(
+            const audioFeaturesAPI = await axios.get<IAudioFeaturesListAPI>(
                 endpoint_audio_features,
                 {
                     headers: {
@@ -100,7 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 }
             );
 
-            const addons: IAddonsTopTracksAPI = {
+            const addons: IAddonsTracksAPI = {
                 audio_features: audioFeaturesAPI.data,
             };
 

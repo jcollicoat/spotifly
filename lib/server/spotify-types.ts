@@ -55,7 +55,7 @@ export interface IArtistDTO {
     uri: string;
 }
 
-export interface IAudioFeaturesDTO {
+export interface IAudioFeaturesAPI {
     acousticness: number;
     analysis_url: string;
     danceability: number;
@@ -76,12 +76,12 @@ export interface IAudioFeaturesDTO {
     valence: number;
 }
 
-export interface IAudioFeaturesAPI {
-    audio_features: IAudioFeaturesDTO[];
+export interface IAudioFeaturesListAPI {
+    audio_features: IAudioFeaturesAPI[];
 }
 
-export interface ITrackInjectionsDTO {
-    audio_features?: IAudioFeaturesDTO;
+export interface IAddonsTracksAPI {
+    audio_features?: IAudioFeaturesListAPI;
 }
 
 export interface ITrackAPI {
@@ -111,24 +111,7 @@ export interface ITrackAPI {
 }
 
 export interface ITrackDTO extends ITrackAPI {
-    audio_features?: IAudioFeaturesDTO;
-}
-
-export interface IRecentlyPlayedTrackDTO {
-    context?: string;
-    href: string;
-    track: ITrackAPI;
-}
-
-export interface IRecentlyPlayedDTO {
-    href: string;
-    items: IRecentlyPlayedTrackDTO[];
-    limit: number;
-    next: string | null;
-    cursors: {
-        after: string;
-    };
-    total: number;
+    audio_features?: IAudioFeaturesAPI;
 }
 
 export interface ITopAlbumsDTO {

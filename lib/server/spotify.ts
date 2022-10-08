@@ -1,12 +1,10 @@
 import { getAverageColor } from 'fast-average-color-node';
-import { IAddonsTopTracksAPI } from '../../pages/api/spotify/getTopTracks';
 import {
     AlbumImageSize,
     IAlbum,
     IAlbumMinimum,
     IAudioFeatures,
     // IArtist,
-    IRecentlyPlayed,
     ISmallListArtist,
     ISmallListTrack,
     ITopArtists,
@@ -15,11 +13,11 @@ import {
 } from '../client/spotify-types';
 import { reduceItemArtists, appendUUID } from './helpers';
 import {
+    IAddonsTracksAPI,
     IAlbumDTO,
     IAlbumsDTO,
     IArtistDTO,
-    IAudioFeaturesDTO,
-    IRecentlyPlayedDTO,
+    IAudioFeaturesAPI,
     ITopArtistsDTO,
     ITrackAPI,
     ITrackDTO,
@@ -62,7 +60,7 @@ const normalizeTimeSig = (value: number) => {
 };
 
 const reduceAudioFeatures = (
-    audioFeaturesDTO: IAudioFeaturesDTO
+    audioFeaturesDTO: IAudioFeaturesAPI
 ): IAudioFeatures => ({
     acousticness: normalizeFloat(audioFeaturesDTO.acousticness),
     danceability: normalizeFloat(audioFeaturesDTO.danceability),
@@ -114,11 +112,11 @@ export const buildAlbums = async (
 
 export const buildTrack = async (
     trackDTO: ITrackDTO,
-    addons?: IAddonsTopTracksAPI,
+    addons?: IAddonsTracksAPI,
     imageSize?: AlbumImageSize
 ): Promise<ITrack> => {
     const color = await getAverageColor(trackDTO.album.images[2].url);
-    if (!color) {
+    if (!color.hex) {
         throw new Error(
             `Error getting color for track: ${trackDTO.id} (${trackDTO.name}).`
         );
@@ -164,7 +162,7 @@ export const buildTrack = async (
 
 export const buildTracks = async (
     trackAPIs: ITrackAPI[],
-    addons?: IAddonsTopTracksAPI,
+    addons?: IAddonsTracksAPI,
     imageSize?: AlbumImageSize
 ): Promise<ISmallListTrack[]> => {
     return await Promise.all(
@@ -172,25 +170,6 @@ export const buildTracks = async (
             async (track) => await buildTrack(track, addons, imageSize)
         )
     );
-};
-
-export const buildRecentlyPlayed = async (
-    data: IRecentlyPlayedDTO
-): Promise<IRecentlyPlayed<ISmallListTrack>> => {
-    const items: ISmallListTrack[] = await buildTracks(
-        data.items.map((item) => item.track),
-        undefined,
-        AlbumImageSize.small
-    );
-    return {
-        items: items,
-        limit: data.limit,
-        next: data.next,
-        cursors: {
-            after: data.cursors.after,
-        },
-        total: data.total,
-    };
 };
 
 export const buildArtist = async (

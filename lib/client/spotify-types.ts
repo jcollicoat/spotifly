@@ -64,12 +64,22 @@ export interface IArtist {
     type: string;
 }
 
-export interface ITrackInjections {
-    audio_features: IAudioFeatures;
+export interface ITrack {
+    id: string;
+    album: IAlbumMinimum;
+    artists: IArtistMinimum[];
+    audio_features?: IAudioFeatures;
+    color: string;
+    image: string;
+    key: string;
+    name: string;
+    popularity: number;
+    type: string;
+    addons?: IAddonsTrack;
 }
 
-export interface IRecentlyPlayed<T> {
-    items: T[];
+export interface IRecentlyPlayed {
+    items: ITrack[];
     limit?: number;
     next?: string | null;
     cursors?: {
@@ -112,20 +122,6 @@ export interface ISmallListTrack {
     name: string;
     popularity: number;
     type: string;
-}
-
-export interface ITrack {
-    id: string;
-    album: IAlbumMinimum;
-    artists: IArtistMinimum[];
-    audio_features?: IAudioFeatures;
-    color: string;
-    image: string;
-    key: string;
-    name: string;
-    popularity: number;
-    type: string;
-    addons?: IAddonsTrack;
 }
 
 export interface ITopTracks {
