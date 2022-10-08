@@ -1,9 +1,9 @@
+import { IAlbumAPI } from '../../../pages/api/spotify/getAlbum';
 import { IItemArtistDTO } from './_simple';
-import { IAlbumDTO } from './albums';
 
 export interface ITrackDTO {
     id: string;
-    album: IAlbumDTO;
+    album: IAlbumAPI;
     artists: IItemArtistDTO[];
     available_markets: string[];
     disc_number: number;

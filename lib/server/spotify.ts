@@ -1,4 +1,5 @@
 import { getAverageColor } from 'fast-average-color-node';
+import { buildAlbum, IAlbumAPI } from '../../pages/api/spotify/getAlbum';
 import { ITopArtistsAPI } from '../../pages/api/spotify/getTopArtists';
 import { IUserProfileAPI } from '../../pages/api/spotify/getUserProfile';
 import { IAlbumMinimum, AlbumImageSize } from '../client/types/_simple';
@@ -9,11 +10,11 @@ import { ITrack } from '../client/types/tracks';
 import { IUserProfile } from '../client/types/user';
 import { reduceItemArtists, appendUUID } from './helpers';
 import { IAddonsTracksDTO, IAudioFeaturesAPI } from './types/addons';
-import { IAlbumDTO, IAlbumsDTO } from './types/albums';
+import { IAlbumsDTO } from './types/albums';
 import { IArtistDTO } from './types/artists';
 import { ITrackDTO } from './types/tracks';
 
-export const reduceAlbum = (album: IAlbumDTO): IAlbumMinimum => {
+export const reduceAlbum = (album: IAlbumAPI): IAlbumMinimum => {
     return {
         id: album.id,
         key: appendUUID(album.id),
@@ -67,26 +68,6 @@ const reduceAudioFeatures = (
     time_signature: normalizeTimeSig(audioFeaturesDTO.time_signature),
     valence: normalizeFloat(audioFeaturesDTO.valence),
 });
-
-export const buildAlbum = async (
-    album: IAlbumDTO,
-    imageSize?: AlbumImageSize
-): Promise<IAlbum> => {
-    // const color = await getAverageColor(album.images[2].url);
-    await setTimeout(() => null, 200);
-    return {
-        album_type: album.album_type,
-        artists: reduceItemArtists(album.artists),
-        color: 'red',
-        id: album.id,
-        image: album.images[imageSize ?? 2].url,
-        key: appendUUID(album.id),
-        name: album.name,
-        release_date: album.release_date,
-        total_tracks: album.total_tracks,
-        type: album.type,
-    };
-};
 
 export const buildAlbums = async (
     albumsDTO: IAlbumsDTO,
