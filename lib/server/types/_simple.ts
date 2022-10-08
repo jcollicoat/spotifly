@@ -4,7 +4,7 @@ export interface IImageDTO {
     width: number;
 }
 
-export interface IItemArtistDTO {
+export interface ITrackArtistDTO {
     external_urls: {
         spotify: string;
     };

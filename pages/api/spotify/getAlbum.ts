@@ -5,14 +5,11 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { AlbumImageSize } from '../../../lib/client/types/_simple';
 import { IAlbum } from '../../../lib/client/types/albums';
 import { determineAccessToken } from '../../../lib/server/auth';
-import {
-    appendUUID,
-    handleError,
-    reduceItemArtists,
-} from '../../../lib/server/helpers';
+import { appendUUID, handleError } from '../../../lib/server/helpers';
+import { reduceArtists } from '../../../lib/server/spotify';
 import { IImageDTO } from '../../../lib/server/types/_simple';
-import { ITrackDTO } from '../../../lib/server/types/tracks';
 import { IArtistAPI } from './getArtist';
+import { ITrackAPI } from './getTrack';
 
 const endpoint = 'https://api.spotify.com/v1/albums/';
 
@@ -35,7 +32,7 @@ export interface IAlbumAPI {
     total_tracks: number;
     tracks: {
         href: string;
-        items: ITrackDTO[];
+        items: ITrackAPI[];
         limit: number;
         next: string;
         offset: number;
@@ -59,7 +56,7 @@ export const buildAlbum = async (
 
     return {
         album_type: albumAPI.album_type,
-        artists: reduceItemArtists(albumAPI.artists),
+        artists: reduceArtists(albumAPI.artists),
         color: color.hex,
         id: albumAPI.id,
         image: albumAPI.images[imageSize ?? 2].url,

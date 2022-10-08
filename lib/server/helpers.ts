@@ -1,7 +1,5 @@
 import { AxiosError } from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { IArtistMinimum } from '../client/types/_simple';
-import { IItemArtistDTO } from './types/_simple';
 
 export const appendUUID = (input: string): string => `${input}-${uuidv4()}`;
 
@@ -30,12 +28,3 @@ export const handleError = (error: unknown): ErrorResponse => {
         message: `Unhandled error occured: ${error}`,
     };
 };
-
-export const reduceItemArtists = (
-    artists: IItemArtistDTO[]
-): IArtistMinimum[] =>
-    artists.map((artist) => ({
-        id: artist.id,
-        key: appendUUID(artist.id),
-        name: artist.name,
-    }));

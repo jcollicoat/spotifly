@@ -1,15 +1,19 @@
-import { getAverageColor } from 'fast-average-color-node';
 import { IAlbumAPI } from '../../pages/api/spotify/getAlbum';
 import { buildArtist, IArtistAPI } from '../../pages/api/spotify/getArtist';
+import { buildTrack, ITrackAPI } from '../../pages/api/spotify/getTrack';
 import { IUserProfileAPI } from '../../pages/api/spotify/getUserProfile';
-import { IAlbumMinimum, AlbumImageSize } from '../client/types/_simple';
+import {
+    IAlbumMinimum,
+    AlbumImageSize,
+    IArtistMinimum,
+} from '../client/types/_simple';
 import { IAudioFeatures } from '../client/types/addons';
 import { IArtist } from '../client/types/artists';
 import { ITrack } from '../client/types/tracks';
 import { IUserProfile } from '../client/types/user';
-import { reduceItemArtists, appendUUID } from './helpers';
+import { appendUUID } from './helpers';
+import { ITrackArtistDTO } from './types/_simple';
 import { IAddonsTracksDTO, IAudioFeaturesAPI } from './types/addons';
-import { ITrackDTO } from './types/tracks';
 
 export const reduceAlbum = (album: IAlbumAPI): IAlbumMinimum => {
     return {
@@ -46,7 +50,7 @@ const normalizeTimeSig = (value: number) => {
     return `${value}/4`;
 };
 
-const reduceAudioFeatures = (
+export const reduceAudioFeatures = (
     audioFeaturesDTO: IAudioFeaturesAPI
 ): IAudioFeatures => ({
     acousticness: normalizeFloat(audioFeaturesDTO.acousticness),
@@ -66,55 +70,17 @@ const reduceAudioFeatures = (
     valence: normalizeFloat(audioFeaturesDTO.valence),
 });
 
-export const buildTrack = async (
-    trackDTO: ITrackDTO,
-    addons?: IAddonsTracksDTO,
-    imageSize?: AlbumImageSize
-): Promise<ITrack> => {
-    const color = await getAverageColor(trackDTO.album.images[2].url);
-    if (!color.hex) {
-        throw new Error(
-            `Error getting color for track: ${trackDTO.id} (${trackDTO.name}).`
-        );
-    }
-
-    if (addons) {
-        const audio_features = addons.audio_features?.audio_features.find(
-            (featureSet) => featureSet.id === trackDTO.id
-        );
-
-        const track: ITrack = {
-            id: trackDTO.id,
-            album: reduceAlbum(trackDTO.album),
-            artists: reduceItemArtists(trackDTO.artists),
-            audio_features:
-                audio_features && reduceAudioFeatures(audio_features),
-            color: color.hex,
-            image: trackDTO.album.images[imageSize ?? 2].url,
-            key: appendUUID(trackDTO.id),
-            name: trackDTO.name,
-            popularity: trackDTO.popularity,
-            type: trackDTO.type,
-        };
-        return track;
-    }
-
-    const track: ITrack = {
-        id: trackDTO.id,
-        album: reduceAlbum(trackDTO.album),
-        artists: reduceItemArtists(trackDTO.artists),
-        color: color.hex,
-        image: trackDTO.album.images[imageSize ?? 2].url,
-        key: appendUUID(trackDTO.id),
-        name: trackDTO.name,
-        popularity: trackDTO.popularity,
-        type: trackDTO.type,
-    };
-    return track;
-};
+export const reduceArtists = (
+    artists: IArtistAPI[] | ITrackArtistDTO[]
+): IArtistMinimum[] =>
+    artists.map((artist) => ({
+        id: artist.id,
+        key: appendUUID(artist.id),
+        name: artist.name,
+    }));
 
 export const buildTracks = async (
-    trackAPIs: ITrackDTO[],
+    trackAPIs: ITrackAPI[],
     addons?: IAddonsTracksDTO,
     imageSize?: AlbumImageSize
 ): Promise<ITrack[]> => {
