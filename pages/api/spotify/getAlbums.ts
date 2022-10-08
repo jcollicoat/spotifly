@@ -1,42 +1,49 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { AlbumImageSize } from '../../../lib/client/types/_simple';
+import { IAlbum } from '../../../lib/client/types/albums';
 import { determineAccessToken } from '../../../lib/server/auth';
-import { buildAlbums } from '../../../lib/server/spotify';
-import { IAlbumsDTO } from '../../../lib/server/spotify-types';
+import { handleError } from '../../../lib/server/helpers';
+import { buildAlbum, IAlbumAPI } from './getAlbum';
 
 const endpoint = 'https://api.spotify.com/v1/albums';
 
-const getAlbums = async (
-    req: NextApiRequest
-): Promise<AxiosResponse<IAlbumsDTO> | null> => {
-    const access_token = await determineAccessToken(req);
-    if (access_token === null) {
-        return access_token;
-    }
+export interface IAlbumsAPI {
+    albums: IAlbumAPI[];
+}
 
-    const albumIDs = req.query.albumIDs?.toString();
-    return await axios.get<IAlbumsDTO>(endpoint, {
-        headers: {
-            Authorization: access_token,
-        },
-        params: {
-            ids: albumIDs,
-        },
-    });
+const buildAlbums = async (
+    albumsAPI: IAlbumsAPI,
+    imageSize?: AlbumImageSize
+): Promise<IAlbum[]> => {
+    return await Promise.all(
+        albumsAPI.albums.map(
+            async (albumAPI) => await buildAlbum(albumAPI, imageSize)
+        )
+    );
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const api = await getAlbums(req);
+    try {
+        const access_token = await determineAccessToken(req);
 
-    if (!api) {
-        res.status(401).send('Invalid Spotify access_token provided.');
-    } else {
-        if (api.status !== 200) {
-            res.status(api.status).json(api.data);
-        }
-        const built = await buildAlbums(api.data);
-        res.status(200).json(built);
+        const albumIDs = req.query.albumIDs?.toString();
+        const albumsAPI = await axios.get<IAlbumsAPI>(endpoint, {
+            headers: {
+                Authorization: access_token,
+            },
+            params: {
+                ids: albumIDs,
+            },
+        });
+
+        const builtAlbums = await buildAlbums(albumsAPI.data);
+
+        res.status(200).json(builtAlbums);
+    } catch (error) {
+        const { status, message } = handleError(error);
+        res.status(status).send(message);
     }
 };
 
