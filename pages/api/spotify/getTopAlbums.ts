@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 // import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { IAlbumAPI } from './getAlbum';
 // import { getSession } from 'next-auth/react';
 // import { ITopAlbumsDTO, ITopAlbums } from '../../../lib/client/spotify-types';
 // import { buildAlbums } from './getAlbum';
@@ -9,7 +10,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 interface ITopAlbumsAPI {
     href: string;
-    items: IAlbumDTO[];
+    items: IAlbumAPI[];
     limit: number;
     next?: string;
     offset: number;
