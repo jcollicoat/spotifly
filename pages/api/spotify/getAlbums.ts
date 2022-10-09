@@ -39,9 +39,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 message: message,
             });
 
-            const builtTopTracks = await buildAlbums(albumsAPI.data);
+            const builtAlbums = await buildAlbums(albumsAPI.data);
 
-            res.status(200).json(builtTopTracks);
+            res.status(200).json(builtAlbums);
         }
 
         const builtAlbums = await buildAlbums(albumsAPI.data);

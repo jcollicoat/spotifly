@@ -1,7 +1,56 @@
-import { ITrackAPI, buildTrack } from '../../pages/api/spotify/getTrack';
+import { getAverageColor } from 'fast-average-color-node';
+import { reduceAlbum, reduceArtists, appendUUID } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
+import { buildAudioFeatures } from '../addons/builders';
 import { IAddonsDTO } from '../addons/types';
-import { ITrack } from './types';
+import { ITrack, ITrackAPI } from './types';
+
+export const buildTrack = async (
+    trackAPI: ITrackAPI,
+    addons?: IAddonsDTO,
+    imageSize?: ImageSize
+): Promise<ITrack> => {
+    const color = await getAverageColor(trackAPI.album.images[2].url);
+    if (!color.hex) {
+        throw new Error(
+            `Error getting color for track: ${trackAPI.id} (${trackAPI.name}).`
+        );
+    }
+
+    if (addons) {
+        const audio_features = addons.audio_features?.audio_features.find(
+            (featureSet) => featureSet.id === trackAPI.id
+        );
+
+        const track: ITrack = {
+            id: trackAPI.id,
+            album: reduceAlbum(trackAPI.album),
+            artists: reduceArtists(trackAPI.artists),
+            audio_features:
+                audio_features && buildAudioFeatures(audio_features),
+            color: color.hex,
+            image: trackAPI.album.images[imageSize ?? 2].url,
+            key: appendUUID(trackAPI.id),
+            name: trackAPI.name,
+            popularity: trackAPI.popularity,
+            type: trackAPI.type,
+        };
+        return track;
+    }
+
+    const track: ITrack = {
+        id: trackAPI.id,
+        album: reduceAlbum(trackAPI.album),
+        artists: reduceArtists(trackAPI.artists),
+        color: color.hex,
+        image: trackAPI.album.images[imageSize ?? 2].url,
+        key: appendUUID(trackAPI.id),
+        name: trackAPI.name,
+        popularity: trackAPI.popularity,
+        type: trackAPI.type,
+    };
+    return track;
+};
 
 export const buildTracks = async (
     trackAPIs: ITrackAPI[],

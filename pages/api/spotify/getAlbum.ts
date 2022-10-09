@@ -52,9 +52,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 message: message,
             });
 
-            const builtTopTracks = await buildAlbum(albumAPI.data);
+            const builtAlbum = await buildAlbum(albumAPI.data);
 
-            res.status(200).json(builtTopTracks);
+            res.status(200).json(builtAlbum);
         }
     } catch (error) {
         const { status, message } = handleError(error);
