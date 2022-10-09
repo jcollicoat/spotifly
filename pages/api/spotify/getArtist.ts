@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { getAverageColor } from 'fast-average-color-node';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { AlbumImageSize } from '../../../lib/client/types/_simple';
+import { ImageSize } from '../../../lib/client/types/_simple';
 import { IArtist } from '../../../lib/client/types/artists';
 import { determineAccessToken } from '../../../lib/server/auth';
 import { appendUUID, handleError } from '../../../lib/server/helpers';
@@ -30,7 +30,7 @@ export interface IArtistAPI {
 
 export const buildArtist = async (
     artistAPI: IArtistAPI,
-    imageSize?: AlbumImageSize
+    imageSize?: ImageSize
 ): Promise<IArtist> => {
     const color = await getAverageColor(artistAPI.images[2].url);
     if (!color.hex) {

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { IUserProfile } from '../../../lib/client/types/user';
 import { determineAccessToken } from '../../../lib/server/auth';
 import { handleError } from '../../../lib/server/helpers';
+import { IUserProfile } from '../../../lib/user/types';
 
 const endpoint = 'https://api.spotify.com/v1/me';
 

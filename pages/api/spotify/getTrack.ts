@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { getAverageColor } from 'fast-average-color-node';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { AlbumImageSize } from '../../../lib/client/types/_simple';
+import { ImageSize } from '../../../lib/client/types/_simple';
 import { ITrack } from '../../../lib/client/types/tracks';
 import { determineAccessToken } from '../../../lib/server/auth';
 import { appendUUID, handleError } from '../../../lib/server/helpers';
@@ -46,7 +46,7 @@ export interface ITrackAPI {
 export const buildTrack = async (
     trackAPI: ITrackAPI,
     addons?: IAddonsTracksDTO,
-    imageSize?: AlbumImageSize
+    imageSize?: ImageSize
 ): Promise<ITrack> => {
     const color = await getAverageColor(trackAPI.album.images[2].url);
     if (!color.hex) {

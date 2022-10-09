@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { AlbumImageSize } from '../../../lib/client/types/_simple';
+import { ImageSize } from '../../../lib/client/types/_simple';
 import { IAlbum } from '../../../lib/client/types/albums';
 import { determineAccessToken } from '../../../lib/server/auth';
 import { handleError } from '../../../lib/server/helpers';
@@ -15,7 +15,7 @@ export interface IAlbumsAPI {
 
 const buildAlbums = async (
     albumsAPI: IAlbumsAPI,
-    imageSize?: AlbumImageSize
+    imageSize?: ImageSize
 ): Promise<IAlbum[]> => {
     return await Promise.all(
         albumsAPI.albums.map(

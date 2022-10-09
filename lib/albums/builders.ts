@@ -1,7 +1,7 @@
 import { getAverageColor } from 'fast-average-color-node';
 import { reduceArtists } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
-import { averageAudioFeaturesList } from '../addons/builders';
+import { buildAudioFeaturesList } from '../addons/builders';
 import { IAddonsAlbum, IAddonsAlbumDTO } from '../addons/types';
 import { appendUUID } from '../server/helpers';
 import { IAlbum, IAlbumAPI } from './types';
@@ -21,7 +21,7 @@ export const buildAlbum = async (
     const builtAddons: IAddonsAlbum = {
         audio_features:
             addons?.audio_features &&
-            averageAudioFeaturesList(addons.audio_features),
+            buildAudioFeaturesList(addons.audio_features),
     };
 
     return {
