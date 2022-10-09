@@ -43,10 +43,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             res.status(200).json(builtAlbums);
         }
-
-        const builtAlbums = await buildAlbums(albumsAPI.data);
-
-        res.status(200).json(builtAlbums);
     } catch (error) {
         const { status, message } = handleError(error);
         res.status(status).send(message);

@@ -40,10 +40,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             res.status(200).json(builtArtist);
         }
-
-        const builtArtist = await buildArtist(artistAPI.data);
-
-        res.status(200).json(builtArtist);
     } catch (error) {
         const { status, message } = handleError(error);
         res.status(status).send(message);

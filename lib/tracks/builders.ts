@@ -3,7 +3,12 @@ import { reduceAlbum, reduceArtists, appendUUID } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
 import { buildAudioFeatures } from '../addons/builders';
 import { IAddonsDTO } from '../addons/types';
-import { ITrack, ITrackAPI } from './types';
+import {
+    IRecentlyPlayed,
+    IRecentlyPlayedAPI,
+    ITrack,
+    ITrackAPI,
+} from './types';
 
 export const buildTrack = async (
     trackAPI: ITrackAPI,
@@ -62,4 +67,22 @@ export const buildTracks = async (
             async (track) => await buildTrack(track, addons, imageSize)
         )
     );
+};
+
+export const buildRecentlyPlayed = async (
+    recentlyPlayedAPI: IRecentlyPlayedAPI,
+    addons?: IAddonsDTO
+): Promise<IRecentlyPlayed> => {
+    return {
+        items: await buildTracks(
+            recentlyPlayedAPI.items.map((item) => item.track),
+            addons
+        ),
+        limit: recentlyPlayedAPI.limit,
+        next: recentlyPlayedAPI.next,
+        cursors: {
+            after: recentlyPlayedAPI.cursors.after,
+        },
+        total: recentlyPlayedAPI.total,
+    };
 };

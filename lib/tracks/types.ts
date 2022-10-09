@@ -70,3 +70,20 @@ export interface ITrackAPI {
     type: string;
     uri: string;
 }
+
+interface IRecentlyPlayedTrackAPI {
+    context?: string;
+    href: string;
+    track: ITrackAPI;
+}
+
+export interface IRecentlyPlayedAPI {
+    href: string;
+    items: IRecentlyPlayedTrackAPI[];
+    limit: number;
+    next: string | null;
+    cursors: {
+        after: string;
+    };
+    total: number;
+}

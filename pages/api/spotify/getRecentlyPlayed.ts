@@ -2,52 +2,13 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleError } from '../../../lib/_helpers/server';
+import { IAddonsDTO, IAudioFeaturesListAPI } from '../../../lib/addons/types';
 import { determineAccessToken } from '../../../lib/auth/server';
-import { IRecentlyPlayed } from '../../../lib/client/types/tracks';
-import { buildTracks } from '../../../lib/server/spotify';
-import {
-    IAddonsTracksDTO,
-    IAudioFeaturesListAPI,
-} from '../../../lib/server/types/addons';
-import { ITrackDTO } from '../../../lib/server/types/tracks';
+import { buildRecentlyPlayed } from '../../../lib/tracks/builders';
+import { IRecentlyPlayedAPI } from '../../../lib/tracks/types';
 
 const endpoint = 'https://api.spotify.com/v1/me/player/recently-played';
 const endpoint_audio_features = 'https://api.spotify.com/v1/audio-features';
-
-interface IRecentlyPlayedTrackAPI {
-    context?: string;
-    href: string;
-    track: ITrackDTO;
-}
-
-interface IRecentlyPlayedAPI {
-    href: string;
-    items: IRecentlyPlayedTrackAPI[];
-    limit: number;
-    next: string | null;
-    cursors: {
-        after: string;
-    };
-    total: number;
-}
-
-const buildRecentlyPlayed = async (
-    recentlyPlayedAPI: IRecentlyPlayedAPI,
-    addons?: IAddonsTracksDTO
-): Promise<IRecentlyPlayed> => {
-    return {
-        items: await buildTracks(
-            recentlyPlayedAPI.items.map((item) => item.track),
-            addons
-        ),
-        limit: recentlyPlayedAPI.limit,
-        next: recentlyPlayedAPI.next,
-        cursors: {
-            after: recentlyPlayedAPI.cursors.after,
-        },
-        total: recentlyPlayedAPI.total,
-    };
-};
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -82,16 +43,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 }
             );
 
-            const addons: IAddonsTracksDTO = {
+            const addons: IAddonsDTO = {
                 audio_features: audioFeaturesAPI.data,
             };
 
-            const builtTopTracks = await buildRecentlyPlayed(
+            const builtRecentlyPlayed = await buildRecentlyPlayed(
                 recentlyPlayedAPI.data,
                 addons
             );
 
-            res.status(200).json(builtTopTracks);
+            res.status(200).json(builtRecentlyPlayed);
         } catch (error) {
             const { status, message } = handleError(error);
             console.warn({
@@ -100,11 +61,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 message: message,
             });
 
-            const builtTopTracks = await buildRecentlyPlayed(
+            const builtRecentlyPlayed = await buildRecentlyPlayed(
                 recentlyPlayedAPI.data
             );
 
-            res.status(200).json(builtTopTracks);
+            res.status(200).json(builtRecentlyPlayed);
         }
     } catch (error) {
         const { status, message } = handleError(error);
