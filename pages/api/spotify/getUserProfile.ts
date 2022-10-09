@@ -3,48 +3,10 @@ import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleError } from '../../../lib/_helpers/server';
 import { determineAccessToken } from '../../../lib/auth/server';
-import { IUserProfile } from '../../../lib/user/types';
+import { buildUserProfile } from '../../../lib/user/builders';
+import { IUserProfileAPI } from '../../../lib/user/types';
 
 const endpoint = 'https://api.spotify.com/v1/me';
-
-export interface IUserProfileAPI {
-    country: string;
-    display_name: string;
-    email: string;
-    explicit_content: {
-        filter_enabled: true;
-        filter_locked: true;
-    };
-    external_urls: {
-        spotify: string;
-    };
-    followers: {
-        href: string;
-        total: number;
-    };
-    href: string;
-    id: string;
-    images: [
-        {
-            url: string;
-            height: number;
-            width: number;
-        }
-    ];
-    product: string;
-    type: string;
-    uri: string;
-}
-
-export const buildUserProfile = (data: IUserProfileAPI): IUserProfile => ({
-    country: data.country,
-    display_name: data.display_name,
-    followers: data.followers.total,
-    id: data.id,
-    image: data.images[0].url,
-    product: data.product,
-    type: data.type,
-});
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
