@@ -1,56 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
-import { getAverageColor } from 'fast-average-color-node';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { ImageSize } from '../../../lib/client/types/_simple';
-import { IArtist } from '../../../lib/client/types/artists';
+import { IAddonsDTO } from '../../../lib/addons/types';
+import { buildArtist } from '../../../lib/artists/builders';
+import { IArtistAPI } from '../../../lib/artists/types';
 import { determineAccessToken } from '../../../lib/server/auth';
-import { appendUUID, handleError } from '../../../lib/server/helpers';
-import { IImageDTO } from '../../../lib/server/types/_simple';
+import { handleError } from '../../../lib/server/helpers';
 
 const endpoint = 'https://api.spotify.com/v1/artists/';
-
-export interface IArtistAPI {
-    id: string;
-    external_urls: {
-        spotify: string;
-    };
-    followers: {
-        href: string;
-        total: number;
-    };
-    genres: string[];
-    href: string;
-    images: IImageDTO[];
-    name: string;
-    popularity: number;
-    type: string;
-    uri: string;
-}
-
-export const buildArtist = async (
-    artistAPI: IArtistAPI,
-    imageSize?: ImageSize
-): Promise<IArtist> => {
-    const color = await getAverageColor(artistAPI.images[2].url);
-    if (!color.hex) {
-        throw new Error(
-            `Error getting color for track: ${artistAPI.id} (${artistAPI.name}).`
-        );
-    }
-
-    return {
-        id: artistAPI.id,
-        color: color.hex,
-        followers: artistAPI.followers.total,
-        genres: artistAPI.genres,
-        image: artistAPI.images[imageSize ?? 2].url,
-        key: appendUUID(artistAPI.id),
-        name: artistAPI.name,
-        popularity: artistAPI.popularity,
-        type: artistAPI.type,
-    };
-};
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -62,6 +19,27 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 Authorization: access_token,
             },
         });
+
+        try {
+            // Fetch addons here
+
+            const addons: IAddonsDTO[] | undefined = undefined;
+
+            const builtArtist = await buildArtist(artistAPI.data, addons);
+
+            res.status(200).json(builtArtist);
+        } catch (error) {
+            const { status, message } = handleError(error);
+            console.warn({
+                summary: `Error fetching artist addons: ${artistAPI.data.id}`,
+                status: status,
+                message: message,
+            });
+
+            const builtTopTracks = await buildArtist(artistAPI.data);
+
+            res.status(200).json(builtTopTracks);
+        }
 
         const builtArtist = await buildArtist(artistAPI.data);
 

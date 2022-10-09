@@ -1,3 +1,5 @@
+import { IImageDTO } from '../_helpers/types';
+
 export interface IArtist {
     id: string;
     color: string;
@@ -16,4 +18,22 @@ export interface ITopArtists {
     offset: number;
     previous: string | null;
     total: number;
+}
+
+export interface IArtistAPI {
+    id: string;
+    external_urls: {
+        spotify: string;
+    };
+    followers: {
+        href: string;
+        total: number;
+    };
+    genres: string[];
+    href: string;
+    images: IImageDTO[];
+    name: string;
+    popularity: number;
+    type: string;
+    uri: string;
 }
