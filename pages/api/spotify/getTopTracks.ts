@@ -2,40 +2,13 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleError } from '../../../lib/_helpers/server';
+import { IAddonsDTO, IAudioFeaturesListAPI } from '../../../lib/addons/types';
 import { determineAccessToken } from '../../../lib/auth/server';
-import { ITopTracks } from '../../../lib/client/types/tracks';
-import { buildTracks } from '../../../lib/server/spotify';
-import {
-    IAddonsTracksDTO,
-    IAudioFeaturesListAPI,
-} from '../../../lib/server/types/addons';
-import { ITrackAPI } from './getTrack';
+import { buildTopTracks } from '../../../lib/tracks/builders';
+import { ITopTracksAPI } from '../../../lib/tracks/types';
 
 const endpoint = 'https://api.spotify.com/v1/me/top/tracks';
 const endpoint_audio_features = 'https://api.spotify.com/v1/audio-features';
-
-export interface ITopTracksAPI {
-    href: string;
-    items: ITrackAPI[];
-    limit: number;
-    next: string | null;
-    offset: number;
-    previous: string | null;
-    total: number;
-}
-
-const buildTopTracks = async (
-    topTracksAPI: ITopTracksAPI,
-    addons?: IAddonsTracksDTO
-): Promise<ITopTracks> => {
-    return {
-        items: await buildTracks(topTracksAPI.items, addons),
-        next: topTracksAPI.next,
-        offset: topTracksAPI.offset,
-        previous: topTracksAPI.previous,
-        total: topTracksAPI.total,
-    };
-};
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -63,7 +36,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 }
             );
 
-            const addons: IAddonsTracksDTO = {
+            const addons: IAddonsDTO = {
                 audio_features: audioFeaturesAPI.data,
             };
 

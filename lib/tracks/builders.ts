@@ -6,6 +6,8 @@ import { IAddonsDTO } from '../addons/types';
 import {
     IRecentlyPlayed,
     IRecentlyPlayedAPI,
+    ITopTracks,
+    ITopTracksAPI,
     ITrack,
     ITrackAPI,
 } from './types';
@@ -84,5 +86,18 @@ export const buildRecentlyPlayed = async (
             after: recentlyPlayedAPI.cursors.after,
         },
         total: recentlyPlayedAPI.total,
+    };
+};
+
+export const buildTopTracks = async (
+    topTracksAPI: ITopTracksAPI,
+    addons?: IAddonsDTO
+): Promise<ITopTracks> => {
+    return {
+        items: await buildTracks(topTracksAPI.items, addons),
+        next: topTracksAPI.next,
+        offset: topTracksAPI.offset,
+        previous: topTracksAPI.previous,
+        total: topTracksAPI.total,
     };
 };

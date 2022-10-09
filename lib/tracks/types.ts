@@ -87,3 +87,13 @@ export interface IRecentlyPlayedAPI {
     };
     total: number;
 }
+
+export interface ITopTracksAPI {
+    href: string;
+    items: ITrackAPI[];
+    limit: number;
+    next: string | null;
+    offset: number;
+    previous: string | null;
+    total: number;
+}
