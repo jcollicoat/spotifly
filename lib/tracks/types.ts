@@ -1,19 +1,18 @@
 import { IAlbumMinimum, IArtistMinimum } from '../_helpers/types';
-import { IAudioFeatures, IAddonsTrack } from '../addons/types';
+import { IAudioFeatures } from '../addons/types';
 import { IAlbumAPI } from '../albums/types';
 
 export interface ITrack {
     id: string;
     album: IAlbumMinimum;
     artists: IArtistMinimum[];
-    audio_features?: IAudioFeatures;
     color: string;
     image: string;
     key: string;
     name: string;
     popularity: number;
     type: string;
-    addons?: IAddonsTrack;
+    audio_features?: IAudioFeatures;
 }
 
 export interface IRecentlyPlayed {

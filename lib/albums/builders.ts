@@ -1,9 +1,38 @@
 import { getAverageColor } from 'fast-average-color-node';
-import { appendUUID, reduceArtists } from '../_helpers/helpers';
+import { appendUUID } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
 import { buildAudioFeaturesListToSingle } from '../addons/builders';
 import { IAddonsAlbum, IAddonsDTO } from '../addons/types';
-import { IAlbum, IAlbumAPI, IAlbumsAPI } from './types';
+import {
+    IAlbum,
+    IAlbumAPI,
+    IAlbumArtist,
+    IAlbumArtistDTO,
+    IAlbumsAPI,
+    IAlbumTrack,
+    IAlbumTrackDTO,
+} from './types';
+
+const buildAlbumArtists = (
+    albumArtistsDTOs: IAlbumArtistDTO[]
+): IAlbumArtist[] => {
+    return albumArtistsDTOs.map((artist) => ({
+        id: artist.id,
+        key: appendUUID(artist.id),
+        name: artist.name,
+    }));
+};
+
+const buildAlbumTracks = (albumTracksDTOs: IAlbumTrackDTO[]): IAlbumTrack[] => {
+    return albumTracksDTOs.map((track) => ({
+        id: track.id,
+        artists: [],
+        duration_ms: 0,
+        explicit: false,
+        key: appendUUID(track.id),
+        name: track.name,
+    }));
+};
 
 export const buildAlbum = async (
     albumAPI: IAlbumAPI,
@@ -29,14 +58,14 @@ export const buildAlbum = async (
     return {
         id: albumAPI.id,
         album_type: albumAPI.album_type,
-        artists: reduceArtists(albumAPI.artists),
+        artists: buildAlbumArtists(albumAPI.artists),
         color: color.hex,
         image: albumAPI.images[imageSize ?? 2].url,
         key: appendUUID(albumAPI.id),
         name: albumAPI.name,
         release_date: albumAPI.release_date,
         total_tracks: albumAPI.total_tracks,
-        type: albumAPI.type,
+        tracks: buildAlbumTracks(albumAPI.tracks.items),
         ...builtAddons,
     };
 };

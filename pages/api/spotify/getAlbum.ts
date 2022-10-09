@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             const ids = albumAPI.data.tracks.items
                 .map((track) => track.id)
                 .join(',');
-            const audioFeaturesAPI = await axios.get<IAudioFeaturesListAPI>(
+            const audioFeaturesListAPI = await axios.get<IAudioFeaturesListAPI>(
                 endpoint_audio_features,
                 {
                     headers: {
@@ -38,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             );
 
             const addons: IAddonsDTO = {
-                audio_features: audioFeaturesAPI.data,
+                audio_features: audioFeaturesListAPI.data,
             };
 
             const builtAlbum = await buildAlbum(albumAPI.data, addons);
