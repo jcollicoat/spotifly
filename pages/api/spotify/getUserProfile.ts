@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { determineAccessToken } from '../../../lib/server/auth';
+import { determineAccessToken } from '../../../lib/auth/server';
 import { handleError } from '../../../lib/server/helpers';
 import { IUserProfile } from '../../../lib/user/types';
 

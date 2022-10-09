@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { HiLogin, HiLogout } from 'react-icons/hi';
 import { useMedia } from 'react-use';
 import { breakpoints } from '../../context/breakpoints/breakpoints';
-import { signInOrOut } from '../../lib/client/auth';
+import { signInOrOut } from '../../lib/auth/client';
 import styles from './Button.module.scss';
 
 interface IButton {

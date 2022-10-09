@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { IAddonsDTO, IAudioFeaturesListAPI } from '../../../lib/addons/types';
 import { buildAlbum } from '../../../lib/albums/builders';
 import { IAlbumAPI } from '../../../lib/albums/types';
-import { determineAccessToken } from '../../../lib/server/auth';
+import { determineAccessToken } from '../../../lib/auth/server';
 import { handleError } from '../../../lib/server/helpers';
 
 const endpoint = 'https://api.spotify.com/v1/albums/';

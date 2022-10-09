@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { IAddonsDTO } from '../../../lib/addons/types';
 import { buildArtist } from '../../../lib/artists/builders';
 import { IArtistAPI } from '../../../lib/artists/types';
-import { determineAccessToken } from '../../../lib/server/auth';
+import { determineAccessToken } from '../../../lib/auth/server';
 import { handleError } from '../../../lib/server/helpers';
 
 const endpoint = 'https://api.spotify.com/v1/artists/';
