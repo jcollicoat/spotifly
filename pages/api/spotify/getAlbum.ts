@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {
-    IAddonsAlbumDTO,
-    IAudioFeaturesListAPI,
-} from '../../../lib/addons/types';
+import { IAddonsDTO, IAudioFeaturesListAPI } from '../../../lib/addons/types';
 import { buildAlbum } from '../../../lib/albums/builders';
 import { IAlbumAPI } from '../../../lib/albums/types';
 import { determineAccessToken } from '../../../lib/server/auth';
@@ -40,7 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 }
             );
 
-            const addons: IAddonsAlbumDTO = {
+            const addons: IAddonsDTO = {
                 audio_features: audioFeaturesAPI.data,
             };
 

@@ -47,10 +47,6 @@ export interface IAddonsAlbum {
     audio_features?: IAudioFeatures;
 }
 
-export interface IAddonsAlbumDTO {
-    audio_features?: IAudioFeaturesListAPI;
-}
-
-export interface IAddonsTracksDTO {
+export interface IAddonsDTO {
     audio_features?: IAudioFeaturesListAPI;
 }

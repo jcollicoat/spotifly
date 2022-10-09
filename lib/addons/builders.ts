@@ -92,7 +92,7 @@ const getMostCommonValue = (values: (string | number)[]) => {
     );
 };
 
-export const buildAudioFeaturesList = (
+export const buildAudioFeaturesListToSingle = (
     audioFeaturesListAPI: IAudioFeaturesListAPI
 ): IAudioFeatures => {
     const combined: IAudioFeaturesAPI = {

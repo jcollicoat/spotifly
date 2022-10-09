@@ -1,14 +1,14 @@
 import { getAverageColor } from 'fast-average-color-node';
 import { reduceArtists } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
-import { buildAudioFeaturesList } from '../addons/builders';
-import { IAddonsAlbum, IAddonsAlbumDTO } from '../addons/types';
+import { buildAudioFeaturesListToSingle } from '../addons/builders';
+import { IAddonsAlbum, IAddonsDTO } from '../addons/types';
 import { appendUUID } from '../server/helpers';
 import { IAlbum, IAlbumAPI } from './types';
 
 export const buildAlbum = async (
     albumAPI: IAlbumAPI,
-    addons?: IAddonsAlbumDTO,
+    addons?: IAddonsDTO,
     imageSize?: ImageSize
 ): Promise<IAlbum> => {
     const color = await getAverageColor(albumAPI.images[2].url);
@@ -18,11 +18,14 @@ export const buildAlbum = async (
         );
     }
 
-    const builtAddons: IAddonsAlbum = {
-        audio_features:
-            addons?.audio_features &&
-            buildAudioFeaturesList(addons.audio_features),
-    };
+    let builtAddons: IAddonsAlbum | undefined = undefined;
+    if (addons) {
+        builtAddons = {
+            audio_features: addons.audio_features
+                ? buildAudioFeaturesListToSingle(addons.audio_features)
+                : undefined,
+        };
+    }
 
     return {
         id: albumAPI.id,
