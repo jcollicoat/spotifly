@@ -17,7 +17,7 @@ export const handleError = (error: unknown): ErrorResponse => {
         };
     if (error instanceof Error)
         return {
-            status: 400,
+            status: 500,
             message: error.message,
         };
     return {
