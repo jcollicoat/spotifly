@@ -4,7 +4,7 @@ import { ImageSize } from '../_helpers/types';
 import { buildAudioFeaturesListToSingle } from '../addons/builders';
 import { IAddonsAlbum, IAddonsDTO } from '../addons/types';
 import { appendUUID } from '../server/helpers';
-import { IAlbum, IAlbumAPI } from './types';
+import { IAlbum, IAlbumAPI, IAlbumsAPI } from './types';
 
 export const buildAlbum = async (
     albumAPI: IAlbumAPI,
@@ -40,4 +40,16 @@ export const buildAlbum = async (
         type: albumAPI.type,
         ...builtAddons,
     };
+};
+
+export const buildAlbums = async (
+    albumsAPI: IAlbumsAPI,
+    addons?: IAddonsDTO,
+    imageSize?: ImageSize
+): Promise<IAlbum[]> => {
+    return await Promise.all(
+        albumsAPI.albums.map(
+            async (albumAPI) => await buildAlbum(albumAPI, addons, imageSize)
+        )
+    );
 };

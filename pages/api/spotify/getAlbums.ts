@@ -1,28 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { ImageSize } from '../../../lib/client/types/_simple';
-import { IAlbum } from '../../../lib/client/types/albums';
+import { IAddonsDTO } from '../../../lib/addons/types';
+import { buildAlbums } from '../../../lib/albums/builders';
+import { IAlbumsAPI } from '../../../lib/albums/types';
 import { determineAccessToken } from '../../../lib/server/auth';
 import { handleError } from '../../../lib/server/helpers';
-import { buildAlbum, IAlbumAPI } from './getAlbum';
 
 const endpoint = 'https://api.spotify.com/v1/albums';
-
-export interface IAlbumsAPI {
-    albums: IAlbumAPI[];
-}
-
-const buildAlbums = async (
-    albumsAPI: IAlbumsAPI,
-    imageSize?: ImageSize
-): Promise<IAlbum[]> => {
-    return await Promise.all(
-        albumsAPI.albums.map(
-            async (albumAPI) => await buildAlbum(albumAPI, imageSize)
-        )
-    );
-};
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -37,6 +22,27 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 ids: albumIDs,
             },
         });
+
+        try {
+            // Fetch addons here
+
+            const addons: IAddonsDTO[] | undefined = undefined;
+
+            const builtAlbums = await buildAlbums(albumsAPI.data, addons);
+
+            res.status(200).json(builtAlbums);
+        } catch (error) {
+            const { status, message } = handleError(error);
+            console.warn({
+                summary: 'Error fetching albums addons.',
+                status: status,
+                message: message,
+            });
+
+            const builtTopTracks = await buildAlbums(albumsAPI.data);
+
+            res.status(200).json(builtTopTracks);
+        }
 
         const builtAlbums = await buildAlbums(albumsAPI.data);
 

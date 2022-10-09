@@ -50,3 +50,7 @@ export interface IAlbumAPI {
     type: string;
     uri: string;
 }
+
+export interface IAlbumsAPI {
+    albums: IAlbumAPI[];
+}
