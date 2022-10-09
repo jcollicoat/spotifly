@@ -1,4 +1,7 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { TimeMS } from '../lib/_helpers/constants';
+import { ITopAlbums } from '../lib/albums/types';
+import { ITopArtists } from '../lib/artists/types';
 import {
     getRecentlyPlayed,
     getRecentlyPlayedSingle,
@@ -6,20 +9,9 @@ import {
     getTopArtists,
     getTopTracks,
 } from '../lib/client/spotify';
-import {
-    IRecentlyPlayed,
-    ISmallListArtist,
-    ISmallListTrack,
-    ITopAlbums,
-    ITopArtists,
-    ITopTracks,
-    ITrack,
-} from '../lib/client/spotify-types';
-import { TimeMS } from '../lib/constants';
+import { IRecentlyPlayed, ITrack, ITopTracks } from '../lib/tracks/types';
 
-export const useRecentlyPlayed = (): UseQueryResult<
-    IRecentlyPlayed<ISmallListTrack>
-> => {
+export const useRecentlyPlayed = (): UseQueryResult<IRecentlyPlayed> => {
     return useQuery(['recently-played'], getRecentlyPlayed, {
         staleTime: TimeMS.Minutes5,
     });
@@ -37,9 +29,7 @@ export const useTopAlbums = (): UseQueryResult<ITopAlbums> => {
     });
 };
 
-export const useTopArtists = (): UseQueryResult<
-    ITopArtists<ISmallListArtist>
-> => {
+export const useTopArtists = (): UseQueryResult<ITopArtists> => {
     return useQuery(['top-artists'], getTopArtists, {
         staleTime: Infinity,
     });
