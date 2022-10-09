@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         try {
             // Fetch addons here
 
-            const addons: IAddonsDTO[] | undefined = undefined;
+            const addons: IAddonsDTO | undefined = undefined;
 
             const builtArtist = await buildArtist(artistAPI.data, addons);
 

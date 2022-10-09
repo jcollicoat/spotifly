@@ -37,3 +37,13 @@ export interface IArtistAPI {
     type: string;
     uri: string;
 }
+
+export interface ITopArtistsAPI {
+    href: string;
+    items: IArtistAPI[];
+    limit: number;
+    next: string | null;
+    offset: number;
+    previous: string | null;
+    total: number;
+}

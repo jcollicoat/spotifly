@@ -56,7 +56,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         } catch (error) {
             const { status, message } = handleError(error);
             console.warn({
-                summary: 'Error fetching topTracks addons.',
+                summary: 'Error fetching recentlyPlayed addons.',
                 status: status,
                 message: message,
             });

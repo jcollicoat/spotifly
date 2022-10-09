@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         try {
             // Fetch addons here
 
-            const addons: IAddonsDTO[] | undefined = undefined;
+            const addons: IAddonsDTO | undefined = undefined;
 
             const builtTrack = await buildTrack(trackAPI.data, addons);
 
@@ -31,7 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         } catch (error) {
             const { status, message } = handleError(error);
             console.warn({
-                summary: `Error fetching artist addons: ${trackAPI.data.id}`,
+                summary: `Error fetching track addons: ${trackAPI.data.id}`,
                 status: status,
                 message: message,
             });

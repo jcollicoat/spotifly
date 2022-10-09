@@ -1,7 +1,8 @@
 import { getAverageColor } from 'fast-average-color-node';
 import { appendUUID } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
-import { IArtist, IArtistAPI } from './types';
+import { IAddonsDTO } from '../addons/types';
+import { IArtist, IArtistAPI, ITopArtists, ITopArtistsAPI } from './types';
 
 export const buildArtist = async (
     artistAPI: IArtistAPI,
@@ -35,3 +36,15 @@ export const buildArtists = async (
         artists.map(async (artist) => await buildArtist(artist, imageSize))
     );
 };
+
+export const buildTopArtists = async (
+    data: ITopArtistsAPI,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    addons?: IAddonsDTO
+): Promise<ITopArtists> => ({
+    artists: await buildArtists(data.items),
+    next: data.next,
+    offset: data.offset,
+    previous: data.previous,
+    total: data.total,
+});

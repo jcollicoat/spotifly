@@ -2,32 +2,12 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleError } from '../../../lib/_helpers/server';
+import { IAddonsDTO } from '../../../lib/addons/types';
+import { buildTopArtists } from '../../../lib/artists/builders';
+import { ITopArtistsAPI } from '../../../lib/artists/types';
 import { determineAccessToken } from '../../../lib/auth/server';
-import { ITopArtists } from '../../../lib/client/types/artists';
-import { buildArtists } from '../../../lib/server/spotify';
-import { IArtistAPI } from './getArtist';
 
 const endpoint = 'https://api.spotify.com/v1/me/top/artists';
-
-export interface ITopArtistsAPI {
-    href: string;
-    items: IArtistAPI[];
-    limit: number;
-    next: string | null;
-    offset: number;
-    previous: string | null;
-    total: number;
-}
-
-export const buildTopArtists = async (
-    data: ITopArtistsAPI
-): Promise<ITopArtists> => ({
-    artists: await buildArtists(data.items),
-    next: data.next,
-    offset: data.offset,
-    previous: data.previous,
-    total: data.total,
-});
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -39,9 +19,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
         });
 
-        const builtTopArtists = await buildTopArtists(topArtistsAPI.data);
+        try {
+            // Fetch addons here
 
-        res.status(200).json(builtTopArtists);
+            const addons: IAddonsDTO | undefined = undefined;
+
+            const builtTopArtists = await buildTopArtists(
+                topArtistsAPI.data,
+                addons
+            );
+
+            res.status(200).json(builtTopArtists);
+        } catch (error) {
+            const { status, message } = handleError(error);
+            console.warn({
+                summary: 'Error fetching topArtists addons.',
+                status: status,
+                message: message,
+            });
+
+            const builtTopArtists = await buildTopArtists(topArtistsAPI.data);
+
+            res.status(200).json(builtTopArtists);
+        }
     } catch (error) {
         const { status, message } = handleError(error);
         res.status(status).send(message);
