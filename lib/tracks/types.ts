@@ -1,5 +1,5 @@
-import { IAlbumMinimum, IArtistMinimum } from './_simple';
-import { IAddonsTrack, IAudioFeatures } from './addons';
+import { IAlbumMinimum, IArtistMinimum } from '../_helpers/types';
+import { IAudioFeatures, IAddonsTrack } from '../addons/types';
 
 export interface ITrack {
     id: string;
@@ -13,6 +13,17 @@ export interface ITrack {
     popularity: number;
     type: string;
     addons?: IAddonsTrack;
+}
+
+export interface ITrackArtistDTO {
+    external_urls: {
+        spotify: string;
+    };
+    href: string;
+    id: string;
+    name: string;
+    type: string;
+    uri: string;
 }
 
 export interface IRecentlyPlayed {

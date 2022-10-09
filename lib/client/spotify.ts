@@ -1,9 +1,9 @@
 import { QueryKey } from '@tanstack/react-query';
 import axios from 'axios';
-import { IAlbum, ITopAlbums } from './types/albums';
-import { IArtist, ITopArtists } from './types/artists';
-import { ITrack, IRecentlyPlayed, ITopTracks } from './types/tracks';
-import { IUserProfile } from './types/user';
+import { IAlbum, ITopAlbums } from '../albums/types';
+import { IArtist, ITopArtists } from '../artists/types';
+import { ITrack, IRecentlyPlayed, ITopTracks } from '../tracks/types';
+import { IUserProfile } from '../user/types';
 
 export const getAlbum = async ({
     queryKey,
