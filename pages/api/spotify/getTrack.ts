@@ -2,10 +2,10 @@
 import axios from 'axios';
 import { getAverageColor } from 'fast-average-color-node';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { appendUUID, handleError } from '../../../lib/_helpers/server';
 import { determineAccessToken } from '../../../lib/auth/server';
 import { ImageSize } from '../../../lib/client/types/_simple';
 import { ITrack } from '../../../lib/client/types/tracks';
-import { appendUUID, handleError } from '../../../lib/server/helpers';
 import {
     reduceAlbum,
     reduceArtists,

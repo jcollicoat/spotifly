@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { handleError } from '../../../lib/_helpers/server';
 import { determineAccessToken } from '../../../lib/auth/server';
 import { IRecentlyPlayed } from '../../../lib/client/types/tracks';
-import { handleError } from '../../../lib/server/helpers';
 import { buildTracks } from '../../../lib/server/spotify';
 import {
     IAddonsTracksDTO,

@@ -1,9 +1,8 @@
 import { getAverageColor } from 'fast-average-color-node';
-import { reduceArtists } from '../_helpers/helpers';
+import { appendUUID, reduceArtists } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
 import { buildAudioFeaturesListToSingle } from '../addons/builders';
 import { IAddonsAlbum, IAddonsDTO } from '../addons/types';
-import { appendUUID } from '../server/helpers';
 import { IAlbum, IAlbumAPI, IAlbumsAPI } from './types';
 
 export const buildAlbum = async (

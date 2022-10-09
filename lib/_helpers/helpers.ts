@@ -1,8 +1,10 @@
-import { IArtistAPI } from '../../pages/api/spotify/getArtist';
+import { v4 as uuidv4 } from 'uuid';
 import { IAlbumAPI } from '../albums/types';
-import { appendUUID } from '../server/helpers';
+import { IArtistAPI } from '../artists/types';
 import { ITrackArtistDTO } from '../tracks/types';
 import { IAlbumMinimum, IArtistMinimum } from './types';
+
+export const appendUUID = (input: string): string => `${input}-${uuidv4()}`;
 
 export const reduceAlbum = (album: IAlbumAPI): IAlbumMinimum => {
     return {

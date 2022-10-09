@@ -1,7 +1,7 @@
-import { IArtistAPI } from '../../pages/api/spotify/getArtist';
 import { ITrackAPI } from '../../pages/api/spotify/getTrack';
 import { IArtistMinimum, IImageDTO } from '../_helpers/types';
 import { IAudioFeatures } from '../addons/types';
+import { IArtistAPI } from '../artists/types';
 
 export interface IAlbum {
     id: string;

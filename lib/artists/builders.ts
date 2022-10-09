@@ -1,6 +1,6 @@
 import { getAverageColor } from 'fast-average-color-node';
+import { appendUUID } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
-import { appendUUID } from '../server/helpers';
 import { IArtist, IArtistAPI } from './types';
 
 export const buildArtist = async (
