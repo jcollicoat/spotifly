@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { FC } from 'react';
 import { getUserProfile } from '../../lib/client/spotify';
-import { IUserProfile } from '../../lib/client/spotify-types';
+import { IUserProfile } from '../../lib/user/types';
 import { IPanelDisplay, Panel } from '../Panels/_Bases/Panel/Panel';
 import { IPanelHeading } from '../Panels/_Bases/PanelHeading/PanelHeading';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
@@ -85,7 +85,7 @@ export const UserProfile: FC<ICreatePanel> = ({ isSkeleton }) => {
 
     const heading: IPanelHeading = {
         subheading: 'Dashboard',
-        subheadingLevel: 1,
+        subheadingLevel: 'h1',
     };
 
     return (

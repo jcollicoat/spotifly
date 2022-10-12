@@ -19,7 +19,7 @@
 
         &:hover {
             .audio_features {
-                background-color: rgba(255, 255, 255, 0.05);
+                opacity: 1;
             }
         }
 
@@ -78,19 +78,30 @@
 
         .audio_features {
             align-items: center;
+            background-color: transparent;
             border-radius: $border-radius-button;
             display: flex;
             gap: $space-small;
+            opacity: 0;
             padding: $space-small;
             transition: $transition-ease;
-            transition-property: background-color;
+            transition-property: background-color, opacity;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.05);
+
+                .feature {
+                    opacity: 1;
+                }
+            }
 
             .feature {
                 color: $color-gray-4;
                 height: 1rem;
+                opacity: 0.5;
                 position: relative;
                 transition: $transition-ease;
-                transition-property: color;
+                transition-property: color, opacity;
                 width: 1rem;
 
                 &:hover {

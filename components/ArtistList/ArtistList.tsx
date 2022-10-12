@@ -1,9 +1,12 @@
 import { FC } from 'react';
 import { useTopArtists } from '../../hooks/useSpotify';
-import { appendUUID } from '../../lib/_helpers/server';
-import { ISmallListArtist } from '../../lib/client/spotify-types';
+import { appendUUID } from '../../lib/_helpers/helpers';
+import { IArtist } from '../../lib/artists/types';
 import { IPanelDisplay, Panel } from '../Panels/_Bases/Panel/Panel';
-import { IPanelHeading } from '../Panels/_Bases/PanelHeading/PanelHeading';
+import {
+    HeadingLevel,
+    IPanelHeading,
+} from '../Panels/_Bases/PanelHeading/PanelHeading';
 import { ICreatePanel, SkeletonStates } from '../types';
 import { Artist, ArtistSkeleton } from './Artist/Artist';
 
@@ -12,12 +15,14 @@ type ComponentTypes = 'top-artists';
 interface IArtistListPanel extends ICreatePanel {
     list: ComponentTypes;
     subheading: string;
+    subheadingLevel?: HeadingLevel;
     title?: string;
 }
 
 export const ArtistList: FC<IArtistListPanel> = ({
     list,
     subheading,
+    subheadingLevel,
     title,
     isSkeleton,
 }) => {
@@ -31,7 +36,7 @@ export const ArtistList: FC<IArtistListPanel> = ({
     const { data, isError, isLoading } = query();
 
     // TODO: Fix this ugly ass code
-    const mapArtists = (artists?: ISmallListArtist[] | SkeletonStates) => {
+    const mapArtists = (artists?: IArtist[] | SkeletonStates) => {
         if (!artists || isSkeleton) {
             return new Array(20)
                 .fill('')
@@ -51,6 +56,7 @@ export const ArtistList: FC<IArtistListPanel> = ({
 
     const heading: IPanelHeading = {
         subheading: subheading,
+        subheadingLevel: subheadingLevel,
         title: title,
         titleLarge: true,
     };

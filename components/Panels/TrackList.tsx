@@ -1,23 +1,28 @@
 import { FC } from 'react';
 import { useRecentlyPlayed, useTopTracks } from '../../hooks/useSpotify';
-import { appendUUID } from '../../lib/_helpers/server';
-import { ITrack } from '../../lib/client/spotify-types';
+import { appendUUID } from '../../lib/_helpers/helpers';
+import { ITrack } from '../../lib/tracks/types';
 import { ListTrack } from '../ListTrack/ListTrack';
 import { ICreatePanel, SkeletonStates } from '../types';
 import { IPanelDisplay, Panel } from './_Bases/Panel/Panel';
-import { IPanelHeading } from './_Bases/PanelHeading/PanelHeading';
+import {
+    HeadingLevel,
+    IPanelHeading,
+} from './_Bases/PanelHeading/PanelHeading';
 
 type ComponentTypes = 'recently-played' | 'top-tracks';
 
 interface ITracksListPanel extends ICreatePanel {
     list: ComponentTypes;
     subheading: string;
+    subheadingLevel?: HeadingLevel;
     title?: string;
 }
 
 export const TrackList: FC<ITracksListPanel> = ({
     list,
     subheading,
+    subheadingLevel,
     title,
     isSkeleton,
 }) => {
@@ -51,6 +56,7 @@ export const TrackList: FC<ITracksListPanel> = ({
 
     const heading: IPanelHeading = {
         subheading: subheading,
+        subheadingLevel: subheadingLevel,
         title: title,
         titleLarge: true,
     };

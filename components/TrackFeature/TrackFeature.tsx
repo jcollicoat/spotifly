@@ -5,12 +5,12 @@ import Link from 'next/link';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
 import { getRecentlyPlayedSingle } from '../../lib/client/spotify';
-import {
-    IRecentlyPlayed,
-    ISmallListTrack,
-} from '../../lib/client/spotify-types';
+import { IRecentlyPlayed } from '../../lib/tracks/types';
 import { IPanelDisplay, Panel } from '../Panels/_Bases/Panel/Panel';
-import { IPanelHeading } from '../Panels/_Bases/PanelHeading/PanelHeading';
+import {
+    HeadingLevel,
+    IPanelHeading,
+} from '../Panels/_Bases/PanelHeading/PanelHeading';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
 import { IComponent, ICreatePanel, ITrackComponentBase } from '../types';
@@ -102,23 +102,28 @@ type ComponentTypes = 'recently-played' | 'top-tracks';
 interface ITrackFeaturePanel extends ICreatePanel {
     track: ComponentTypes;
     subheading?: string;
+    subheadingLevel?: HeadingLevel;
     title?: string;
 }
 
 export const TrackFeature: FC<ITrackFeaturePanel> = ({
     subheading,
+    subheadingLevel,
     title,
     isSkeleton,
 }) => {
-    const { data: track, isLoading } = useQuery<
-        IRecentlyPlayed<ISmallListTrack>
-    >(['track-feature'], getRecentlyPlayedSingle, {
-        staleTime: Infinity,
-    });
+    const { data: track, isLoading } = useQuery<IRecentlyPlayed>(
+        ['track-feature'],
+        getRecentlyPlayedSingle,
+        {
+            staleTime: Infinity,
+        }
+    );
 
     const heading: IPanelHeading = {
         title: title,
         subheading: subheading,
+        subheadingLevel: subheadingLevel,
     };
 
     const display: IPanelDisplay = {
@@ -163,6 +168,7 @@ export const TrackFeature: FC<ITrackFeaturePanel> = ({
                 id: track.items[0].id,
                 album: track.items[0].album,
                 artists: track.items[0].artists,
+                audio_features: track.items[0].audio_features,
                 color: track.items[0].color,
                 image: track.items[0].image,
                 name: track.items[0].name,
