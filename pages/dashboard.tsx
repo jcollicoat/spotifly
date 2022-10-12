@@ -2,8 +2,8 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import { AppPage } from '../components/AppPage/AppPage';
 import { ArtistList } from '../components/ArtistList/ArtistList';
+import { LastPlayedTrack } from '../components/Panels/LastPlayedTrack';
 import { TrackList } from '../components/Panels/TrackList';
-import { TrackFeature } from '../components/TrackFeature/TrackFeature';
 import { UserProfile } from '../components/UserProfile/UserProfile';
 // import { useTopArtists } from '../hooks/useSpotify';
 
@@ -20,8 +20,7 @@ const TopLists: NextPage = () => {
             </Head>
             <AppPage page="dashboard">
                 <UserProfile />
-                <TrackFeature
-                    track="recently-played"
+                <LastPlayedTrack
                     subheading="Last Played Track"
                     subheadingLevel="h2"
                 />

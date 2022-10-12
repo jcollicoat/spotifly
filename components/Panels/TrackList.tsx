@@ -39,7 +39,7 @@ export const TrackList: FC<ITracksListPanel> = ({
 
     // TODO: Fix this ugly ass code
     const mapTracks = (tracks?: ITrack[] | SkeletonStates) => {
-        if (!tracks || isSkeleton) {
+        if (isSkeleton || !tracks) {
             return new Array(20)
                 .fill('')
                 .map(() => <ListTrack key={appendUUID('')} />);

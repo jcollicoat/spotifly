@@ -1,58 +1,41 @@
-import { useQuery } from '@tanstack/react-query';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FC, useEffect, useRef, useState } from 'react';
-import { useWindowSize } from 'react-use';
-import { getRecentlyPlayedSingle } from '../../lib/client/spotify';
-import { IRecentlyPlayed } from '../../lib/tracks/types';
-import { IPanelDisplay, Panel } from '../Panels/_Bases/Panel/Panel';
-import {
-    HeadingLevel,
-    IPanelHeading,
-} from '../Panels/_Bases/PanelHeading/PanelHeading';
+import { FC } from 'react';
+import { ITrack } from '../../lib/tracks/types';
+import { Scroller } from '../Scroller/Scroller';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
-import { IComponent, ICreatePanel, ITrackComponentBase } from '../types';
+import { IComponent } from '../types';
 import styles from './TrackFeature.module.scss';
 
-interface ITrackFeatureSkeleton extends ITrackComponentBase {
-    detailsRef: React.RefObject<HTMLDivElement>;
-    noWrapRef: React.RefObject<HTMLDivElement>;
-    isOverflowed?: boolean;
-}
+type TrackFeatureSkeleton = IComponent<ITrack>;
 
-type TrackFeatureSkeleton = IComponent<ITrackFeatureSkeleton>;
-
-const TrackFeatureSkeleton: FC<TrackFeatureSkeleton> = ({ data, state }) => (
-    <div className={styles.track}>
-        <div
-            className={classNames(
-                styles.content,
-                data?.isOverflowed && styles.overflowed
-            )}
-        >
+export const TrackFeature: FC<TrackFeatureSkeleton> = ({
+    data: track,
+    state,
+}) => (
+    <div
+        className={styles.track}
+        style={{ backgroundColor: track && track.color }}
+    >
+        <div className={classNames(styles.content, track && styles.loaded)}>
             <div className={styles.cover}>
-                {data ? (
-                    <Image
-                        src={data.track.image}
-                        alt=""
-                        height={80}
-                        width={80}
-                    />
+                {track ? (
+                    <Image src={track.image} alt="" height={80} width={80} />
                 ) : (
-                    <SkeletonImage height="120px" width="120px" state={state} />
+                    <SkeletonImage height="80px" width="80px" state={state} />
                 )}
             </div>
-            <div className={styles.details} ref={data?.detailsRef}>
-                <div className={styles.nowrap} ref={data?.noWrapRef}>
-                    {data ? (
-                        <Link href={`/track/${data.track.id}`} passHref>
+            <Scroller>
+                <div className={styles.details}>
+                    {track ? (
+                        <Link href={`/track/${track.id}`} passHref>
                             <a
-                                aria-label={`Explore ${data.track.name} by ${data.track.artists[0].name}`}
+                                aria-label={`Explore ${track.name} by ${track.artists[0].name}`}
                                 className={styles.name}
                             >
-                                {data.track.name}
+                                {track.name}
                             </a>
                         </Link>
                     ) : (
@@ -61,13 +44,13 @@ const TrackFeatureSkeleton: FC<TrackFeatureSkeleton> = ({ data, state }) => (
                         </a>
                     )}
                     <div className={styles.subdetails}>
-                        {data ? (
+                        {track ? (
                             <Link
-                                href={`/artist/${data.track.artists[0].id}`}
+                                href={`/artist/${track.artists[0].id}`}
                                 passHref
                             >
                                 <a className={styles.subdetail}>
-                                    {data.track.artists[0].name}
+                                    {track.artists[0].name}
                                 </a>
                             </Link>
                         ) : (
@@ -75,14 +58,11 @@ const TrackFeatureSkeleton: FC<TrackFeatureSkeleton> = ({ data, state }) => (
                                 <SkeletonText state={state} />
                             </a>
                         )}
-                        •
-                        {data ? (
-                            <Link
-                                href={`/album/${data.track.album.id}`}
-                                passHref
-                            >
+                        {track && '•'}
+                        {track ? (
+                            <Link href={`/album/${track.album.id}`} passHref>
                                 <a className={styles.subdetail}>
-                                    {data.track.album.name}
+                                    {track.album.name}
                                 </a>
                             </Link>
                         ) : (
@@ -92,96 +72,7 @@ const TrackFeatureSkeleton: FC<TrackFeatureSkeleton> = ({ data, state }) => (
                         )}
                     </div>
                 </div>
-            </div>
+            </Scroller>
         </div>
     </div>
 );
-
-type ComponentTypes = 'recently-played' | 'top-tracks';
-
-interface ITrackFeaturePanel extends ICreatePanel {
-    track: ComponentTypes;
-    subheading?: string;
-    subheadingLevel?: HeadingLevel;
-    title?: string;
-}
-
-export const TrackFeature: FC<ITrackFeaturePanel> = ({
-    subheading,
-    subheadingLevel,
-    title,
-    isSkeleton,
-}) => {
-    const { data: track, isLoading } = useQuery<IRecentlyPlayed>(
-        ['track-feature'],
-        getRecentlyPlayedSingle,
-        {
-            staleTime: Infinity,
-        }
-    );
-
-    const heading: IPanelHeading = {
-        title: title,
-        subheading: subheading,
-        subheadingLevel: subheadingLevel,
-    };
-
-    const display: IPanelDisplay = {
-        area: 'track-feature',
-    };
-
-    const detailsRef = useRef<HTMLDivElement>(null);
-    const noWrapRef = useRef<HTMLDivElement>(null);
-    const { width } = useWindowSize();
-    const [isOverflowed, setIsOverflowed] = useState(false);
-
-    const measureOverflow = (): void => {
-        const detailsWidth = detailsRef.current?.clientWidth;
-        const noWrapWidth = noWrapRef.current?.clientWidth;
-
-        if (!detailsWidth || !noWrapWidth) {
-            setIsOverflowed(false);
-        } else if (detailsWidth > noWrapWidth) {
-            setIsOverflowed(false);
-        } else if (detailsWidth < noWrapWidth) {
-            setIsOverflowed(true);
-        }
-    };
-
-    useEffect(() => {
-        measureOverflow();
-    }, [width]);
-
-    useEffect(() => {
-        measureOverflow();
-    }, []);
-
-    if (!track) {
-        return (
-            <Panel display={display} heading={heading}>
-                {(isLoading || isSkeleton) && <TrackFeatureSkeleton />}
-            </Panel>
-        );
-    } else {
-        const data: ITrackFeatureSkeleton = {
-            track: {
-                id: track.items[0].id,
-                album: track.items[0].album,
-                artists: track.items[0].artists,
-                audio_features: track.items[0].audio_features,
-                color: track.items[0].color,
-                image: track.items[0].image,
-                name: track.items[0].name,
-            },
-            detailsRef: detailsRef,
-            noWrapRef: noWrapRef,
-            isOverflowed: isOverflowed,
-        };
-
-        return (
-            <Panel display={display} heading={heading}>
-                <TrackFeatureSkeleton data={data} />
-            </Panel>
-        );
-    }
-};

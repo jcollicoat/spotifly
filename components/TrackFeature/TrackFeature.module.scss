@@ -14,6 +14,10 @@
         gap: $space-medium;
         position: relative;
 
+        &.loaded {
+            background: $color-overlay-gradient;
+        }
+
         .cover {
             position: relative;
             flex-shrink: 0;
@@ -27,54 +31,38 @@
 
         .details {
             font-size: 2em;
-            mask-image: linear-gradient(
-                to left,
-                transparent 0,
-                rgba(#000000, 1) $space-xxxlarge,
-                rgba(#000000, 1)
-            );
-            overflow: hidden;
             padding: $space-xsmall 0;
-            position: relative;
-            width: 100%;
-            white-space: nowrap;
 
-            .nowrap {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
+            .name {
+                color: #ffffff;
+                display: block;
+                height: $text-line-height;
+                margin-bottom: $space-xsmall;
+                text-decoration: none;
+                transition: $transition-ease;
+                transition-property: color;
 
-                .name {
-                    color: #ffffff;
-                    display: block;
+                &:hover {
+                    color: $color-primary-3;
+                }
+            }
+
+            .subdetails {
+                color: $color-gray-4;
+                display: flex;
+                flex-wrap: nowrap;
+                font-size: 0.75em;
+                gap: $space-small;
+
+                .subdetail {
+                    color: $color-gray-4;
                     height: $text-line-height;
-                    margin-bottom: $space-xsmall;
                     text-decoration: none;
                     transition: $transition-ease;
                     transition-property: color;
 
                     &:hover {
                         color: $color-primary-3;
-                    }
-                }
-
-                .subdetails {
-                    color: $color-gray-4;
-                    display: flex;
-                    flex-wrap: nowrap;
-                    font-size: 0.75em;
-                    gap: $space-small;
-
-                    .subdetail {
-                        color: $color-gray-4;
-                        height: $text-line-height;
-                        text-decoration: none;
-                        transition: $transition-ease;
-                        transition-property: color;
-
-                        &:hover {
-                            color: $color-primary-3;
-                        }
                     }
                 }
             }
