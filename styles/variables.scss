@@ -96,6 +96,11 @@ $textscroller-speed: 3s ease-in-out;
     }
 }
 
+@mixin frosted-glass {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur($space-medium);
+}
+
 @mixin grid-full-width {
     grid-column: 1 / -1;
 }
