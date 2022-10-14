@@ -1,11 +1,11 @@
 import { FC, useMemo } from 'react';
 
 type IconType =
-    | 'acousticness'
-    | 'danceability'
-    | 'energy'
-    | 'loudness'
-    | 'mood';
+    | 'Acousticness'
+    | 'Danceability'
+    | 'Energy'
+    | 'Loudness'
+    | 'Mood';
 
 const Acousticness: FC = () => (
     <g>
@@ -230,24 +230,25 @@ const Mood: FC<IMood> = ({ mood }) => {
     }
 };
 
-interface IIcon {
+type SubType = IMood;
+
+interface IIcon extends SubType {
     ariaLabel: string;
     type: IconType;
-    mood?: 'happy' | 'neutral' | 'sad';
 }
 
 export const Icon: FC<IIcon> = ({ ariaLabel, type, mood }) => {
     const icon = useMemo(() => {
         switch (type) {
-            case 'acousticness':
+            case 'Acousticness':
                 return <Acousticness />;
-            case 'danceability':
+            case 'Danceability':
                 return <Danceability />;
-            case 'energy':
+            case 'Energy':
                 return <Energy />;
-            case 'loudness':
+            case 'Loudness':
                 return <Loudness />;
-            case 'mood':
+            case 'Mood':
                 return <Mood mood={mood} />;
         }
     }, [mood, type]);

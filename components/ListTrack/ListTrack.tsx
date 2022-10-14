@@ -91,7 +91,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                         <div className={styles.feature}>
                             <Icon
                                 ariaLabel={`Mood: ${track.audio_features.valence}`}
-                                type="mood"
+                                type="Mood"
                                 mood={
                                     // eslint-disable-next-line no-nested-ternary
                                     track.audio_features.valence > 25
@@ -108,7 +108,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                         <div className={styles.feature}>
                             <Icon
                                 ariaLabel={`Loudness: ${track.audio_features.loudness}`}
-                                type="loudness"
+                                type="Loudness"
                             />
                             <span aria-hidden className={styles.label}>
                                 {`Loudness: ${track.audio_features.loudness}`}
@@ -117,7 +117,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                         <div className={styles.feature}>
                             <Icon
                                 ariaLabel={`Acousticness: ${track.audio_features.acousticness}`}
-                                type="acousticness"
+                                type="Acousticness"
                             />
                             <span aria-hidden className={styles.label}>
                                 {`Acousticness: ${track.audio_features.acousticness}`}
@@ -126,7 +126,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                         <div className={styles.feature}>
                             <Icon
                                 ariaLabel={`Danceability: ${track.audio_features.danceability}`}
-                                type="danceability"
+                                type="Danceability"
                             />
                             <span aria-hidden className={styles.label}>
                                 {`Danceability: ${track.audio_features.danceability}`}
@@ -135,7 +135,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                         <div className={styles.feature}>
                             <Icon
                                 ariaLabel={`Energy: ${track.audio_features.energy}`}
-                                type="energy"
+                                type="Energy"
                             />
                             <span aria-hidden className={styles.label}>
                                 {`Energy: ${track.audio_features.energy}`}
