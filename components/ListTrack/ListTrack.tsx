@@ -1,16 +1,9 @@
-import { faFaceSmile } from '@fortawesome/free-regular-svg-icons';
-import {
-    faBolt,
-    faGuitar,
-    faHeartPulse,
-    faVolumeHigh,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 import { ITrack } from '../../lib/tracks/types';
+import { Icon } from '../Icons/Icon';
 import { Scroller } from '../Scroller/Scroller';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
@@ -96,50 +89,45 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                 {track?.audio_features && (
                     <div className={styles.audio_features}>
                         <div className={styles.feature}>
-                            <FontAwesomeIcon
-                                className={styles.icon}
-                                icon={faFaceSmile}
-                                title={`Happiness: ${track.audio_features.valence}`}
+                            <Icon
+                                ariaLabel={`Happiness: ${track.audio_features.valence}`}
+                                type="happy"
                             />
                             <span aria-hidden className={styles.label}>
                                 {`Happiness: ${track.audio_features.valence}`}
                             </span>
                         </div>
                         <div className={styles.feature}>
-                            <FontAwesomeIcon
-                                className={styles.icon}
-                                icon={faVolumeHigh}
-                                title={`Loudness: ${track.audio_features.loudness}`}
+                            <Icon
+                                ariaLabel={`Loudness: ${track.audio_features.loudness}`}
+                                type="loudness"
                             />
                             <span aria-hidden className={styles.label}>
                                 {`Loudness: ${track.audio_features.loudness}`}
                             </span>
                         </div>
                         <div className={styles.feature}>
-                            <FontAwesomeIcon
-                                className={styles.icon}
-                                icon={faGuitar}
-                                title={`Acousticness: ${track.audio_features.acousticness}`}
+                            <Icon
+                                ariaLabel={`Acousticness: ${track.audio_features.acousticness}`}
+                                type="acousticness"
                             />
                             <span aria-hidden className={styles.label}>
                                 {`Acousticness: ${track.audio_features.acousticness}`}
                             </span>
                         </div>
                         <div className={styles.feature}>
-                            <FontAwesomeIcon
-                                className={styles.icon}
-                                icon={faHeartPulse}
-                                title={`Danceability: ${track.audio_features.danceability}`}
+                            <Icon
+                                ariaLabel={`Danceability: ${track.audio_features.danceability}`}
+                                type="danceability"
                             />
                             <span aria-hidden className={styles.label}>
                                 {`Danceability: ${track.audio_features.danceability}`}
                             </span>
                         </div>
                         <div className={styles.feature}>
-                            <FontAwesomeIcon
-                                className={styles.icon}
-                                icon={faBolt}
-                                title={`Energy: ${track.audio_features.energy}`}
+                            <Icon
+                                ariaLabel={`Energy: ${track.audio_features.energy}`}
+                                type="energy"
                             />
                             <span aria-hidden className={styles.label}>
                                 {`Energy: ${track.audio_features.energy}`}
