@@ -6,11 +6,8 @@
     padding: $space-xxlarge 0;
     text-align: center;
 
-    .icon {
-        @include icon-medium;
-
-        margin: 0 auto;
-        stroke: $color-warning;
+    svg {
+        color: $color-warning;
     }
 
     .heading {

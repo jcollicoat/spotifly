@@ -1,13 +1,10 @@
 import { FC, useMemo } from 'react';
 
-type IconType =
-    | 'Acousticness'
-    | 'Danceability'
-    | 'Energy'
-    | 'Loudness'
-    | 'Mood';
+interface IGlyph {
+    size?: 'large';
+}
 
-const Bolt: FC = () => (
+const Bolt: FC<IGlyph> = () => (
     <polygon
         points="8 0.5 8 5.5 11.5 5.5 6 13.5 6 8.5 2.5 8.5 8 0.5"
         fill="none"
@@ -17,7 +14,7 @@ const Bolt: FC = () => (
     ></polygon>
 );
 
-const Heartbeat: FC = () => (
+const Heartbeat: FC<IGlyph> = () => (
     <g>
         <path
             d="M.58,4.31C1.09,1.85,4.12,0,7,3.27c4.11-4.71,8.5,1.13,5.52,4.14L7,12.5l-3.23-3"
@@ -36,7 +33,7 @@ const Heartbeat: FC = () => (
     </g>
 );
 
-interface IMood {
+interface IMood extends IGlyph {
     mood?: 'happy' | 'neutral' | 'sad';
 }
 
@@ -176,7 +173,7 @@ const Mood: FC<IMood> = ({ mood }) => {
     }
 };
 
-const MusicNote: FC = () => (
+const MusicNote: FC<IGlyph> = () => (
     <g>
         <circle
             cx="4.25"
@@ -197,7 +194,7 @@ const MusicNote: FC = () => (
     </g>
 );
 
-const VolumeLoud: FC = () => (
+const VolumeLoud: FC<IGlyph> = () => (
     <g>
         <path
             d="M3,5H1.5a1,1,0,0,0-1,1V8a1,1,0,0,0,1,1H3Z"
@@ -230,15 +227,50 @@ const VolumeLoud: FC = () => (
     </g>
 );
 
-type Glyph = IMood;
+const Warning: FC<IGlyph> = () => (
+    <g>
+        <line
+            x1="7"
+            y1="5"
+            x2="7"
+            y2="8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></line>
+        <circle
+            cx="7"
+            cy="11"
+            r="0.5"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></circle>
+        <path
+            d="M7.89,1.05a1,1,0,0,0-1.78,0l-5.5,11A1,1,0,0,0,1.5,13.5h11a1,1,0,0,0,.89-1.45Z"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></path>
+    </g>
+);
 
-interface IIcon extends Glyph {
-    ariaLabel: string;
-    type: IconType;
+type GlyphType =
+    | 'Acousticness'
+    | 'Danceability'
+    | 'Energy'
+    | 'Loudness'
+    | 'Mood'
+    | 'Warning';
+
+type GlyphProps = IMood;
+
+interface IIcon extends GlyphProps {
+    type: GlyphType;
+    ariaLabel?: string;
 }
 
-export const Icon: FC<IIcon> = ({ ariaLabel, type, mood }) => {
-    const icon = useMemo(() => {
+export const Icon: FC<IIcon> = ({ ariaLabel, type, size, mood }) => {
+    const glyph = useMemo(() => {
         switch (type) {
             case 'Acousticness':
                 return <MusicNote />;
@@ -250,19 +282,27 @@ export const Icon: FC<IIcon> = ({ ariaLabel, type, mood }) => {
                 return <VolumeLoud />;
             case 'Mood':
                 return <Mood mood={mood} />;
+            case 'Warning':
+                return <Warning />;
         }
-    }, [mood, type]);
+    }, [type, mood]);
+
+    const iconSize = useMemo(() => {
+        return size === 'large' ? '42' : '14';
+    }, [size]);
 
     return (
         <svg
+            aria-hidden={!ariaLabel}
             aria-label={ariaLabel}
-            height="14"
+            height={iconSize}
+            stroke="currentColor"
             strokeWidth="1.25"
             viewBox="0 0 14 14"
-            width="14"
+            width={iconSize}
             xmlns="http://www.w3.org/2000/svg"
         >
-            {icon}
+            {glyph}
         </svg>
     );
 };
