@@ -7,28 +7,17 @@ type IconType =
     | 'Loudness'
     | 'Mood';
 
-const Acousticness: FC = () => (
-    <g>
-        <circle
-            cx="4.25"
-            cy="11"
-            r="2.5"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        ></circle>
-        <path
-            d="M6.75,11V.5h0A5.5,5.5,0,0,1,12.25,6h0"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        ></path>
-    </g>
+const Bolt: FC = () => (
+    <polygon
+        points="8 0.5 8 5.5 11.5 5.5 6 13.5 6 8.5 2.5 8.5 8 0.5"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+    ></polygon>
 );
 
-const Danceability: FC = () => (
+const Heartbeat: FC = () => (
     <g>
         <path
             d="M.58,4.31C1.09,1.85,4.12,0,7,3.27c4.11-4.71,8.5,1.13,5.52,4.14L7,12.5l-3.23-3"
@@ -44,49 +33,6 @@ const Danceability: FC = () => (
             strokeLinecap="round"
             strokeLinejoin="round"
         ></polyline>
-    </g>
-);
-
-const Energy: FC = () => (
-    <polygon
-        points="8 0.5 8 5.5 11.5 5.5 6 13.5 6 8.5 2.5 8.5 8 0.5"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-    ></polygon>
-);
-
-const Loudness: FC = () => (
-    <g>
-        <path
-            d="M3,5H1.5a1,1,0,0,0-1,1V8a1,1,0,0,0,1,1H3Z"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        ></path>
-        <path
-            d="M3,9l3.91,2.81a1,1,0,0,0,1,.08A1,1,0,0,0,8.5,11V3A1,1,0,0,0,8,2.11a1,1,0,0,0-1,.08L3,5"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        ></path>
-        <path
-            d="M12.5,4a4.38,4.38,0,0,1,1,3,6.92,6.92,0,0,1-1,3.5"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        ></path>
-        <path
-            d="M10.5,5.5A2.19,2.19,0,0,1,11,7a2.19,2.19,0,0,1-.5,1.5"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        ></path>
     </g>
 );
 
@@ -230,9 +176,63 @@ const Mood: FC<IMood> = ({ mood }) => {
     }
 };
 
-type SubType = IMood;
+const MusicNote: FC = () => (
+    <g>
+        <circle
+            cx="4.25"
+            cy="11"
+            r="2.5"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></circle>
+        <path
+            d="M6.75,11V.5h0A5.5,5.5,0,0,1,12.25,6h0"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></path>
+    </g>
+);
 
-interface IIcon extends SubType {
+const VolumeLoud: FC = () => (
+    <g>
+        <path
+            d="M3,5H1.5a1,1,0,0,0-1,1V8a1,1,0,0,0,1,1H3Z"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></path>
+        <path
+            d="M3,9l3.91,2.81a1,1,0,0,0,1,.08A1,1,0,0,0,8.5,11V3A1,1,0,0,0,8,2.11a1,1,0,0,0-1,.08L3,5"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></path>
+        <path
+            d="M12.5,4a4.38,4.38,0,0,1,1,3,6.92,6.92,0,0,1-1,3.5"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></path>
+        <path
+            d="M10.5,5.5A2.19,2.19,0,0,1,11,7a2.19,2.19,0,0,1-.5,1.5"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></path>
+    </g>
+);
+
+type Glyph = IMood;
+
+interface IIcon extends Glyph {
     ariaLabel: string;
     type: IconType;
 }
@@ -241,13 +241,13 @@ export const Icon: FC<IIcon> = ({ ariaLabel, type, mood }) => {
     const icon = useMemo(() => {
         switch (type) {
             case 'Acousticness':
-                return <Acousticness />;
+                return <MusicNote />;
             case 'Danceability':
-                return <Danceability />;
+                return <Bolt />;
             case 'Energy':
-                return <Energy />;
+                return <Heartbeat />;
             case 'Loudness':
-                return <Loudness />;
+                return <VolumeLoud />;
             case 'Mood':
                 return <Mood mood={mood} />;
         }

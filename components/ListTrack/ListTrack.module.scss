@@ -120,8 +120,9 @@
                 .label {
                     font-size: 0.75em;
                     left: 50%;
-                    position: absolute;
                     opacity: 0;
+                    pointer-events: none;
+                    position: absolute;
                     top: -$space-large;
                     transform: translateX(-50%);
                     transition: $transition-ease;
