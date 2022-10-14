@@ -90,11 +90,19 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                     <div className={styles.audio_features}>
                         <div className={styles.feature}>
                             <Icon
-                                ariaLabel={`Happiness: ${track.audio_features.valence}`}
-                                type="happy"
+                                ariaLabel={`Mood: ${track.audio_features.valence}`}
+                                type="mood"
+                                mood={
+                                    // eslint-disable-next-line no-nested-ternary
+                                    track.audio_features.valence > 25
+                                        ? 'neutral'
+                                        : track.audio_features.valence > 70
+                                        ? 'happy'
+                                        : 'sad'
+                                }
                             />
                             <span aria-hidden className={styles.label}>
-                                {`Happiness: ${track.audio_features.valence}`}
+                                {`Mood: ${track.audio_features.valence}`}
                             </span>
                         </div>
                         <div className={styles.feature}>
