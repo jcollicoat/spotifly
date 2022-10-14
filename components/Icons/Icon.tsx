@@ -1,10 +1,6 @@
 import { FC, useMemo } from 'react';
 
-interface IGlyph {
-    size?: 'large';
-}
-
-const Bolt: FC<IGlyph> = () => (
+const Bolt: FC = () => (
     <polygon
         points="8 0.5 8 5.5 11.5 5.5 6 13.5 6 8.5 2.5 8.5 8 0.5"
         fill="none"
@@ -14,7 +10,37 @@ const Bolt: FC<IGlyph> = () => (
     ></polygon>
 );
 
-const Heartbeat: FC<IGlyph> = () => (
+const Dashboard: FC = () => (
+    <g>
+        <circle
+            cx="7"
+            cy="5.5"
+            r="2.5"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></circle>
+        <path
+            d="M2.73,11.9a5,5,0,0,1,8.54,0"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></path>
+        <circle
+            cx="7"
+            cy="7"
+            r="6.5"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></circle>
+    </g>
+);
+
+const Heartbeat: FC = () => (
     <g>
         <path
             d="M.58,4.31C1.09,1.85,4.12,0,7,3.27c4.11-4.71,8.5,1.13,5.52,4.14L7,12.5l-3.23-3"
@@ -33,7 +59,26 @@ const Heartbeat: FC<IGlyph> = () => (
     </g>
 );
 
-interface IMood extends IGlyph {
+const Home: FC = () => (
+    <g>
+        <polyline
+            points="0.5 7 7 0.5 13.5 7"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></polyline>
+        <polyline
+            points="2.5 8.5 2.5 13.5 11.5 13.5 11.5 8.5"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        ></polyline>
+    </g>
+);
+
+interface IMood {
     mood?: 'happy' | 'neutral' | 'sad';
 }
 
@@ -173,7 +218,7 @@ const Mood: FC<IMood> = ({ mood }) => {
     }
 };
 
-const MusicNote: FC<IGlyph> = () => (
+const MusicNote: FC = () => (
     <g>
         <circle
             cx="4.25"
@@ -194,7 +239,68 @@ const MusicNote: FC<IGlyph> = () => (
     </g>
 );
 
-const VolumeLoud: FC<IGlyph> = () => (
+interface ISignInOut {
+    signout?: boolean;
+}
+
+const SignInOut: FC<ISignInOut> = ({ signout }) => {
+    console.log(signout);
+    return signout ? (
+        <g>
+            <line
+                x1="6.5"
+                y1="7"
+                x2="13.5"
+                y2="7"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            ></line>
+            <polyline
+                points="11.5 5 13.5 7 11.5 9"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            ></polyline>
+            <path
+                d="M11.7,11.49a6.5,6.5,0,1,1,0-9"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            ></path>
+        </g>
+    ) : (
+        <g>
+            <line
+                x1="13.5"
+                y1="7"
+                x2="5.5"
+                y2="7"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            ></line>
+            <polyline
+                points="7.5 5 5.5 7 7.5 9"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            ></polyline>
+            <path
+                d="M12.48,10.5a6.5,6.5,0,1,1,0-7"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            ></path>
+        </g>
+    );
+};
+
+const VolumeLoud: FC = () => (
     <g>
         <path
             d="M3,5H1.5a1,1,0,0,0-1,1V8a1,1,0,0,0,1,1H3Z"
@@ -227,7 +333,7 @@ const VolumeLoud: FC<IGlyph> = () => (
     </g>
 );
 
-const Warning: FC<IGlyph> = () => (
+const Warning: FC = () => (
     <g>
         <line
             x1="7"
@@ -257,35 +363,45 @@ const Warning: FC<IGlyph> = () => (
 type GlyphType =
     | 'Acousticness'
     | 'Danceability'
+    | 'Dashboard'
     | 'Energy'
+    | 'Home'
     | 'Loudness'
     | 'Mood'
+    | 'SignInOut'
     | 'Warning';
 
-type GlyphProps = IMood;
+type GlyphProps = IMood & ISignInOut;
 
 interface IIcon extends GlyphProps {
     type: GlyphType;
     ariaLabel?: string;
+    size?: 'large';
 }
 
-export const Icon: FC<IIcon> = ({ ariaLabel, type, size, mood }) => {
+export const Icon: FC<IIcon> = ({ ariaLabel, type, size, mood, signout }) => {
     const glyph = useMemo(() => {
         switch (type) {
             case 'Acousticness':
                 return <MusicNote />;
             case 'Danceability':
                 return <Bolt />;
+            case 'Dashboard':
+                return <Dashboard />;
             case 'Energy':
                 return <Heartbeat />;
+            case 'Home':
+                return <Home />;
             case 'Loudness':
                 return <VolumeLoud />;
             case 'Mood':
                 return <Mood mood={mood} />;
+            case 'SignInOut':
+                return <SignInOut signout={signout} />;
             case 'Warning':
                 return <Warning />;
         }
-    }, [type, mood]);
+    }, [type, mood, signout]);
 
     const iconSize = useMemo(() => {
         return size === 'large' ? '42' : '14';

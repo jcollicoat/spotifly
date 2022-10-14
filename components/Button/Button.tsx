@@ -2,10 +2,10 @@ import classNames from 'classnames';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { FC } from 'react';
-import { HiLogin, HiLogout } from 'react-icons/hi';
 import { useMedia } from 'react-use';
 import { breakpoints } from '../../context/breakpoints/breakpoints';
 import { signInOrOut } from '../../lib/auth/client';
+import { Icon } from '../Icons/Icon';
 import styles from './Button.module.scss';
 
 interface IButton {
@@ -107,7 +107,9 @@ export const ButtonSignInOut: FC<ISignInOutProps> = ({
     style,
 }) => {
     const { data: session } = useSession();
-    const smallGlyph = showSmallGlyph && (session ? <HiLogout /> : <HiLogin />);
+    const smallGlyph = showSmallGlyph && (
+        <Icon type="SignInOut" signout={Boolean(session)} />
+    );
 
     return (
         <Button
