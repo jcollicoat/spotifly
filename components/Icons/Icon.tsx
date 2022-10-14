@@ -157,10 +157,10 @@ export const Icon: FC<IIcon> = ({ ariaLabel, type }) => {
     return (
         <svg
             aria-label={ariaLabel}
-            height="16"
+            height="14"
             strokeWidth="1.25"
             viewBox="0 0 14 14"
-            width="16"
+            width="14"
             xmlns="http://www.w3.org/2000/svg"
         >
             {icon}
