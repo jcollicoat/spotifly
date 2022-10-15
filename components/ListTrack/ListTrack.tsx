@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 import { ITrack } from '../../lib/tracks/types';
-import { Icon } from '../Icons/Icon';
+import { Glyph } from '../Glyphs/Glyph';
 import { Scroller } from '../Scroller/Scroller';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
 import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
@@ -89,7 +89,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                 {track?.audio_features && (
                     <div className={styles.audio_features}>
                         <div className={styles.feature}>
-                            <Icon
+                            <Glyph
                                 ariaLabel={`Mood: ${track.audio_features.valence}`}
                                 type="Mood"
                                 mood={
@@ -106,7 +106,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                             </span>
                         </div>
                         <div className={styles.feature}>
-                            <Icon
+                            <Glyph
                                 ariaLabel={`Loudness: ${track.audio_features.loudness}`}
                                 type="Loudness"
                             />
@@ -115,7 +115,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                             </span>
                         </div>
                         <div className={styles.feature}>
-                            <Icon
+                            <Glyph
                                 ariaLabel={`Acousticness: ${track.audio_features.acousticness}`}
                                 type="Acousticness"
                             />
@@ -124,7 +124,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                             </span>
                         </div>
                         <div className={styles.feature}>
-                            <Icon
+                            <Glyph
                                 ariaLabel={`Danceability: ${track.audio_features.danceability}`}
                                 type="Danceability"
                             />
@@ -133,7 +133,7 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                             </span>
                         </div>
                         <div className={styles.feature}>
-                            <Icon
+                            <Glyph
                                 ariaLabel={`Energy: ${track.audio_features.energy}`}
                                 type="Energy"
                             />

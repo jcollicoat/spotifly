@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FC } from 'react';
 import { Button, ButtonSignInOut } from '../Button/Button';
-import { Icon } from '../Icons/Icon';
+import { Glyph } from '../Glyphs/Glyph';
 import { Panel } from '../Panels/_Bases/Panel/Panel';
 import { SpotiflyLogo } from '../SpotiflyLogo/SpotiflyLogo';
 import styles from './Header.module.scss';
@@ -19,7 +19,7 @@ export const Header: FC = () => (
                     <Button
                         ariaLabel="Navigate home"
                         href="/"
-                        glyph={<Icon type="Home" />}
+                        glyph={<Glyph type="Home" />}
                         showGlyph="responsive"
                         style="tertiary"
                         type="link"
@@ -29,7 +29,7 @@ export const Header: FC = () => (
                     <Button
                         ariaLabel="Navigate to your dashboard"
                         href="/dashboard"
-                        glyph={<Icon type="Dashboard" />}
+                        glyph={<Glyph type="Dashboard" />}
                         showGlyph="responsive"
                         style="tertiary"
                         type="link"

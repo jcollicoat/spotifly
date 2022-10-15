@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { useMedia } from 'react-use';
 import { breakpoints } from '../../context/breakpoints/breakpoints';
 import { signInOrOut } from '../../lib/auth/client';
-import { Icon } from '../Icons/Icon';
+import { Glyph } from '../Glyphs/Glyph';
 import styles from './Button.module.scss';
 
 interface IButton {
@@ -125,7 +125,7 @@ export const Button: FC<IButtonProps> = ({
 export const ButtonSignInOut: FC<IButton> = ({ showGlyph, style }) => {
     const { data: session } = useSession();
     const glyph = showGlyph && (
-        <Icon type="SignInOut" signout={Boolean(session)} />
+        <Glyph type="SignInOut" signout={Boolean(session)} />
     );
 
     return (

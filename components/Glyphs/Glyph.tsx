@@ -373,13 +373,13 @@ type GlyphType =
 
 type GlyphProps = IMood & ISignInOut;
 
-interface IIcon extends GlyphProps {
+interface IGlyph extends GlyphProps {
     type: GlyphType;
     ariaLabel?: string;
     size?: 'large';
 }
 
-export const Icon: FC<IIcon> = ({ ariaLabel, type, size, mood, signout }) => {
+export const Glyph: FC<IGlyph> = ({ ariaLabel, type, size, mood, signout }) => {
     const glyph = useMemo(() => {
         switch (type) {
             case 'Acousticness':

@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Icon } from '../Icons/Icon';
+import { Glyph } from '../Glyphs/Glyph';
 
 import { Button } from './Button';
 
@@ -27,7 +27,7 @@ export default {
 
 const Template: ComponentStory<typeof Button> = (args) => {
     if (args.showGlyph !== undefined) {
-        return <Button {...args} glyph={<Icon type="Dashboard" />} />;
+        return <Button {...args} glyph={<Glyph type="Dashboard" />} />;
     } else {
         return <Button {...args} />;
     }
