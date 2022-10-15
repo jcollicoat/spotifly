@@ -19,7 +19,8 @@ export const Header: FC = () => (
                     <Button
                         ariaLabel="Navigate home"
                         href="/"
-                        smallGlyph={<Icon type="Home" />}
+                        glyph={<Icon type="Home" />}
+                        showGlyph="responsive"
                         style="tertiary"
                         type="link"
                     >
@@ -28,13 +29,14 @@ export const Header: FC = () => (
                     <Button
                         ariaLabel="Navigate to your dashboard"
                         href="/dashboard"
-                        smallGlyph={<Icon type="Dashboard" />}
+                        glyph={<Icon type="Dashboard" />}
+                        showGlyph="responsive"
                         style="tertiary"
                         type="link"
                     >
                         Dashboard
                     </Button>
-                    <ButtonSignInOut showSmallGlyph={true} />
+                    <ButtonSignInOut showGlyph="responsive" />
                 </nav>
             </div>
         </Panel>

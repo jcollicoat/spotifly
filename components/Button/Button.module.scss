@@ -14,8 +14,9 @@
     transition-property: background-color, border-color, box-shadow, color;
 
     svg {
-        height: 1.5em;
-        width: 1.5em;
+        height: $text-line-height;
+        transform: scale(1.1);
+        width: $text-line-height;
     }
 
     &.primary {
