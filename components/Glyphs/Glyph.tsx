@@ -414,7 +414,7 @@ export const Glyph: FC<IGlyph> = ({ ariaLabel, type, size, mood, signout }) => {
             height={iconSize}
             stroke="currentColor"
             strokeWidth="1.25"
-            viewBox="0 0 14 14"
+            viewBox="-0.25 -0.25 14.5 14.5"
             width={iconSize}
             xmlns="http://www.w3.org/2000/svg"
         >
