@@ -2,16 +2,16 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
-import { ITrack } from '../../lib/tracks/types';
-import { Scroller } from '../Scroller/Scroller';
-import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
-import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
-import { IComponent } from '../types';
-import styles from './TrackFeature.module.scss';
+import { ITrack } from '../../../lib/tracks/types';
+import { Scroller } from '../../Scroller/Scroller';
+import { SkeletonImage } from '../../Skeletons/SkeletonImage/SkeletonImage';
+import { SkeletonText } from '../../Skeletons/SkeletonText/SkeletonText';
+import { IComponent } from '../../types';
+import styles from './FeaturedTrack.module.scss';
 
-type TrackFeatureSkeleton = IComponent<ITrack>;
+type FeaturedTrackSkeleton = IComponent<ITrack>;
 
-export const TrackFeature: FC<TrackFeatureSkeleton> = ({
+export const FeaturedTrack: FC<FeaturedTrackSkeleton> = ({
     data: track,
     state,
 }) => (

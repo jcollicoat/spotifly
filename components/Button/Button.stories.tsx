@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
 import { Glyph } from '../Glyphs/Glyph';
 
 import { Button } from './Button';

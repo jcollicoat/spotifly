@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 import { getRecentlyPlayedSingle } from '../../lib/client/spotify';
 import { IRecentlyPlayed } from '../../lib/tracks/types';
-import { TrackFeature } from '../TrackFeature/TrackFeature';
+import { FeaturedTrack } from '../Tracks/FeaturedTrack/FeaturedTrack';
 import { ICreatePanel } from '../types';
 import { IPanelDisplay, Panel } from './_Bases/Panel/Panel';
 import {
@@ -43,13 +43,13 @@ export const LastPlayedTrack: FC<ILastPlayedTrack> = ({
     if (isSkeleton || !track) {
         return (
             <Panel display={display} heading={heading}>
-                {(isLoading || isSkeleton) && <TrackFeature />}
+                {(isLoading || isSkeleton) && <FeaturedTrack />}
             </Panel>
         );
     } else {
         return (
             <Panel display={display} heading={heading}>
-                <TrackFeature data={track.items[0]} />
+                <FeaturedTrack data={track.items[0]} />
             </Panel>
         );
     }
