@@ -1,6 +1,11 @@
-import { IAlbumMinimum, IArtistMinimum } from '../_helpers/types';
-import { IAudioFeatures } from '../addons/types';
+import {
+    CheckSavedAPI,
+    IAlbumMinimum,
+    IArtistMinimum,
+} from '../_helpers/types';
+import { IAudioFeatures, IAudioFeaturesAPI } from '../addons/types';
 import { IAlbumAPI } from '../albums/types';
+import { ITopArtistsAPI } from '../artists/types';
 
 export interface ITrack {
     id: string;
@@ -15,6 +20,12 @@ export interface ITrack {
     audio_features?: IAudioFeatures;
 }
 
+export interface ITrackAddonsDTO {
+    audioFeaturesAPI: IAudioFeaturesAPI;
+    topArtistsAPI: ITopArtistsAPI;
+    checkSavedAPI: CheckSavedAPI;
+}
+
 export interface IRecentlyPlayed {
     items: ITrack[];
     limit?: number;
@@ -23,6 +34,24 @@ export interface IRecentlyPlayed {
         after: string;
     };
     total?: number;
+}
+
+export interface ITopTrackArtist extends IArtistMinimum {
+    top_artist: boolean;
+}
+
+export interface ITopTrack {
+    id: string;
+    album: IAlbumMinimum;
+    artists: ITopTrackArtist[];
+    color: string;
+    image: string;
+    key: string;
+    name: string;
+    popularity: number;
+    type: string;
+    audio_features?: IAudioFeatures;
+    saved?: boolean;
 }
 
 export interface ITopTracks {

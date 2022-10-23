@@ -1,16 +1,76 @@
 import { getAverageColor } from 'fast-average-color-node';
 import { reduceAlbum, reduceArtists, appendUUID } from '../_helpers/helpers';
-import { ImageSize } from '../_helpers/types';
+import { IAlbumMinimum, ImageSize } from '../_helpers/types';
 import { buildAudioFeatures } from '../addons/builders';
 import { IAddonsDTO } from '../addons/types';
+import { IAlbumAPI } from '../albums/types';
+import { IArtistAPI } from '../artists/types';
 import {
     IRecentlyPlayed,
     IRecentlyPlayedAPI,
+    ITopTrack,
+    ITopTrackArtist,
     ITopTracks,
     ITopTracksAPI,
     ITrack,
+    ITrackAddonsDTO,
     ITrackAPI,
+    ITrackArtistDTO,
 } from './types';
+
+const buildTrackAlbum = (album: IAlbumAPI): IAlbumMinimum => ({
+    id: album.id,
+    key: appendUUID(album.id),
+    name: album.name,
+});
+
+const buildTrackArtists = (
+    artistsDTO: IArtistAPI[] | ITrackArtistDTO[],
+    artistIDs?: string[]
+): ITopTrackArtist[] =>
+    artistsDTO.map((artistDTO) => {
+        let isTopArtist = false;
+        if (artistIDs) {
+            isTopArtist = artistIDs.includes(artistDTO.id);
+        }
+        return {
+            id: artistDTO.id,
+            key: appendUUID(artistDTO.id),
+            name: artistDTO.name,
+            top_artist: isTopArtist,
+        };
+    });
+
+export const buildTopTrack = async (
+    topTrackAPI: ITrackAPI,
+    addons?: ITrackAddonsDTO
+): Promise<ITopTrack> => {
+    const color = await getAverageColor(topTrackAPI.album.images[2].url);
+    if (!color.hex) {
+        throw new Error(
+            `Error getting color for track: ${topTrackAPI.id} (${topTrackAPI.name}).`
+        );
+    }
+
+    let artistIDs = undefined;
+    if (addons) {
+        artistIDs = addons.topArtistsAPI.items.map((topArtist) => topArtist.id);
+    }
+
+    return {
+        id: topTrackAPI.id,
+        album: buildTrackAlbum(topTrackAPI.album),
+        artists: buildTrackArtists(topTrackAPI.artists, artistIDs),
+        color: color.hex,
+        image: topTrackAPI.album.images[0].url,
+        key: appendUUID(topTrackAPI.id),
+        name: topTrackAPI.name,
+        popularity: topTrackAPI.popularity,
+        type: topTrackAPI.type,
+        audio_features: addons && buildAudioFeatures(addons.audioFeaturesAPI),
+        saved: addons && addons.checkSavedAPI[0] === true,
+    };
+};
 
 export const buildTrack = async (
     trackAPI: ITrackAPI,

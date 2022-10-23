@@ -1,3 +1,5 @@
+export type CheckSavedAPI = boolean[];
+
 export enum ImageSize {
     small = 2,
     medium = 1,
