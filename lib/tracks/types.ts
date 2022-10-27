@@ -66,11 +66,11 @@ export interface ITrackAddonsDTO {
 }
 
 export interface ITrackArtistDTO {
+    id: string;
     external_urls: {
         spotify: string;
     };
     href: string;
-    id: string;
     name: string;
     type: string;
     uri: string;
