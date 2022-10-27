@@ -1,24 +1,17 @@
-import { ITrack } from '../tracks/types';
-
-interface IAudioFeature {
-    related_tracks: ITrack[];
-    value: number;
-}
-
 export interface IAudioFeatures {
     acousticness: number;
-    danceability: IAudioFeature;
+    danceability: number;
     duration_ms: number;
-    energy: IAudioFeature;
-    instrumentalness: IAudioFeature;
-    liveness: IAudioFeature;
+    energy: number;
+    instrumentalness: number;
+    liveness: number;
     loudness: number;
-    mode: IAudioFeature;
+    mode: string;
     music_key: string;
     speechiness: number;
-    tempo: IAudioFeature;
+    tempo: number;
     time_signature: string;
-    valence: IAudioFeature;
+    valence: number;
 }
 
 export interface IAddonsTrack {

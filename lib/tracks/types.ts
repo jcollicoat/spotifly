@@ -3,9 +3,15 @@ import {
     IAlbumMinimum,
     IArtistMinimum,
 } from '../_helpers/types';
-import { IAudioFeatures, IAudioFeaturesAPI } from '../addons/types';
+import {
+    IAudioFeatures,
+    IAudioFeaturesAPI,
+    IAudioFeaturesListAPI,
+} from '../addons/types';
 import { IAlbumAPI } from '../albums/types';
 import { ITopArtistsAPI } from '../artists/types';
+
+// Client
 
 export interface ITrack {
     id: string;
@@ -20,10 +26,25 @@ export interface ITrack {
     audio_features?: IAudioFeatures;
 }
 
-export interface ITrackAddonsDTO {
-    audioFeaturesAPI: IAudioFeaturesAPI;
-    topArtistsAPI: ITopArtistsAPI;
-    checkSavedAPI: CheckSavedAPI;
+interface ITracks {
+    next: string | null;
+    offset: number;
+    previous: string | null;
+    total: number;
+    audio_features?: IAudioFeatures;
+}
+
+export interface ITopTrackArtist extends IArtistMinimum {
+    top_artist: boolean;
+}
+
+export interface ITopTrack extends ITrack {
+    artists: ITopTrackArtist[];
+    saved?: boolean;
+}
+
+export interface ITopTracks extends ITracks {
+    items: ITopTrack[];
 }
 
 export interface IRecentlyPlayed {
@@ -36,30 +57,12 @@ export interface IRecentlyPlayed {
     total?: number;
 }
 
-export interface ITopTrackArtist extends IArtistMinimum {
-    top_artist: boolean;
-}
+// Server
 
-export interface ITopTrack {
-    id: string;
-    album: IAlbumMinimum;
-    artists: ITopTrackArtist[];
-    color: string;
-    image: string;
-    key: string;
-    name: string;
-    popularity: number;
-    type: string;
-    audio_features?: IAudioFeatures;
-    saved?: boolean;
-}
-
-export interface ITopTracks {
-    items: ITrack[];
-    next: string | null;
-    offset: number;
-    previous: string | null;
-    total: number;
+export interface ITrackAddonsDTO {
+    audioFeaturesAPI: IAudioFeaturesAPI;
+    topArtistsAPI: ITopArtistsAPI;
+    checkSavedAPI: CheckSavedAPI;
 }
 
 export interface ITrackArtistDTO {
@@ -71,6 +74,12 @@ export interface ITrackArtistDTO {
     name: string;
     type: string;
     uri: string;
+}
+
+export interface ITracksAddonsDTO {
+    audioFeaturesAPI: IAudioFeaturesListAPI;
+    topArtistsAPI: ITopArtistsAPI;
+    checkSavedAPI: CheckSavedAPI;
 }
 
 export interface ITrackAPI {

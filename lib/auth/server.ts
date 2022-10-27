@@ -9,7 +9,6 @@ export const determineAccessToken = async (
     const session = await getSession({ req });
 
     if (session) {
-        console.log('Using session access_token');
         return `Bearer ${session.access_token}`;
     } else if (ENV === 'local' && req.rawHeaders[1].match(/Bearer /g)) {
         console.log('Using Postman access_token');

@@ -1,8 +1,11 @@
 import { getAverageColor } from 'fast-average-color-node';
 import { reduceAlbum, reduceArtists, appendUUID } from '../_helpers/helpers';
 import { IAlbumMinimum, ImageSize } from '../_helpers/types';
-import { buildAudioFeatures } from '../addons/builders';
-import { IAddonsDTO } from '../addons/types';
+import {
+    buildAudioFeatures,
+    buildAudioFeaturesListToSingle,
+} from '../addons/builders';
+import { IAddonsDTO, IAudioFeaturesAPI } from '../addons/types';
 import { IAlbumAPI } from '../albums/types';
 import { IArtistAPI } from '../artists/types';
 import {
@@ -16,6 +19,7 @@ import {
     ITrackAddonsDTO,
     ITrackAPI,
     ITrackArtistDTO,
+    ITracksAddonsDTO,
 } from './types';
 
 const buildTrackAlbum = (album: IAlbumAPI): IAlbumMinimum => ({
@@ -40,37 +44,6 @@ const buildTrackArtists = (
             top_artist: isTopArtist,
         };
     });
-
-export const buildTopTrack = async (
-    topTrackAPI: ITrackAPI,
-    addons?: ITrackAddonsDTO
-): Promise<ITopTrack> => {
-    const color = await getAverageColor(topTrackAPI.album.images[2].url);
-    if (!color.hex) {
-        throw new Error(
-            `Error getting color for track: ${topTrackAPI.id} (${topTrackAPI.name}).`
-        );
-    }
-
-    let artistIDs = undefined;
-    if (addons) {
-        artistIDs = addons.topArtistsAPI.items.map((topArtist) => topArtist.id);
-    }
-
-    return {
-        id: topTrackAPI.id,
-        album: buildTrackAlbum(topTrackAPI.album),
-        artists: buildTrackArtists(topTrackAPI.artists, artistIDs),
-        color: color.hex,
-        image: topTrackAPI.album.images[0].url,
-        key: appendUUID(topTrackAPI.id),
-        name: topTrackAPI.name,
-        popularity: topTrackAPI.popularity,
-        type: topTrackAPI.type,
-        audio_features: addons && buildAudioFeatures(addons.audioFeaturesAPI),
-        saved: addons && addons.checkSavedAPI[0] === true,
-    };
-};
 
 export const buildTrack = async (
     trackAPI: ITrackAPI,
@@ -149,12 +122,81 @@ export const buildRecentlyPlayed = async (
     };
 };
 
+export const buildTopTrack = async (
+    topTrackAPI: ITrackAPI,
+    addons?: ITrackAddonsDTO
+): Promise<ITopTrack> => {
+    const color = await getAverageColor(topTrackAPI.album.images[2].url);
+    if (!color.hex) {
+        throw new Error(
+            `Error getting color for track: ${topTrackAPI.id} (${topTrackAPI.name}).`
+        );
+    }
+
+    let artistIDs = undefined;
+    if (addons) {
+        artistIDs = addons.topArtistsAPI.items.map((topArtist) => topArtist.id);
+    }
+
+    return {
+        id: topTrackAPI.id,
+        album: buildTrackAlbum(topTrackAPI.album),
+        artists: buildTrackArtists(topTrackAPI.artists, artistIDs),
+        color: color.hex,
+        image: topTrackAPI.album.images[0].url,
+        key: appendUUID(topTrackAPI.id),
+        name: topTrackAPI.name,
+        popularity: topTrackAPI.popularity,
+        type: topTrackAPI.type,
+        audio_features: addons && buildAudioFeatures(addons.audioFeaturesAPI),
+        saved: addons && addons.checkSavedAPI[0] === true,
+    };
+};
+
+const getSingleTrackAddonsFromList = (
+    addons: ITracksAddonsDTO,
+    trackID: string
+): ITrackAddonsDTO => {
+    return {
+        audioFeaturesAPI: addons.audioFeaturesAPI.audio_features.find(
+            (featureSet) => featureSet.id === trackID
+        ) as IAudioFeaturesAPI, // This will never be undefined unless the API breaks
+        checkSavedAPI: addons.checkSavedAPI,
+        topArtistsAPI: addons.topArtistsAPI,
+    };
+};
+
 export const buildTopTracks = async (
     topTracksAPI: ITopTracksAPI,
-    addons?: IAddonsDTO
+    addons?: ITracksAddonsDTO
 ): Promise<ITopTracks> => {
+    if (addons) {
+        return {
+            items: await Promise.all(
+                topTracksAPI.items.map(
+                    async (track) =>
+                        await buildTopTrack(
+                            track,
+                            getSingleTrackAddonsFromList(addons, track.id)
+                        )
+                )
+            ),
+            next: topTracksAPI.next,
+            offset: topTracksAPI.offset,
+            previous: topTracksAPI.previous,
+            total: topTracksAPI.total,
+            audio_features: buildAudioFeaturesListToSingle(
+                addons.audioFeaturesAPI
+            ),
+        };
+    }
+
     return {
-        items: await buildTracks(topTracksAPI.items, addons),
+        items: await Promise.all(
+            topTracksAPI.items.map(
+                async (track) => await buildTopTrack(track, addons)
+            )
+        ),
         next: topTracksAPI.next,
         offset: topTracksAPI.offset,
         previous: topTracksAPI.previous,

@@ -1,18 +1,15 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { EPTopTracks } from '../../lib/_helpers/endpoints';
 import { handleError } from '../../lib/_helpers/server';
 import { determineAccessToken } from '../../lib/auth/server';
 import { getTrackAddons } from '../../lib/tracks/addons';
 import { buildTopTrack } from '../../lib/tracks/builders';
 import { ITopTracksAPI, ITrackAddonsDTO } from '../../lib/tracks/types';
 
-const EPTopTracks = 'https://api.spotify.com/v1/me/top/tracks';
-
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const access_token = await determineAccessToken(req);
-
-        const useAddons = req.query.addons === 'true';
 
         const topTracksAPI = await axios.get<ITopTracksAPI>(EPTopTracks, {
             headers: {
@@ -24,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         });
         const topTrackAPI = topTracksAPI.data.items[0];
 
-        if (useAddons) {
+        if (req.query.addons === 'true') {
             try {
                 const addons: ITrackAddonsDTO = await getTrackAddons(
                     access_token,
