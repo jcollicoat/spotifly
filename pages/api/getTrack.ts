@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { EPTrack } from '../../lib/_helpers/endpoints';
 import { handleError } from '../../lib/_helpers/server';
 import { determineAccessToken } from '../../lib/auth/server';
 import { getTrackAddons } from '../../lib/tracks/addons';
 import { buildTrack } from '../../lib/tracks/builders';
 import { ITrackAddonsDTO, ITrackAPI } from '../../lib/tracks/types';
 
-const endpoint = 'https://api.spotify.com/v1/tracks/';
-
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const access_token = await determineAccessToken(req);
 
         const trackID = req.query.trackID;
-        const trackAPI = await axios.get<ITrackAPI>(endpoint + trackID, {
+        const trackAPI = await axios.get<ITrackAPI>(EPTrack + trackID, {
             headers: {
                 Authorization: access_token,
             },

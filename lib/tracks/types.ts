@@ -30,26 +30,26 @@ export interface ITrack {
     saved?: boolean;
 }
 
-interface ITracks {
+export type TopTracksMeta = {
     next: string | null;
     offset: number;
     previous: string | null;
     total: number;
-    audio_features?: IAudioFeatures;
-}
+};
 
-export interface ITopTracks extends ITracks {
-    items: ITrack[];
-}
-
-export interface IRecentlyPlayed {
-    items: ITrack[];
-    limit?: number;
-    next?: string | null;
-    cursors?: {
+export type RecentlyPlayedMeta = {
+    limit: number;
+    next: string | null;
+    cursors: {
         after: string;
     };
-    total?: number;
+    total: number;
+};
+
+export interface ITracks<TracksMeta> {
+    items: ITrack[];
+    meta: TracksMeta;
+    audio_features?: IAudioFeatures;
 }
 
 // Server

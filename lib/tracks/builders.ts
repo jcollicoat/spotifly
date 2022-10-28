@@ -5,13 +5,11 @@ import {
     buildAudioFeatures,
     buildAudioFeaturesListToSingle,
 } from '../addons/builders';
-import { IAddonsDTO, IAudioFeaturesAPI } from '../addons/types';
+import { IAudioFeaturesAPI } from '../addons/types';
 import { IAlbumAPI } from '../albums/types';
 import { IArtistAPI } from '../artists/types';
 import {
-    IRecentlyPlayed,
     IRecentlyPlayedAPI,
-    ITopTracks,
     ITopTracksAPI,
     ITrack,
     ITrackArtist,
@@ -19,6 +17,9 @@ import {
     ITrackAPI,
     ITrackArtistDTO,
     ITracksAddonsDTO,
+    ITracks,
+    TopTracksMeta,
+    RecentlyPlayedMeta,
 } from './types';
 
 const buildTrackAlbum = (album: IAlbumAPI): IAlbumMinimum => ({
@@ -76,36 +77,6 @@ export const buildTrack = async (
     };
 };
 
-export const buildTracks = async (
-    trackAPIs: ITrackAPI[],
-    addons?: IAddonsDTO,
-    imageSize?: ImageSize
-): Promise<ITrack[]> => {
-    return await Promise.all(
-        trackAPIs.map(
-            async (track) => await buildTrack(track, addons, imageSize)
-        )
-    );
-};
-
-export const buildRecentlyPlayed = async (
-    recentlyPlayedAPI: IRecentlyPlayedAPI,
-    addons?: IAddonsDTO
-): Promise<IRecentlyPlayed> => {
-    return {
-        items: await buildTracks(
-            recentlyPlayedAPI.items.map((item) => item.track),
-            addons
-        ),
-        limit: recentlyPlayedAPI.limit,
-        next: recentlyPlayedAPI.next,
-        cursors: {
-            after: recentlyPlayedAPI.cursors.after,
-        },
-        total: recentlyPlayedAPI.total,
-    };
-};
-
 const getSingleTrackAddonsFromList = (
     addons: ITracksAddonsDTO,
     trackID: string
@@ -119,25 +90,56 @@ const getSingleTrackAddonsFromList = (
     };
 };
 
+export const buildTracks = async (
+    trackAPIs: ITrackAPI[],
+    addons?: ITracksAddonsDTO,
+    imageSize?: ImageSize
+): Promise<ITrack[]> => {
+    return await Promise.all(
+        trackAPIs.map(
+            async (track) =>
+                await buildTrack(
+                    track,
+                    addons && getSingleTrackAddonsFromList(addons, track.id),
+                    imageSize
+                )
+        )
+    );
+};
+
+export const buildRecentlyPlayed = async (
+    recentlyPlayedAPI: IRecentlyPlayedAPI,
+    addons?: ITracksAddonsDTO
+): Promise<ITracks<RecentlyPlayedMeta>> => {
+    return {
+        items: await buildTracks(
+            recentlyPlayedAPI.items.map((item) => item.track),
+            addons
+        ),
+        meta: {
+            limit: recentlyPlayedAPI.limit,
+            next: recentlyPlayedAPI.next,
+            cursors: {
+                after: recentlyPlayedAPI.cursors.after,
+            },
+            total: recentlyPlayedAPI.total,
+        },
+    };
+};
+
 export const buildTopTracks = async (
     topTracksAPI: ITopTracksAPI,
     addons?: ITracksAddonsDTO
-): Promise<ITopTracks> => {
+): Promise<ITracks<TopTracksMeta>> => {
     if (addons) {
         return {
-            items: await Promise.all(
-                topTracksAPI.items.map(
-                    async (track) =>
-                        await buildTrack(
-                            track,
-                            getSingleTrackAddonsFromList(addons, track.id)
-                        )
-                )
-            ),
-            next: topTracksAPI.next,
-            offset: topTracksAPI.offset,
-            previous: topTracksAPI.previous,
-            total: topTracksAPI.total,
+            items: await buildTracks(topTracksAPI.items, addons),
+            meta: {
+                next: topTracksAPI.next,
+                offset: topTracksAPI.offset,
+                previous: topTracksAPI.previous,
+                total: topTracksAPI.total,
+            },
             audio_features: buildAudioFeaturesListToSingle(
                 addons.audioFeaturesAPI
             ),
@@ -150,9 +152,11 @@ export const buildTopTracks = async (
                 async (track) => await buildTrack(track, addons)
             )
         ),
-        next: topTracksAPI.next,
-        offset: topTracksAPI.offset,
-        previous: topTracksAPI.previous,
-        total: topTracksAPI.total,
+        meta: {
+            next: topTracksAPI.next,
+            offset: topTracksAPI.offset,
+            previous: topTracksAPI.previous,
+            total: topTracksAPI.total,
+        },
     };
 };

@@ -2,7 +2,12 @@ import { QueryKey } from '@tanstack/react-query';
 import axios from 'axios';
 import { IAlbum } from '../albums/types';
 import { IArtist, ITopArtists } from '../artists/types';
-import { ITrack, IRecentlyPlayed, ITopTracks } from '../tracks/types';
+import {
+    ITrack,
+    ITracks,
+    RecentlyPlayedMeta,
+    TopTracksMeta,
+} from '../tracks/types';
 import { IUserProfile } from '../user/types';
 
 export const getAlbum = async ({
@@ -52,19 +57,17 @@ export const getTrack = async ({
 }: {
     queryKey: QueryKey;
 }): Promise<ITrack> => {
-    const { data: track }: { data: ITrack } = await axios.get(
-        '/api/spotify/getTrack',
-        {
-            params: { trackID: queryKey[1] },
-        }
-    );
+    const { data: track }: { data: ITrack } = await axios.get('/api/getTrack', {
+        params: { trackID: queryKey[1] },
+    });
     return track;
 };
 
-export const getRecentlyPlayed = async (): Promise<IRecentlyPlayed> => {
-    const { data: recentlyPlayed }: { data: IRecentlyPlayed } = await axios.get(
-        '/api/spotify/getRecentlyPlayed'
-    );
+export const getRecentlyPlayed = async (): Promise<
+    ITracks<RecentlyPlayedMeta>
+> => {
+    const { data: recentlyPlayed }: { data: ITracks<RecentlyPlayedMeta> } =
+        await axios.get('/api/spotify/getRecentlyPlayed');
     return recentlyPlayed;
 };
 
@@ -72,23 +75,21 @@ export const getRecentlyPlayedNumber = async ({
     queryKey,
 }: {
     queryKey: QueryKey;
-}): Promise<IRecentlyPlayed> => {
-    const { data: recentlyPlayed }: { data: IRecentlyPlayed } = await axios.get(
-        '/api/spotify/getRecentlyPlayed',
-        {
+}): Promise<ITracks<RecentlyPlayedMeta>> => {
+    const { data: recentlyPlayed }: { data: ITracks<RecentlyPlayedMeta> } =
+        await axios.get('/api/spotify/getRecentlyPlayed', {
             params: { limit: queryKey[1] },
-        }
-    );
+        });
     return recentlyPlayed;
 };
 
-export const getRecentlyPlayedSingle = async (): Promise<IRecentlyPlayed> => {
-    const { data: recentlyPlayed }: { data: IRecentlyPlayed } = await axios.get(
-        '/api/spotify/getRecentlyPlayed',
-        {
+export const getRecentlyPlayedSingle = async (): Promise<
+    ITracks<RecentlyPlayedMeta>
+> => {
+    const { data: recentlyPlayed }: { data: ITracks<RecentlyPlayedMeta> } =
+        await axios.get('/api/getRecentlyPlayed', {
             params: { limit: '1' },
-        }
-    );
+        });
     return recentlyPlayed;
 };
 
@@ -99,10 +100,9 @@ export const getTopArtists = async (): Promise<ITopArtists> => {
     return topArtists;
 };
 
-export const getTopTracks = async (): Promise<ITopTracks> => {
-    const { data: topTracks }: { data: ITopTracks } = await axios.get(
-        '/api/getTopTracks'
-    );
+export const getTopTracks = async (): Promise<ITracks<TopTracksMeta>> => {
+    const { data: topTracks }: { data: ITracks<TopTracksMeta> } =
+        await axios.get('/api/getTopTracks');
     return topTracks;
 };
 
