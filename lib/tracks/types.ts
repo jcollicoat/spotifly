@@ -1,8 +1,4 @@
-import {
-    CheckSavedAPI,
-    IAlbumMinimum,
-    IArtistMinimum,
-} from '../_helpers/types';
+import { CheckSavedAPI, IAlbumMinimum } from '../_helpers/types';
 import {
     IAudioFeatures,
     IAudioFeaturesAPI,
@@ -13,10 +9,17 @@ import { ITopArtistsAPI } from '../artists/types';
 
 // Client
 
+export interface ITrackArtist {
+    id: string;
+    key: string;
+    name: string;
+    top_artist: boolean;
+}
+
 export interface ITrack {
     id: string;
     album: IAlbumMinimum;
-    artists: IArtistMinimum[];
+    artists: ITrackArtist[];
     color: string;
     image: string;
     key: string;
@@ -24,6 +27,7 @@ export interface ITrack {
     popularity: number;
     type: string;
     audio_features?: IAudioFeatures;
+    saved?: boolean;
 }
 
 interface ITracks {
@@ -34,17 +38,8 @@ interface ITracks {
     audio_features?: IAudioFeatures;
 }
 
-export interface ITopTrackArtist extends IArtistMinimum {
-    top_artist: boolean;
-}
-
-export interface ITopTrack extends ITrack {
-    artists: ITopTrackArtist[];
-    saved?: boolean;
-}
-
 export interface ITopTracks extends ITracks {
-    items: ITopTrack[];
+    items: ITrack[];
 }
 
 export interface IRecentlyPlayed {

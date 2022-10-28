@@ -1,52 +1,51 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { EPTopTracks } from '../../lib/_helpers/endpoints';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleError } from '../../lib/_helpers/server';
 import { determineAccessToken } from '../../lib/auth/server';
 import { getTrackAddons } from '../../lib/tracks/addons';
 import { buildTrack } from '../../lib/tracks/builders';
-import { ITopTracksAPI, ITrackAddonsDTO } from '../../lib/tracks/types';
+import { ITrackAddonsDTO, ITrackAPI } from '../../lib/tracks/types';
+
+const endpoint = 'https://api.spotify.com/v1/tracks/';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const access_token = await determineAccessToken(req);
 
-        const topTracksAPI = await axios.get<ITopTracksAPI>(EPTopTracks, {
+        const trackID = req.query.trackID;
+        const trackAPI = await axios.get<ITrackAPI>(endpoint + trackID, {
             headers: {
                 Authorization: access_token,
             },
-            params: {
-                limit: 1,
-            },
         });
-        const topTrackAPI = topTracksAPI.data.items[0];
 
         if (req.query.addons === 'true') {
             try {
                 const addons: ITrackAddonsDTO = await getTrackAddons(
                     access_token,
-                    topTrackAPI.id
+                    trackAPI.data.id
                 );
 
-                const builtTopTrack = await buildTrack(topTrackAPI, addons);
+                const builtTrack = await buildTrack(trackAPI.data, addons);
 
-                res.status(200).json(builtTopTrack);
+                res.status(200).json(builtTrack);
             } catch (error) {
                 const { status, message } = handleError(error);
                 console.warn({
-                    summary: 'Error fetching topTrack addons.',
+                    summary: `Error fetching track addons: ${trackAPI.data.id}`,
                     status: status,
                     message: message,
                 });
 
-                const builtTopTrack = await buildTrack(topTrackAPI);
+                const builtTrack = await buildTrack(trackAPI.data);
 
-                res.status(200).json(builtTopTrack);
+                res.status(200).json(builtTrack);
             }
         } else {
-            const builtTopTrack = await buildTrack(topTrackAPI);
+            const builtTrack = await buildTrack(trackAPI.data);
 
-            res.status(200).json(builtTopTrack);
+            res.status(200).json(builtTrack);
         }
     } catch (error) {
         const { status, message } = handleError(error);

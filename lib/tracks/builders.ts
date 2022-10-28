@@ -1,5 +1,5 @@
 import { getAverageColor } from 'fast-average-color-node';
-import { reduceAlbum, reduceArtists, appendUUID } from '../_helpers/helpers';
+import { appendUUID } from '../_helpers/helpers';
 import { IAlbumMinimum, ImageSize } from '../_helpers/types';
 import {
     buildAudioFeatures,
@@ -11,11 +11,10 @@ import { IArtistAPI } from '../artists/types';
 import {
     IRecentlyPlayed,
     IRecentlyPlayedAPI,
-    ITopTrack,
-    ITopTrackArtist,
     ITopTracks,
     ITopTracksAPI,
     ITrack,
+    ITrackArtist,
     ITrackAddonsDTO,
     ITrackAPI,
     ITrackArtistDTO,
@@ -31,7 +30,7 @@ const buildTrackAlbum = (album: IAlbumAPI): IAlbumMinimum => ({
 const buildTrackArtists = (
     artistsDTO: IArtistAPI[] | ITrackArtistDTO[],
     artistIDs?: string[]
-): ITopTrackArtist[] =>
+): ITrackArtist[] =>
     artistsDTO.map((artistDTO) => {
         let isTopArtist = false;
         if (artistIDs) {
@@ -47,7 +46,7 @@ const buildTrackArtists = (
 
 export const buildTrack = async (
     trackAPI: ITrackAPI,
-    addons?: IAddonsDTO,
+    addons?: ITrackAddonsDTO,
     imageSize?: ImageSize
 ): Promise<ITrack> => {
     const color = await getAverageColor(trackAPI.album.images[2].url);
@@ -57,39 +56,24 @@ export const buildTrack = async (
         );
     }
 
+    let artistIDs = undefined;
     if (addons) {
-        const audio_features = addons.audio_features?.audio_features.find(
-            (featureSet) => featureSet.id === trackAPI.id
-        );
-
-        const track: ITrack = {
-            id: trackAPI.id,
-            album: reduceAlbum(trackAPI.album),
-            artists: reduceArtists(trackAPI.artists),
-            audio_features:
-                audio_features && buildAudioFeatures(audio_features),
-            color: color.hex,
-            image: trackAPI.album.images[imageSize ?? 2].url,
-            key: appendUUID(trackAPI.id),
-            name: trackAPI.name,
-            popularity: trackAPI.popularity,
-            type: trackAPI.type,
-        };
-        return track;
+        artistIDs = addons.topArtistsAPI.items.map((topArtist) => topArtist.id);
     }
 
-    const track: ITrack = {
+    return {
         id: trackAPI.id,
-        album: reduceAlbum(trackAPI.album),
-        artists: reduceArtists(trackAPI.artists),
+        album: buildTrackAlbum(trackAPI.album),
+        artists: buildTrackArtists(trackAPI.artists, artistIDs),
         color: color.hex,
         image: trackAPI.album.images[imageSize ?? 2].url,
         key: appendUUID(trackAPI.id),
         name: trackAPI.name,
         popularity: trackAPI.popularity,
         type: trackAPI.type,
+        audio_features: addons && buildAudioFeatures(addons.audioFeaturesAPI),
+        saved: addons && addons.checkSavedAPI[0] === true,
     };
-    return track;
 };
 
 export const buildTracks = async (
@@ -122,37 +106,6 @@ export const buildRecentlyPlayed = async (
     };
 };
 
-export const buildTopTrack = async (
-    topTrackAPI: ITrackAPI,
-    addons?: ITrackAddonsDTO
-): Promise<ITopTrack> => {
-    const color = await getAverageColor(topTrackAPI.album.images[2].url);
-    if (!color.hex) {
-        throw new Error(
-            `Error getting color for track: ${topTrackAPI.id} (${topTrackAPI.name}).`
-        );
-    }
-
-    let artistIDs = undefined;
-    if (addons) {
-        artistIDs = addons.topArtistsAPI.items.map((topArtist) => topArtist.id);
-    }
-
-    return {
-        id: topTrackAPI.id,
-        album: buildTrackAlbum(topTrackAPI.album),
-        artists: buildTrackArtists(topTrackAPI.artists, artistIDs),
-        color: color.hex,
-        image: topTrackAPI.album.images[0].url,
-        key: appendUUID(topTrackAPI.id),
-        name: topTrackAPI.name,
-        popularity: topTrackAPI.popularity,
-        type: topTrackAPI.type,
-        audio_features: addons && buildAudioFeatures(addons.audioFeaturesAPI),
-        saved: addons && addons.checkSavedAPI[0] === true,
-    };
-};
-
 const getSingleTrackAddonsFromList = (
     addons: ITracksAddonsDTO,
     trackID: string
@@ -175,7 +128,7 @@ export const buildTopTracks = async (
             items: await Promise.all(
                 topTracksAPI.items.map(
                     async (track) =>
-                        await buildTopTrack(
+                        await buildTrack(
                             track,
                             getSingleTrackAddonsFromList(addons, track.id)
                         )
@@ -194,7 +147,7 @@ export const buildTopTracks = async (
     return {
         items: await Promise.all(
             topTracksAPI.items.map(
-                async (track) => await buildTopTrack(track, addons)
+                async (track) => await buildTrack(track, addons)
             )
         ),
         next: topTracksAPI.next,
