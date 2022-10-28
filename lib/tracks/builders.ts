@@ -80,22 +80,20 @@ export const buildTrack = async (
 const getSingleTrackAddonsFromList = (
     addons: ITracksAddonsDTO,
     trackID: string
-): ITrackAddonsDTO => {
-    return {
-        audioFeaturesAPI: addons.audioFeaturesAPI.audio_features.find(
-            (featureSet) => featureSet.id === trackID
-        ) as IAudioFeaturesAPI, // This will never be undefined unless the API breaks
-        checkSavedAPI: addons.checkSavedAPI,
-        topArtistsAPI: addons.topArtistsAPI,
-    };
-};
+): ITrackAddonsDTO => ({
+    audioFeaturesAPI: addons.audioFeaturesAPI.audio_features.find(
+        (featureSet) => featureSet.id === trackID
+    ) as IAudioFeaturesAPI, // This will never be undefined unless the API breaks
+    checkSavedAPI: addons.checkSavedAPI,
+    topArtistsAPI: addons.topArtistsAPI,
+});
 
 export const buildTracks = async (
     trackAPIs: ITrackAPI[],
     addons?: ITracksAddonsDTO,
     imageSize?: ImageSize
-): Promise<ITrack[]> => {
-    return await Promise.all(
+): Promise<ITrack[]> =>
+    await Promise.all(
         trackAPIs.map(
             async (track) =>
                 await buildTrack(
@@ -105,58 +103,38 @@ export const buildTracks = async (
                 )
         )
     );
-};
 
 export const buildRecentlyPlayed = async (
     recentlyPlayedAPI: IRecentlyPlayedAPI,
     addons?: ITracksAddonsDTO
-): Promise<ITracks<RecentlyPlayedMeta>> => {
-    return {
-        items: await buildTracks(
-            recentlyPlayedAPI.items.map((item) => item.track),
-            addons
-        ),
-        meta: {
-            limit: recentlyPlayedAPI.limit,
-            next: recentlyPlayedAPI.next,
-            cursors: {
-                after: recentlyPlayedAPI.cursors.after,
-            },
-            total: recentlyPlayedAPI.total,
+): Promise<ITracks<RecentlyPlayedMeta>> => ({
+    items: await buildTracks(
+        recentlyPlayedAPI.items.map((item) => item.track),
+        addons
+    ),
+    meta: {
+        limit: recentlyPlayedAPI.limit,
+        next: recentlyPlayedAPI.next,
+        cursors: {
+            after: recentlyPlayedAPI.cursors.after,
         },
-    };
-};
+        total: recentlyPlayedAPI.total,
+    },
+    audio_features:
+        addons && buildAudioFeaturesListToSingle(addons.audioFeaturesAPI),
+});
 
 export const buildTopTracks = async (
     topTracksAPI: ITopTracksAPI,
     addons?: ITracksAddonsDTO
-): Promise<ITracks<TopTracksMeta>> => {
-    if (addons) {
-        return {
-            items: await buildTracks(topTracksAPI.items, addons),
-            meta: {
-                next: topTracksAPI.next,
-                offset: topTracksAPI.offset,
-                previous: topTracksAPI.previous,
-                total: topTracksAPI.total,
-            },
-            audio_features: buildAudioFeaturesListToSingle(
-                addons.audioFeaturesAPI
-            ),
-        };
-    }
-
-    return {
-        items: await Promise.all(
-            topTracksAPI.items.map(
-                async (track) => await buildTrack(track, addons)
-            )
-        ),
-        meta: {
-            next: topTracksAPI.next,
-            offset: topTracksAPI.offset,
-            previous: topTracksAPI.previous,
-            total: topTracksAPI.total,
-        },
-    };
-};
+): Promise<ITracks<TopTracksMeta>> => ({
+    items: await buildTracks(topTracksAPI.items, addons),
+    meta: {
+        next: topTracksAPI.next,
+        offset: topTracksAPI.offset,
+        previous: topTracksAPI.previous,
+        total: topTracksAPI.total,
+    },
+    audio_features:
+        addons && buildAudioFeaturesListToSingle(addons.audioFeaturesAPI),
+});

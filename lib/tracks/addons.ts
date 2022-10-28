@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
     EPAudioFeatures,
+    EPAudioFeaturesList,
     EPCheckSaved,
     EPTopArtists,
 } from '../_helpers/endpoints';
@@ -49,7 +50,7 @@ export const getTracksAddons = async (
     trackIDs: string
 ): Promise<ITracksAddonsDTO> => {
     const audioFeaturesAPI = await axios.get<IAudioFeaturesListAPI>(
-        EPAudioFeatures,
+        EPAudioFeaturesList,
         {
             headers: {
                 Authorization: access_token,
