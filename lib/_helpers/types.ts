@@ -20,6 +20,10 @@ export interface IArtistMinimum {
 
 export interface IImageDTO {
     height: number;
-    url: string;
     width: number;
+    url: string;
+}
+
+export interface IObject {
+    [key: string]: string;
 }

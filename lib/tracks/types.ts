@@ -1,4 +1,4 @@
-import { CheckSavedAPI, IAlbumMinimum } from '../_helpers/types';
+import { CheckSavedAPI, IAlbumMinimum, IObject } from '../_helpers/types';
 import {
     IAudioFeatures,
     IAudioFeaturesAPI,
@@ -62,9 +62,7 @@ export interface ITrackAddonsDTO {
 
 export interface ITrackArtistDTO {
     id: string;
-    external_urls: {
-        spotify: string;
-    };
+    external_urls: IObject;
     href: string;
     name: string;
     type: string;
@@ -85,14 +83,8 @@ export interface ITrackAPI {
     disc_number: number;
     duration_ms: number;
     explicit: boolean;
-    external_ids: {
-        ean: string;
-        isrc: string;
-        upc: string;
-    };
-    external_urls: {
-        spotify: string;
-    };
+    external_ids: IObject;
+    external_urls: IObject;
     href: string;
     is_local: false;
     name: string;

@@ -32,18 +32,12 @@ const buildTrackArtists = (
     artistsDTO: IArtistAPI[] | ITrackArtistDTO[],
     artistIDs?: string[]
 ): ITrackArtist[] =>
-    artistsDTO.map((artistDTO) => {
-        let isTopArtist = false;
-        if (artistIDs) {
-            isTopArtist = artistIDs.includes(artistDTO.id);
-        }
-        return {
-            id: artistDTO.id,
-            key: appendUUID(artistDTO.id),
-            name: artistDTO.name,
-            top_artist: isTopArtist,
-        };
-    });
+    artistsDTO.map((artistDTO) => ({
+        id: artistDTO.id,
+        key: appendUUID(artistDTO.id),
+        name: artistDTO.name,
+        top_artist: (artistIDs && artistIDs.includes(artistDTO.id)) ?? false,
+    }));
 
 export const buildTrack = async (
     trackAPI: ITrackAPI,
@@ -73,18 +67,19 @@ export const buildTrack = async (
         popularity: trackAPI.popularity,
         type: trackAPI.type,
         audio_features: addons && buildAudioFeatures(addons.audioFeaturesAPI),
-        saved: addons && addons.checkSavedAPI[0] === true,
+        saved: addons && addons.checkSavedAPI[0],
     };
 };
 
-const getSingleTrackAddonsFromList = (
+export const getSingleTrackAddonsFromList = (
     addons: ITracksAddonsDTO,
-    trackID: string
+    trackID: string,
+    index: number
 ): ITrackAddonsDTO => ({
     audioFeaturesAPI: addons.audioFeaturesAPI.audio_features.find(
         (featureSet) => featureSet.id === trackID
     ) as IAudioFeaturesAPI, // This will never be undefined unless the API breaks
-    checkSavedAPI: addons.checkSavedAPI,
+    checkSavedAPI: [addons.checkSavedAPI[index]],
     topArtistsAPI: addons.topArtistsAPI,
 });
 
@@ -95,10 +90,11 @@ export const buildTracks = async (
 ): Promise<ITrack[]> =>
     await Promise.all(
         trackAPIs.map(
-            async (track) =>
+            async (track, index) =>
                 await buildTrack(
                     track,
-                    addons && getSingleTrackAddonsFromList(addons, track.id),
+                    addons &&
+                        getSingleTrackAddonsFromList(addons, track.id, index),
                     imageSize
                 )
         )

@@ -1,14 +1,16 @@
 import axios from 'axios';
-import { IAddonsDTO, IAudioFeaturesListAPI } from '../addons/types';
-import { IAlbumAPI } from './types';
+import { EPCheckSaved, EPTopArtists } from '../_helpers/endpoints';
+import { CheckSavedAPI } from '../_helpers/types';
+import { IAudioFeaturesListAPI } from '../addons/types';
+import { ITopArtistsAPI } from '../artists/types';
+import { IAlbumAddonsDTO } from './types';
 
 const endpoint_audio_features = 'https://api.spotify.com/v1/audio-features';
 
 export const getAlbumAddons = async (
     access_token: string,
-    albumAPI: IAlbumAPI
-): Promise<IAddonsDTO> => {
-    const trackIDs = albumAPI.tracks.items.map((track) => track.id).join(',');
+    trackIDs: string
+): Promise<IAlbumAddonsDTO> => {
     const audioFeaturesListAPI = await axios.get<IAudioFeaturesListAPI>(
         endpoint_audio_features,
         {
@@ -21,7 +23,24 @@ export const getAlbumAddons = async (
         }
     );
 
+    const topArtistsAPI = await axios.get<ITopArtistsAPI>(EPTopArtists, {
+        headers: {
+            Authorization: access_token,
+        },
+    });
+
+    const checkSavedAPI = await axios.get<CheckSavedAPI>(EPCheckSaved, {
+        headers: {
+            Authorization: access_token,
+        },
+        params: {
+            ids: trackIDs,
+        },
+    });
+
     return {
-        audio_features: audioFeaturesListAPI.data,
+        audioFeaturesAPI: audioFeaturesListAPI.data,
+        topArtistsAPI: topArtistsAPI.data,
+        checkSavedAPI: checkSavedAPI.data,
     };
 };

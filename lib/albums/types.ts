@@ -1,19 +1,25 @@
-import { IImageDTO } from '../_helpers/types';
-import { IAudioFeatures } from '../addons/types';
+import { CheckSavedAPI, IImageDTO, IObject } from '../_helpers/types';
+import {
+    IAudioFeatures,
+    IAudioFeaturesAPI,
+    IAudioFeaturesListAPI,
+} from '../addons/types';
+import { ITopArtistsAPI } from '../artists/types';
+import { ITrack, ITrackAPI } from '../tracks/types';
+
+// Client
 
 export interface IAlbumArtist {
     id: string;
     key: string;
     name: string;
+    top_artist: boolean;
 }
 
-export interface IAlbumTrack {
-    id: string;
-    artists: unknown[];
-    duration_ms: number;
-    explicit: boolean;
-    name: string;
-}
+export type IAlbumTrack = Omit<
+    ITrack,
+    'album' | 'artists' | 'color' | 'image' | 'popularity'
+>;
 
 export interface IAlbum {
     id: string;
@@ -29,60 +35,63 @@ export interface IAlbum {
     audio_features?: IAudioFeatures;
 }
 
-export interface IAlbumArtistDTO {
-    id: string;
-    external_urls: {
-        spotify: string;
-    };
-    href: string;
-    name: string;
-    type: 'artist';
-    uri: string;
+// Server
+
+export interface IAlbumAddonsDTO {
+    audioFeaturesAPI: IAudioFeaturesListAPI;
+    topArtistsAPI: ITopArtistsAPI;
+    checkSavedAPI: CheckSavedAPI;
 }
 
-export interface IAlbumTrackDTO {
+export interface IAlbumTrackAddonsDTO {
+    audioFeaturesAPI: IAudioFeaturesAPI;
+    checkSavedAPI: CheckSavedAPI;
+}
+
+export interface IAlbumArtistDTO {
     id: string;
-    artists: unknown[];
-    available_markets: string[];
-    disc_number: number;
-    duration_ms: number;
-    explicit: boolean;
-    external_urls: {
-        spotify: string;
-    };
+    external_urls: IObject;
     href: string;
-    is_local: false;
     name: string;
-    preview_url: string;
-    track_number: number;
     type: string;
     uri: string;
 }
+
+interface IAlbumCopyrightsDTO {
+    text: string;
+    type: string;
+}
+
+export type IAlbumTrackDTO = Omit<
+    ITrackAPI,
+    'album' | 'external_ids' | 'popularity'
+>;
 
 export interface IAlbumAPI {
     id: string;
     album_type: string;
     artists: IAlbumArtistDTO[];
     available_markets: string[];
-    external_urls: {
-        spotify: string;
-    };
+    copyrights: IAlbumCopyrightsDTO[];
+    external_ids: IObject;
+    external_urls: IObject;
+    genres: string[];
     href: string;
     images: IImageDTO[];
+    label: string;
     name: string;
+    popularity: number;
     release_date: string;
     release_date_precision: string;
-    restrictions: {
-        reason: string;
-    };
+    restrictions?: IObject;
     total_tracks: number;
     tracks: {
         href: string;
         items: IAlbumTrackDTO[];
         limit: number;
-        next: string;
+        next: string | null;
         offset: number;
-        previous: string;
+        previous: string | null;
         total: number;
     };
     type: string;
