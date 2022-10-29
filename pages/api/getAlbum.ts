@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { handleError } from '../../../lib/_helpers/server';
-import { getAlbumAddons } from '../../../lib/albums/addons';
-import { buildAlbum } from '../../../lib/albums/builders';
-import { IAlbumAddonsDTO, IAlbumAPI } from '../../../lib/albums/types';
-import { determineAccessToken } from '../../../lib/auth/server';
+import { handleError } from '../../lib/_helpers/server';
+import { getAlbumAddons } from '../../lib/albums/addons';
+import { buildAlbum } from '../../lib/albums/builders';
+import { IAlbumAddonsDTO, IAlbumAPI } from '../../lib/albums/types';
+import { determineAccessToken } from '../../lib/auth/server';
 
 const endpoint = 'https://api.spotify.com/v1/albums/';
 
