@@ -2,7 +2,7 @@ export type SkeletonStates = 'error' | 'warning';
 
 export interface ISkeleton {
     data?: never;
-    state?: SkeletonStates; // None treated as loading
+    state?: SkeletonStates; // undefined treated as loading
 }
 
 interface IData<T> {
