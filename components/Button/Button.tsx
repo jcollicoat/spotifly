@@ -9,7 +9,7 @@ import { Glyph } from '../Glyphs/Glyph';
 import styles from './Button.module.scss';
 
 interface IButton {
-    showGlyph?: 'always' | 'responsive';
+    displayAsGlyph?: 'always' | 'responsive';
     style?: 'primary' | 'secondary' | 'tertiary';
 }
 
@@ -92,16 +92,19 @@ type IButtonProps = IButtonTypeProps | ILinkTypeProps;
 export const Button: FC<IButtonProps> = ({
     ariaLabel,
     children,
+    displayAsGlyph,
     glyph,
     href,
     onClick,
-    showGlyph,
     style,
     type,
 }) => {
     const isSmall = useMedia(`(max-width: ${breakpoints.medium - 1}px)`, false);
     const buttonContent = () => {
-        if (showGlyph === 'always' || (showGlyph === 'responsive' && isSmall)) {
+        if (
+            displayAsGlyph === 'always' ||
+            (displayAsGlyph === 'responsive' && isSmall)
+        ) {
             return glyph;
         } else {
             return children;
@@ -122,9 +125,9 @@ export const Button: FC<IButtonProps> = ({
     );
 };
 
-export const ButtonSignInOut: FC<IButton> = ({ showGlyph, style }) => {
+export const ButtonSignInOut: FC<IButton> = ({ displayAsGlyph, style }) => {
     const { data: session } = useSession();
-    const glyph = showGlyph && (
+    const glyph = displayAsGlyph && (
         <Glyph type="SignInOut" signout={Boolean(session)} />
     );
 
@@ -133,7 +136,7 @@ export const ButtonSignInOut: FC<IButton> = ({ showGlyph, style }) => {
             ariaLabel={session ? 'Sign out' : 'Sign in with Spotify'}
             onClick={signInOrOut}
             glyph={glyph}
-            showGlyph={showGlyph}
+            displayAsGlyph={displayAsGlyph}
             style={style ?? (session ? 'secondary' : 'primary')}
         >
             {session ? 'Sign out' : 'Sign in with Spotify'}

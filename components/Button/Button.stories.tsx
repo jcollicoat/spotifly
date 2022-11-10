@@ -1,5 +1,5 @@
 import { ComponentStory } from '@storybook/react';
-import { Glyph } from '../Glyphs/Glyph';
+import { Glyph, GlyphType } from '../Glyphs/Glyph';
 
 import { Button } from './Button';
 
@@ -8,9 +8,16 @@ export default {
     component: Button,
     argTypes: {
         glyph: {
-            table: {
-                disable: true,
+            control: {
+                type: 'select',
             },
+            options: [
+                'Dashboard',
+                'Home',
+                'Acousticness',
+                'Danceability',
+                'Energy',
+            ],
         },
         onClick: {
             table: {
@@ -26,8 +33,13 @@ export default {
 };
 
 const Template: ComponentStory<typeof Button> = (args) => {
-    if (args.showGlyph !== undefined) {
-        return <Button {...args} glyph={<Glyph type="Dashboard" />} />;
+    if (args.displayAsGlyph !== undefined) {
+        return (
+            <Button
+                {...args}
+                glyph={<Glyph type={args.glyph as GlyphType} />}
+            />
+        );
     } else {
         return <Button {...args} />;
     }
@@ -37,13 +49,22 @@ export const Default = Template.bind({});
 Default.args = {
     ariaLabel: 'Default Button',
     children: 'Default Button',
+    glyph: 'Dashboard',
     style: 'primary',
+};
+Default.argTypes = {
+    href: {
+        table: {
+            disable: true,
+        },
+    },
 };
 
 export const Link = Template.bind({});
 Link.args = {
     ariaLabel: 'Google link button',
     children: 'Google link button',
+    glyph: 'Dashboard',
     href: 'https://www.google.com',
     style: 'primary',
     type: 'link',

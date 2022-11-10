@@ -360,7 +360,7 @@ const Warning: FC = () => (
     </g>
 );
 
-type GlyphType =
+export type GlyphType =
     | 'Acousticness'
     | 'Danceability'
     | 'Dashboard'
