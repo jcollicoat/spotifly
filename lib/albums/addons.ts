@@ -39,7 +39,7 @@ export const getAlbumAddons = async (
     });
 
     return {
-        audioFeaturesAPI: audioFeaturesListAPI.data,
+        audioFeaturesListAPI: audioFeaturesListAPI.data,
         topArtistsAPI: topArtistsAPI.data,
         checkSavedAPI: checkSavedAPI.data,
     };

@@ -38,9 +38,9 @@ export interface IAlbum {
 // Server
 
 export interface IAlbumAddonsDTO {
-    audioFeaturesAPI: IAudioFeaturesListAPI;
+    audioFeaturesListAPI: IAudioFeaturesListAPI;
     topArtistsAPI: ITopArtistsAPI;
-    checkSavedAPI: CheckSavedAPI;
+    checkSavedAPI: ICheckSavedAPI;
 }
 
 export interface IAlbumTrackAddonsDTO {

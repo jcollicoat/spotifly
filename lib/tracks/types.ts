@@ -70,7 +70,7 @@ export interface ITrackArtistDTO {
 }
 
 export interface ITracksAddonsDTO {
-    audioFeaturesAPI: IAudioFeaturesListAPI;
+    audioFeaturesListAPI: IAudioFeaturesListAPI;
     topArtistsAPI: ITopArtistsAPI;
     checkSavedAPI: ICheckSavedAPI;
 }

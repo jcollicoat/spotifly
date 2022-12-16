@@ -76,7 +76,7 @@ export const getSingleTrackAddonsFromList = (
     trackID: string,
     index: number
 ): ITrackAddonsDTO => ({
-    audioFeaturesAPI: addons.audioFeaturesAPI.audio_features.find(
+    audioFeaturesAPI: addons.audioFeaturesListAPI.audio_features.find(
         (featureSet) => featureSet.id === trackID
     ) as IAudioFeaturesAPI, // This will never be undefined unless the API breaks
     checkSavedAPI: [addons.checkSavedAPI[index]],
@@ -117,7 +117,7 @@ export const buildRecentlyPlayed = async (
         total: recentlyPlayedAPI.total,
     },
     audio_features:
-        addons && buildAudioFeaturesListToSingle(addons.audioFeaturesAPI),
+        addons && buildAudioFeaturesListToSingle(addons.audioFeaturesListAPI),
 });
 
 export const buildTopTracks = async (
@@ -132,5 +132,5 @@ export const buildTopTracks = async (
         total: topTracksAPI.total,
     },
     audio_features:
-        addons && buildAudioFeaturesListToSingle(addons.audioFeaturesAPI),
+        addons && buildAudioFeaturesListToSingle(addons.audioFeaturesListAPI),
 });
