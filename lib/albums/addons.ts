@@ -1,18 +1,20 @@
 import axios from 'axios';
-import { EPCheckSaved, EPTopArtists } from '../_helpers/endpoints';
+import {
+    EPAudioFeaturesList,
+    EPCheckSaved,
+    EPTopArtists,
+} from '../_helpers/endpoints';
 import { ICheckSavedAPI } from '../_helpers/types';
-import { IAudioFeaturesListAPI } from '../addons/types';
+import { IAudioFeaturesListAPI, IAudioFeaturesListsDTO } from '../addons/types';
 import { ITopArtistsAPI } from '../artists/types';
-import { IAlbumAddonsDTO } from './types';
-
-const endpoint_audio_features = 'https://api.spotify.com/v1/audio-features';
+import { IAlbumAddonsDTO, IAlbumsAddonsDTO } from './types';
 
 export const getAlbumAddons = async (
     access_token: string,
     trackIDs: string
 ): Promise<IAlbumAddonsDTO> => {
     const audioFeaturesListAPI = await axios.get<IAudioFeaturesListAPI>(
-        endpoint_audio_features,
+        EPAudioFeaturesList,
         {
             headers: {
                 Authorization: access_token,
@@ -42,5 +44,38 @@ export const getAlbumAddons = async (
         audioFeaturesListAPI: audioFeaturesListAPI.data,
         topArtistsAPI: topArtistsAPI.data,
         checkSavedAPI: checkSavedAPI.data,
+    };
+};
+
+export const getAlbumsAddons = async (
+    access_token: string,
+    trackIDsByAlbum: {
+        albumID: string;
+        trackIDs: string[];
+    }[]
+): Promise<IAlbumsAddonsDTO> => {
+    const audioFeaturesListsDTOs: IAudioFeaturesListsDTO[] = await Promise.all(
+        trackIDsByAlbum.map(async (trackSet) => {
+            const audioFeaturesListAPI = await axios.get<IAudioFeaturesListAPI>(
+                EPAudioFeaturesList,
+                {
+                    headers: {
+                        Authorization: access_token,
+                    },
+                    params: {
+                        ids: trackSet.trackIDs.toString(),
+                    },
+                }
+            );
+
+            return {
+                audio_features: audioFeaturesListAPI.data.audio_features,
+                id: trackSet.albumID,
+            };
+        })
+    );
+
+    return {
+        audioFeaturesListsDTOs: audioFeaturesListsDTOs,
     };
 };

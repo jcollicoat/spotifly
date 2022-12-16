@@ -49,7 +49,7 @@ export const getTracksAddons = async (
     access_token: string,
     trackIDs: string
 ): Promise<ITracksAddonsDTO> => {
-    const audioFeaturesAPI = await axios.get<IAudioFeaturesListAPI>(
+    const audioFeaturesListAPI = await axios.get<IAudioFeaturesListAPI>(
         EPAudioFeaturesList,
         {
             headers: {
@@ -77,7 +77,7 @@ export const getTracksAddons = async (
     });
 
     return {
-        audioFeaturesAPI: audioFeaturesAPI.data,
+        audioFeaturesListAPI: audioFeaturesListAPI.data,
         topArtistsAPI: topArtistsAPI.data,
         checkSavedAPI: checkSavedAPI.data,
     };

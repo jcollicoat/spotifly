@@ -3,6 +3,7 @@ import {
     IAudioFeatures,
     IAudioFeaturesAPI,
     IAudioFeaturesListAPI,
+    IAudioFeaturesListsDTO,
 } from '../addons/types';
 import { ITopArtistsAPI } from '../artists/types';
 import { ITrack, ITrackAPI } from '../tracks/types';
@@ -96,6 +97,10 @@ export interface IAlbumAPI {
     };
     type: string;
     uri: string;
+}
+
+export interface IAlbumsAddonsDTO {
+    audioFeaturesListsDTOs: IAudioFeaturesListsDTO[];
 }
 
 export interface IAlbumsAPI {

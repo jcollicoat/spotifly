@@ -12,6 +12,7 @@ import {
     IAlbumAPI,
     IAlbumArtist,
     IAlbumArtistDTO,
+    IAlbumsAddonsDTO,
     IAlbumsAPI,
     IAlbumTrack,
     IAlbumTrackAddonsDTO,
@@ -98,7 +99,7 @@ export const buildAlbum = async (
 
 export const buildAlbums = async (
     albumsAPI: IAlbumsAPI,
-    addons?: IAlbumAddonsDTO,
+    addons?: IAlbumsAddonsDTO,
     imageSize?: ImageSize
 ): Promise<IAlbum[]> => {
     return await Promise.all(

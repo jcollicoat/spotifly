@@ -1,3 +1,5 @@
+// Client
+
 export interface IAudioFeatures {
     acousticness: number;
     danceability: number;
@@ -18,6 +20,8 @@ export interface IAddonsTrack {
     audio_features: IAudioFeatures;
 }
 
+// Server
+
 export interface IAudioFeaturesAPI {
     id: string;
     acousticness: number;
@@ -37,6 +41,11 @@ export interface IAudioFeaturesAPI {
     type: string;
     uri: string;
     valence: number;
+}
+
+export interface IAudioFeaturesListsDTO {
+    audio_features: IAudioFeaturesAPI[];
+    id?: string;
 }
 
 export interface IAudioFeaturesListAPI {
