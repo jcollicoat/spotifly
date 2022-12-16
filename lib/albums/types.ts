@@ -1,4 +1,4 @@
-import { CheckSavedAPI, IImageDTO, IObject } from '../_helpers/types';
+import { ICheckSavedAPI, IImageDTO, IObject } from '../_helpers/types';
 import {
     IAudioFeatures,
     IAudioFeaturesAPI,
@@ -45,7 +45,7 @@ export interface IAlbumAddonsDTO {
 
 export interface IAlbumTrackAddonsDTO {
     audioFeaturesAPI: IAudioFeaturesAPI;
-    checkSavedAPI: CheckSavedAPI;
+    checkSavedAPI: ICheckSavedAPI;
 }
 
 export interface IAlbumArtistDTO {

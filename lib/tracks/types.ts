@@ -1,4 +1,4 @@
-import { CheckSavedAPI, IAlbumMinimum, IObject } from '../_helpers/types';
+import { ICheckSavedAPI, IAlbumMinimum, IObject } from '../_helpers/types';
 import {
     IAudioFeatures,
     IAudioFeaturesAPI,
@@ -57,7 +57,7 @@ export interface ITracks<TracksMeta> {
 export interface ITrackAddonsDTO {
     audioFeaturesAPI: IAudioFeaturesAPI;
     topArtistsAPI: ITopArtistsAPI;
-    checkSavedAPI: CheckSavedAPI;
+    checkSavedAPI: ICheckSavedAPI;
 }
 
 export interface ITrackArtistDTO {
@@ -72,7 +72,7 @@ export interface ITrackArtistDTO {
 export interface ITracksAddonsDTO {
     audioFeaturesAPI: IAudioFeaturesListAPI;
     topArtistsAPI: ITopArtistsAPI;
-    checkSavedAPI: CheckSavedAPI;
+    checkSavedAPI: ICheckSavedAPI;
 }
 
 export interface ITrackAPI {
