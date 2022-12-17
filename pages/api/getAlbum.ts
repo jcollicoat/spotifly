@@ -21,12 +21,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         if (req.query.addons === 'true') {
             try {
-                const trackIDs = albumAPI.data.tracks.items
-                    .map((track) => track.id)
-                    .join(',');
                 const addons: IAlbumAddonsDTO = await getAlbumAddons(
                     access_token,
-                    trackIDs
+                    albumAPI.data
                 );
 
                 const builtAlbum = await buildAlbum(albumAPI.data, addons);

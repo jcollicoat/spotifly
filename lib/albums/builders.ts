@@ -36,7 +36,7 @@ const findAlbumTrackAddons = (
     index: number
 ): IAlbumTrackAddonsDTO => {
     return {
-        audioFeaturesAPI: addons.audioFeaturesAPI.audio_features.find(
+        audioFeaturesAPI: addons.audioFeaturesListAPI.audio_features.find(
             (featureSet) => featureSet.id === trackID
         ) as IGetAudioFeaturesAPI, // This will never be undefined unless the API breaks
         checkSavedAPI: [addons.checkSavedAPI[index]],
@@ -93,7 +93,8 @@ export const buildAlbum = async (
         total_tracks: albumAPI.total_tracks,
         tracks: buildAlbumTracks(albumAPI.tracks.items, addons),
         audio_features:
-            addons && buildAudioFeaturesListToSingle(addons.audioFeaturesAPI),
+            addons &&
+            buildAudioFeaturesListToSingle(addons.audioFeaturesListAPI),
     };
 };
 
