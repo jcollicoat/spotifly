@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
-import { getRecentlyPlayedSingle } from '../../lib/client/spotify';
+import { getRecentlyPlayedSingle } from '../../lib/client/api';
 import { IRecentlyPlayed } from '../../lib/tracks/types';
 import { FeaturedTrack } from '../Tracks/FeaturedTrack/FeaturedTrack';
 import { ICreatePanel } from '../types';

@@ -1,10 +1,10 @@
-import { CheckSavedAPI, IAlbumMinimum, IObject } from '../_helpers/types';
+import { ICheckSavedAPI, IAlbumMinimum, IObjectDTO } from '../_helpers/types';
 import {
     IAudioFeatures,
-    IAudioFeaturesAPI,
-    IAudioFeaturesListAPI,
+    IGetAudioFeaturesAPI,
+    IGetAudioFeaturesListAPI,
 } from '../addons/types';
-import { IAlbumAPI } from '../albums/types';
+import { IGetAlbumAPI } from '../albums/types';
 import { ITopArtistsAPI } from '../artists/types';
 
 // Client
@@ -55,14 +55,14 @@ export interface ITracks<TracksMeta> {
 // Server
 
 export interface ITrackAddonsDTO {
-    audioFeaturesAPI: IAudioFeaturesAPI;
+    audioFeaturesAPI: IGetAudioFeaturesAPI;
     topArtistsAPI: ITopArtistsAPI;
-    checkSavedAPI: CheckSavedAPI;
+    checkSavedAPI: ICheckSavedAPI;
 }
 
 export interface ITrackArtistDTO {
     id: string;
-    external_urls: IObject;
+    external_urls: IObjectDTO;
     href: string;
     name: string;
     type: string;
@@ -70,21 +70,21 @@ export interface ITrackArtistDTO {
 }
 
 export interface ITracksAddonsDTO {
-    audioFeaturesAPI: IAudioFeaturesListAPI;
+    audioFeaturesListAPI: IGetAudioFeaturesListAPI;
     topArtistsAPI: ITopArtistsAPI;
-    checkSavedAPI: CheckSavedAPI;
+    checkSavedAPI: ICheckSavedAPI;
 }
 
-export interface ITrackAPI {
+export interface IGetTrackAPI {
     id: string;
-    album: IAlbumAPI;
+    album: IGetAlbumAPI;
     artists: ITrackArtistDTO[];
     available_markets: string[];
     disc_number: number;
     duration_ms: number;
     explicit: boolean;
-    external_ids: IObject;
-    external_urls: IObject;
+    external_ids: IObjectDTO;
+    external_urls: IObjectDTO;
     href: string;
     is_local: false;
     name: string;
@@ -95,15 +95,15 @@ export interface ITrackAPI {
     uri: string;
 }
 
-interface IRecentlyPlayedTrackAPI {
+interface IGetRecentlyPlayedTrack {
     context?: string;
     href: string;
-    track: ITrackAPI;
+    track: IGetTrackAPI;
 }
 
-export interface IRecentlyPlayedAPI {
+export interface IGetRecentlyPlayedAPI {
     href: string;
-    items: IRecentlyPlayedTrackAPI[];
+    items: IGetRecentlyPlayedTrack[];
     limit: number;
     next: string | null;
     cursors: {
@@ -112,9 +112,9 @@ export interface IRecentlyPlayedAPI {
     total: number;
 }
 
-export interface ITopTracksAPI {
+export interface IGetTopTracksAPI {
     href: string;
-    items: ITrackAPI[];
+    items: IGetTrackAPI[];
     limit: number;
     next: string | null;
     offset: number;

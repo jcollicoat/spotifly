@@ -6,14 +6,14 @@ import { handleError } from '../../lib/_helpers/server';
 import { determineAccessToken } from '../../lib/auth/server';
 import { getTracksAddons } from '../../lib/tracks/addons';
 import { buildTopTracks } from '../../lib/tracks/builders';
-import { ITopTracksAPI, ITracksAddonsDTO } from '../../lib/tracks/types';
+import { IGetTopTracksAPI, ITracksAddonsDTO } from '../../lib/tracks/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const access_token = await determineAccessToken(req);
 
         const limit = req.query.limit ? Number(req.query.limit) : 20;
-        const topTracksAPI = await axios.get<ITopTracksAPI>(EPTopTracks, {
+        const topTracksAPI = await axios.get<IGetTopTracksAPI>(EPTopTracks, {
             headers: {
                 Authorization: access_token,
             },

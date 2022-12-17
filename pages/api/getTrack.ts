@@ -6,14 +6,14 @@ import { handleError } from '../../lib/_helpers/server';
 import { determineAccessToken } from '../../lib/auth/server';
 import { getTrackAddons } from '../../lib/tracks/addons';
 import { buildTrack } from '../../lib/tracks/builders';
-import { ITrackAddonsDTO, ITrackAPI } from '../../lib/tracks/types';
+import { ITrackAddonsDTO, IGetTrackAPI } from '../../lib/tracks/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const access_token = await determineAccessToken(req);
 
         const trackID = req.query.trackID;
-        const trackAPI = await axios.get<ITrackAPI>(EPTrack + trackID, {
+        const trackAPI = await axios.get<IGetTrackAPI>(EPTrack + trackID, {
             headers: {
                 Authorization: access_token,
             },

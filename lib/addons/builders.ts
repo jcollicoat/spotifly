@@ -1,10 +1,10 @@
 import {
     IAudioFeatures,
-    IAudioFeaturesAPI,
-    IAudioFeaturesListAPI,
+    IGetAudioFeaturesAPI,
+    IGetAudioFeaturesListAPI,
 } from './types';
 
-export const getFloats = (audioFeaturesAPI: IAudioFeaturesAPI) => {
+export const getFloats = (audioFeaturesAPI: IGetAudioFeaturesAPI) => {
     const asArray = Object.entries(audioFeaturesAPI);
     const filtered = asArray.filter(
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -31,7 +31,7 @@ const mapMusicKey = (value: number) => {
     return scale[value] ?? 'Unknown';
 };
 
-const normalizeFloats = (audioFeaturesAPI: IAudioFeaturesAPI) => {
+const normalizeFloats = (audioFeaturesAPI: IGetAudioFeaturesAPI) => {
     const floats = getFloats(audioFeaturesAPI);
     Object.keys(floats).forEach(
         (float) => (floats[float] = Math.floor(floats[float] * 100))
@@ -47,7 +47,7 @@ const normalizeTimeSig = (value: number) => {
 };
 
 export const buildAudioFeatures = (
-    audioFeaturesAPI: IAudioFeaturesAPI
+    audioFeaturesAPI: IGetAudioFeaturesAPI
 ): IAudioFeatures => {
     const {
         acousticness,
@@ -93,9 +93,9 @@ const getMostCommonValue = (values: (string | number)[]) => {
 };
 
 export const buildAudioFeaturesListToSingle = (
-    audioFeaturesListAPI: IAudioFeaturesListAPI
+    audioFeaturesListAPI: IGetAudioFeaturesListAPI
 ): IAudioFeatures => {
-    const combined: IAudioFeaturesAPI = {
+    const combined: IGetAudioFeaturesAPI = {
         id: '',
         acousticness: getAverageValue(
             audioFeaturesListAPI.audio_features.map(
