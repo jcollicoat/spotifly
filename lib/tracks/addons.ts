@@ -6,7 +6,10 @@ import {
     EPTopArtists,
 } from '../_helpers/endpoints';
 import { ICheckSavedAPI } from '../_helpers/types';
-import { IAudioFeaturesAPI, IAudioFeaturesListAPI } from '../addons/types';
+import {
+    IGetAudioFeaturesAPI,
+    IGetAudioFeaturesListAPI,
+} from '../addons/types';
 import { ITopArtistsAPI } from '../artists/types';
 import { ITrackAddonsDTO, ITracksAddonsDTO } from './types';
 
@@ -14,7 +17,7 @@ export const getTrackAddons = async (
     access_token: string,
     trackID: string
 ): Promise<ITrackAddonsDTO> => {
-    const audioFeaturesAPI = await axios.get<IAudioFeaturesAPI>(
+    const audioFeaturesAPI = await axios.get<IGetAudioFeaturesAPI>(
         EPAudioFeatures + trackID,
         {
             headers: {
@@ -49,7 +52,7 @@ export const getTracksAddons = async (
     access_token: string,
     trackIDs: string
 ): Promise<ITracksAddonsDTO> => {
-    const audioFeaturesListAPI = await axios.get<IAudioFeaturesListAPI>(
+    const audioFeaturesListAPI = await axios.get<IGetAudioFeaturesListAPI>(
         EPAudioFeaturesList,
         {
             headers: {

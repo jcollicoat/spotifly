@@ -1,4 +1,4 @@
-export type ICheckSavedAPI = boolean[];
+// Client
 
 export enum ImageSize {
     small = 2,
@@ -18,12 +18,16 @@ export interface IArtistMinimum {
     name: string;
 }
 
+// Server
+
+export type ICheckSavedAPI = boolean[];
+
 export interface IImageDTO {
     height: number;
     width: number;
     url: string;
 }
 
-export interface IObject {
+export interface IObjectDTO {
     [key: string]: string;
 }

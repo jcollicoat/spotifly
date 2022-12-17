@@ -1,12 +1,11 @@
-import { ICheckSavedAPI, IImageDTO, IObject } from '../_helpers/types';
+import { ICheckSavedAPI, IImageDTO, IObjectDTO } from '../_helpers/types';
 import {
     IAudioFeatures,
-    IAudioFeaturesAPI,
-    IAudioFeaturesListAPI,
-    IAudioFeaturesListsDTO,
+    IGetAudioFeaturesAPI,
+    IGetAudioFeaturesListAPI,
 } from '../addons/types';
 import { ITopArtistsAPI } from '../artists/types';
-import { ITrack, ITrackAPI } from '../tracks/types';
+import { ITrack, IGetTrackAPI } from '../tracks/types';
 
 // Client
 
@@ -39,43 +38,43 @@ export interface IAlbum {
 // Server
 
 export interface IAlbumAddonsDTO {
-    audioFeaturesListAPI: IAudioFeaturesListAPI;
+    audioFeaturesListAPI: IGetAudioFeaturesListAPI;
     topArtistsAPI: ITopArtistsAPI;
     checkSavedAPI: ICheckSavedAPI;
 }
 
 export interface IAlbumTrackAddonsDTO {
-    audioFeaturesAPI: IAudioFeaturesAPI;
+    audioFeaturesAPI: IGetAudioFeaturesAPI;
     checkSavedAPI: ICheckSavedAPI;
 }
 
-export interface IAlbumArtistDTO {
+export interface IGetAlbumArtistDTO {
     id: string;
-    external_urls: IObject;
+    external_urls: IObjectDTO;
     href: string;
     name: string;
     type: string;
     uri: string;
 }
 
-interface IAlbumCopyrightsDTO {
+interface IGetAlbumCopyrightsDTO {
     text: string;
     type: string;
 }
 
-export type IAlbumTrackDTO = Omit<
-    ITrackAPI,
+export type IGetAlbumTrackDTO = Omit<
+    IGetTrackAPI,
     'album' | 'external_ids' | 'popularity'
 >;
 
-export interface IAlbumAPI {
+export interface IGetAlbumAPI {
     id: string;
     album_type: string;
-    artists: IAlbumArtistDTO[];
+    artists: IGetAlbumArtistDTO[];
     available_markets: string[];
-    copyrights: IAlbumCopyrightsDTO[];
-    external_ids: IObject;
-    external_urls: IObject;
+    copyrights: IGetAlbumCopyrightsDTO[];
+    external_ids: IObjectDTO;
+    external_urls: IObjectDTO;
     genres: string[];
     href: string;
     images: IImageDTO[];
@@ -84,11 +83,11 @@ export interface IAlbumAPI {
     popularity: number;
     release_date: string;
     release_date_precision: string;
-    restrictions?: IObject;
+    restrictions?: IObjectDTO;
     total_tracks: number;
     tracks: {
         href: string;
-        items: IAlbumTrackDTO[];
+        items: IGetAlbumTrackDTO[];
         limit: number;
         next: string | null;
         offset: number;
@@ -100,9 +99,12 @@ export interface IAlbumAPI {
 }
 
 export interface IAlbumsAddonsDTO {
-    audioFeaturesListsDTOs: IAudioFeaturesListsDTO[];
+    addonSets: {
+        addons: IAlbumAddonsDTO;
+        id: string;
+    }[];
 }
 
-export interface IAlbumsAPI {
-    albums: IAlbumAPI[];
+export interface IGetAlbumsAPI {
+    albums: IGetAlbumAPI[];
 }

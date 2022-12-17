@@ -5,22 +5,22 @@ import {
     buildAudioFeatures,
     buildAudioFeaturesListToSingle,
 } from '../addons/builders';
-import { IAudioFeaturesAPI } from '../addons/types';
+import { IGetAudioFeaturesAPI } from '../addons/types';
 import {
     IAlbum,
     IAlbumAddonsDTO,
-    IAlbumAPI,
+    IGetAlbumAPI,
     IAlbumArtist,
-    IAlbumArtistDTO,
     IAlbumsAddonsDTO,
-    IAlbumsAPI,
     IAlbumTrack,
     IAlbumTrackAddonsDTO,
-    IAlbumTrackDTO,
+    IGetAlbumArtistDTO,
+    IGetAlbumTrackDTO,
+    IGetAlbumsAPI,
 } from './types';
 
 const buildAlbumArtists = (
-    albumArtistsDTOs: IAlbumArtistDTO[],
+    albumArtistsDTOs: IGetAlbumArtistDTO[],
     artistIDs?: string[]
 ): IAlbumArtist[] =>
     albumArtistsDTOs.map((artist) => ({
@@ -38,13 +38,13 @@ const findAlbumTrackAddons = (
     return {
         audioFeaturesAPI: addons.audioFeaturesAPI.audio_features.find(
             (featureSet) => featureSet.id === trackID
-        ) as IAudioFeaturesAPI, // This will never be undefined unless the API breaks
+        ) as IGetAudioFeaturesAPI, // This will never be undefined unless the API breaks
         checkSavedAPI: [addons.checkSavedAPI[index]],
     };
 };
 
 const buildAlbumTracks = (
-    albumTracksDTOs: IAlbumTrackDTO[],
+    albumTracksDTOs: IGetAlbumTrackDTO[],
     addons?: IAlbumAddonsDTO
 ): IAlbumTrack[] =>
     albumTracksDTOs.map((track, index) => {
@@ -65,7 +65,7 @@ const buildAlbumTracks = (
     });
 
 export const buildAlbum = async (
-    albumAPI: IAlbumAPI,
+    albumAPI: IGetAlbumAPI,
     addons?: IAlbumAddonsDTO,
     imageSize?: ImageSize
 ): Promise<IAlbum> => {
@@ -98,7 +98,7 @@ export const buildAlbum = async (
 };
 
 export const buildAlbums = async (
-    albumsAPI: IAlbumsAPI,
+    albumsAPI: IGetAlbumsAPI,
     addons?: IAlbumsAddonsDTO,
     imageSize?: ImageSize
 ): Promise<IAlbum[]> => {

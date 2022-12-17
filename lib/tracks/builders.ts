@@ -5,16 +5,16 @@ import {
     buildAudioFeatures,
     buildAudioFeaturesListToSingle,
 } from '../addons/builders';
-import { IAudioFeaturesAPI } from '../addons/types';
-import { IAlbumAPI } from '../albums/types';
-import { IArtistAPI } from '../artists/types';
+import { IGetAudioFeaturesAPI } from '../addons/types';
+import { IGetAlbumAPI } from '../albums/types';
+import { IGetArtistAPI } from '../artists/types';
 import {
-    IRecentlyPlayedAPI,
-    ITopTracksAPI,
+    IGetRecentlyPlayedAPI,
+    IGetTopTracksAPI,
     ITrack,
     ITrackArtist,
     ITrackAddonsDTO,
-    ITrackAPI,
+    IGetTrackAPI,
     ITrackArtistDTO,
     ITracksAddonsDTO,
     ITracks,
@@ -22,14 +22,14 @@ import {
     RecentlyPlayedMeta,
 } from './types';
 
-const buildTrackAlbum = (album: IAlbumAPI): IAlbumMinimum => ({
+const buildTrackAlbum = (album: IGetAlbumAPI): IAlbumMinimum => ({
     id: album.id,
     key: appendUUID(album.id),
     name: album.name,
 });
 
 const buildTrackArtists = (
-    artistsDTO: IArtistAPI[] | ITrackArtistDTO[],
+    artistsDTO: IGetArtistAPI[] | ITrackArtistDTO[],
     artistIDs?: string[]
 ): ITrackArtist[] =>
     artistsDTO.map((artistDTO) => ({
@@ -40,7 +40,7 @@ const buildTrackArtists = (
     }));
 
 export const buildTrack = async (
-    trackAPI: ITrackAPI,
+    trackAPI: IGetTrackAPI,
     addons?: ITrackAddonsDTO,
     imageSize?: ImageSize
 ): Promise<ITrack> => {
@@ -78,13 +78,13 @@ export const getSingleTrackAddonsFromList = (
 ): ITrackAddonsDTO => ({
     audioFeaturesAPI: addons.audioFeaturesListAPI.audio_features.find(
         (featureSet) => featureSet.id === trackID
-    ) as IAudioFeaturesAPI, // This will never be undefined unless the API breaks
+    ) as IGetAudioFeaturesAPI, // This will never be undefined unless the API breaks
     checkSavedAPI: [addons.checkSavedAPI[index]],
     topArtistsAPI: addons.topArtistsAPI,
 });
 
 export const buildTracks = async (
-    trackAPIs: ITrackAPI[],
+    trackAPIs: IGetTrackAPI[],
     addons?: ITracksAddonsDTO,
     imageSize?: ImageSize
 ): Promise<ITrack[]> =>
@@ -101,7 +101,7 @@ export const buildTracks = async (
     );
 
 export const buildRecentlyPlayed = async (
-    recentlyPlayedAPI: IRecentlyPlayedAPI,
+    recentlyPlayedAPI: IGetRecentlyPlayedAPI,
     addons?: ITracksAddonsDTO
 ): Promise<ITracks<RecentlyPlayedMeta>> => ({
     items: await buildTracks(
@@ -121,7 +121,7 @@ export const buildRecentlyPlayed = async (
 });
 
 export const buildTopTracks = async (
-    topTracksAPI: ITopTracksAPI,
+    topTracksAPI: IGetTopTracksAPI,
     addons?: ITracksAddonsDTO
 ): Promise<ITracks<TopTracksMeta>> => ({
     items: await buildTracks(topTracksAPI.items, addons),

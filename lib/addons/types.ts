@@ -22,7 +22,7 @@ export interface IAddonsTrack {
 
 // Server
 
-export interface IAudioFeaturesAPI {
+export interface IGetAudioFeaturesAPI {
     id: string;
     acousticness: number;
     analysis_url: string;
@@ -43,13 +43,13 @@ export interface IAudioFeaturesAPI {
     valence: number;
 }
 
-export interface IAudioFeaturesListsDTO {
-    audio_features: IAudioFeaturesAPI[];
-    id?: string;
+export interface IGetAudioFeaturesListAPI {
+    audio_features: IGetAudioFeaturesAPI[];
 }
 
-export interface IAudioFeaturesListAPI {
-    audio_features: IAudioFeaturesAPI[];
+export interface IAudioFeaturesListsDTO {
+    audio_features: IGetAudioFeaturesAPI[];
+    id?: string;
 }
 
 export interface IAddonsAlbum {
@@ -57,5 +57,5 @@ export interface IAddonsAlbum {
 }
 
 export interface IAddonsDTO {
-    audio_features?: IAudioFeaturesListAPI;
+    audio_features?: IGetAudioFeaturesListAPI;
 }
