@@ -27,7 +27,7 @@ export const getAlbums = async ({
     queryKey: QueryKey;
 }): Promise<IAlbum[]> => {
     const { data: albums }: { data: IAlbum[] } = await axios.get(
-        '/api/spotify/getAlbums',
+        '/api/getAlbums',
         {
             params: { albumIDs: queryKey[1] },
         }

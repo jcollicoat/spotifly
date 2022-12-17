@@ -6,7 +6,7 @@ import {
     getRecentlyPlayedSingle,
     getTopArtists,
     getTopTracks,
-} from '../lib/client/spotify';
+} from '../lib/client/api';
 import { IRecentlyPlayed, ITrack, ITopTracks } from '../lib/tracks/types';
 
 export const useRecentlyPlayed = (): UseQueryResult<IRecentlyPlayed> => {

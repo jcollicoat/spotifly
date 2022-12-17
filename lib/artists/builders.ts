@@ -2,10 +2,10 @@ import { getAverageColor } from 'fast-average-color-node';
 import { appendUUID } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
 import { IAddonsDTO } from '../addons/types';
-import { IArtist, IArtistAPI, ITopArtists, ITopArtistsAPI } from './types';
+import { IArtist, IGetArtistAPI, ITopArtists, ITopArtistsAPI } from './types';
 
 export const buildArtist = async (
-    artistAPI: IArtistAPI,
+    artistAPI: IGetArtistAPI,
     imageSize?: ImageSize
 ): Promise<IArtist> => {
     const color = await getAverageColor(artistAPI.images[2].url);
@@ -29,7 +29,7 @@ export const buildArtist = async (
 };
 
 export const buildArtists = async (
-    artists: IArtistAPI[],
+    artists: IGetArtistAPI[],
     imageSize?: ImageSize
 ): Promise<IArtist[]> => {
     return await Promise.all(

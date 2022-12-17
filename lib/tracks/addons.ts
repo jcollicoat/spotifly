@@ -5,8 +5,11 @@ import {
     EPCheckSaved,
     EPTopArtists,
 } from '../_helpers/endpoints';
-import { CheckSavedAPI } from '../_helpers/types';
-import { IAudioFeaturesAPI, IAudioFeaturesListAPI } from '../addons/types';
+import { ICheckSavedAPI } from '../_helpers/types';
+import {
+    IGetAudioFeaturesAPI,
+    IGetAudioFeaturesListAPI,
+} from '../addons/types';
 import { ITopArtistsAPI } from '../artists/types';
 import { ITrackAddonsDTO, ITracksAddonsDTO } from './types';
 
@@ -14,7 +17,7 @@ export const getTrackAddons = async (
     access_token: string,
     trackID: string
 ): Promise<ITrackAddonsDTO> => {
-    const audioFeaturesAPI = await axios.get<IAudioFeaturesAPI>(
+    const audioFeaturesAPI = await axios.get<IGetAudioFeaturesAPI>(
         EPAudioFeatures + trackID,
         {
             headers: {
@@ -29,7 +32,7 @@ export const getTrackAddons = async (
         },
     });
 
-    const checkSavedAPI = await axios.get<CheckSavedAPI>(EPCheckSaved, {
+    const checkSavedAPI = await axios.get<ICheckSavedAPI>(EPCheckSaved, {
         headers: {
             Authorization: access_token,
         },
@@ -49,7 +52,7 @@ export const getTracksAddons = async (
     access_token: string,
     trackIDs: string
 ): Promise<ITracksAddonsDTO> => {
-    const audioFeaturesAPI = await axios.get<IAudioFeaturesListAPI>(
+    const audioFeaturesListAPI = await axios.get<IGetAudioFeaturesListAPI>(
         EPAudioFeaturesList,
         {
             headers: {
@@ -67,7 +70,7 @@ export const getTracksAddons = async (
         },
     });
 
-    const checkSavedAPI = await axios.get<CheckSavedAPI>(EPCheckSaved, {
+    const checkSavedAPI = await axios.get<ICheckSavedAPI>(EPCheckSaved, {
         headers: {
             Authorization: access_token,
         },
@@ -77,7 +80,7 @@ export const getTracksAddons = async (
     });
 
     return {
-        audioFeaturesAPI: audioFeaturesAPI.data,
+        audioFeaturesListAPI: audioFeaturesListAPI.data,
         topArtistsAPI: topArtistsAPI.data,
         checkSavedAPI: checkSavedAPI.data,
     };

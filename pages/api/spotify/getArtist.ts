@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleError } from '../../../lib/_helpers/server';
 import { IAddonsDTO } from '../../../lib/addons/types';
 import { buildArtist } from '../../../lib/artists/builders';
-import { IArtistAPI } from '../../../lib/artists/types';
+import { IGetArtistAPI } from '../../../lib/artists/types';
 import { determineAccessToken } from '../../../lib/auth/server';
 
 const endpoint = 'https://api.spotify.com/v1/artists/';
@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const access_token = await determineAccessToken(req);
 
         const artistID = req.query.artistID;
-        const artistAPI = await axios.get<IArtistAPI>(endpoint + artistID, {
+        const artistAPI = await axios.get<IGetArtistAPI>(endpoint + artistID, {
             headers: {
                 Authorization: access_token,
             },
