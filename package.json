@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006 --ci",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test": "jest"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.2.3",
