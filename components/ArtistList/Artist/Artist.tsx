@@ -45,13 +45,12 @@ export const ArtistSkeleton: FC<ArtistSkeleton> = ({ data, state }) => (
             <div className={styles.details} ref={data?.detailsRef}>
                 <div className={styles.nowrap} ref={data?.noWrapRef}>
                     {data ? (
-                        <Link href={`/artist/${data.artist.id}`} passHref>
-                            <a
-                                aria-label={`Explore ${data.artist.name}`}
-                                className={styles.name}
-                            >
-                                {data.artist.name}
-                            </a>
+                        <Link
+                            aria-label={`Explore ${data.artist.name}`}
+                            className={styles.name}
+                            href={`/artist/${data.artist.id}`}
+                        >
+                            {data.artist.name}
                         </Link>
                     ) : (
                         <a aria-hidden className={styles.name}>

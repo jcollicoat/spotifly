@@ -64,12 +64,12 @@ const LinkType: FC<ILinkType> = ({
     } else {
         return (
             <Link href={href} passHref>
-                <a
+                {/* <a
                     aria-label={ariaLabel}
                     className={classNames(styles.button, styles[style])}
                 >
                     {children}
-                </a>
+                </a> */}
             </Link>
         );
     }

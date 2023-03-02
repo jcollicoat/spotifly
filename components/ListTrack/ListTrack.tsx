@@ -40,13 +40,12 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                 <Scroller>
                     <div className={styles.details}>
                         {track ? (
-                            <Link href={`/track/${track.id}`} passHref>
-                                <a
-                                    aria-label={`Explore ${track.name} by ${track.artists[0].name}`}
-                                    className={styles.name}
-                                >
-                                    {track.name}
-                                </a>
+                            <Link
+                                aria-label={`Explore ${track.name} by ${track.artists[0].name}`}
+                                className={styles.name}
+                                href={`/track/${track.id}`}
+                            >
+                                {track.name}
                             </Link>
                         ) : (
                             <a aria-hidden className={styles.name}>
@@ -56,12 +55,10 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                         <div className={styles.subdetails}>
                             {track ? (
                                 <Link
+                                    className={styles.subdetail}
                                     href={`/artist/${track.artists[0].id}`}
-                                    passHref
                                 >
-                                    <a className={styles.subdetail}>
-                                        {track.artists[0].name}
-                                    </a>
+                                    {track.artists[0].name}
                                 </Link>
                             ) : (
                                 <a className={styles.subdetail}>
@@ -71,12 +68,10 @@ export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
                             {track && '•'}
                             {track ? (
                                 <Link
+                                    className={styles.subdetail}
                                     href={`/album/${track.album.id}`}
-                                    passHref
                                 >
-                                    <a className={styles.subdetail}>
-                                        {track.album.name}
-                                    </a>
+                                    {track.album.name}
                                 </Link>
                             ) : (
                                 <a className={styles.subdetail}>

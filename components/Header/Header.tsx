@@ -10,10 +10,8 @@ export const Header: FC = () => (
     <header className={styles.header}>
         <Panel>
             <div className={styles.content}>
-                <Link href="/" passHref>
-                    <a aria-label="Navigate home">
-                        <SpotiflyLogo height={20} />
-                    </a>
+                <Link aria-label="Navigate home" href="/">
+                    <SpotiflyLogo height={20} />
                 </Link>
                 <nav className={styles.nav}>
                     <Button
