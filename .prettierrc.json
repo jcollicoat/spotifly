@@ -1,12 +1,12 @@
 {
-  "singleQuote": true,
-  "endOfLine": "auto",
-  "overrides": [
-    {
-      "files": ["*.yml", "*.json", ".prettierrc", "*.md"],
-      "options": {
-        "tabWidth": 2
-      }
-    }
-  ]
+    "singleQuote": true,
+    "endOfLine": "auto",
+    "overrides": [
+        {
+            "files": ["*.yml", "*.json", ".prettierrc", "*.md"],
+            "options": {
+                "tabWidth": 4
+            }
+        }
+    ]
 }
