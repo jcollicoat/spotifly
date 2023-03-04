@@ -50,7 +50,7 @@ Default.args = {
     ariaLabel: 'Default Button',
     children: 'Default Button',
     glyph: 'Dashboard',
-    style: 'primary',
+    style: 'cta',
 };
 Default.argTypes = {
     href: {

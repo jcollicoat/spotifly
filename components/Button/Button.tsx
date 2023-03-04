@@ -10,7 +10,7 @@ import styles from './Button.module.scss';
 
 interface IButton {
     displayAsGlyph?: 'always' | 'responsive';
-    style?: 'primary' | 'secondary' | 'tertiary';
+    style?: 'cta' | 'primary' | 'secondary' | 'tertiary';
 }
 
 interface IButtonWithChildren extends IButton {
@@ -27,7 +27,7 @@ const ButtonType: FC<IButtonType> = ({
     ariaLabel,
     children,
     onClick,
-    style = 'primary',
+    style = 'cta',
 }) => (
     <button
         aria-label={ariaLabel}
@@ -47,7 +47,7 @@ const LinkType: FC<ILinkType> = ({
     ariaLabel,
     children,
     href,
-    style = 'primary',
+    style = 'cta',
 }) => {
     if (href.startsWith('https://')) {
         return (
