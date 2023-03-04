@@ -27,13 +27,11 @@ $color-gray-7: #3f3f46;
 $color-gray-8: #27272a;
 $color-gray-9: #18181b;
 
-$color-off-black: #0e0f0f;
-
-$color-overlay: rgba($color-off-black, 0.9);
+$color-overlay: rgba($color-gray-9, 0.9);
 $color-overlay-gradient: linear-gradient(
     to right,
-    rgba($color-off-black, 0.9),
-    rgba($color-off-black, 0.85)
+    rgba($color-gray-9, 0.9),
+    rgba($color-gray-9, 0.85)
 );
 
 $color-error: #ff1e00;
