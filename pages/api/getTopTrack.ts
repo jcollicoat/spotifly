@@ -5,13 +5,13 @@ import { handleError } from '../../lib/_helpers/server';
 import { determineAccessToken } from '../../lib/auth/server';
 import { getTrackAddons } from '../../lib/tracks/addons';
 import { buildTrack } from '../../lib/tracks/builders';
-import { IGetTopTracksAPI, ITrackAddonsDTO } from '../../lib/tracks/types';
+import { TopTracksDTO, TrackAddonsDTO } from '../../lib/tracks/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const access_token = await determineAccessToken(req);
 
-        const topTracksAPI = await axios.get<IGetTopTracksAPI>(EPTopTracks, {
+        const topTracksAPI = await axios.get<TopTracksDTO>(EPTopTracks, {
             headers: {
                 Authorization: access_token,
             },
@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         if (req.query.addons === 'true') {
             try {
-                const addons: ITrackAddonsDTO = await getTrackAddons(
+                const addons: TrackAddonsDTO = await getTrackAddons(
                     access_token,
                     topTrackAPI.id
                 );

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
-import { ITrack } from '../../lib/tracks/types';
+import { Track } from '../../lib/tracks/types';
 import { Glyph } from '../Glyphs/Glyph';
 import { Scroller } from '../Scroller/Scroller';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
@@ -10,7 +10,7 @@ import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
 import { IComponent } from '../types';
 import styles from './ListTrack.module.scss';
 
-type ListTrackSkeleton = IComponent<ITrack>;
+type ListTrackSkeleton = IComponent<Track>;
 
 export const ListTrack: FC<ListTrackSkeleton> = ({ data: track, state }) => {
     return (

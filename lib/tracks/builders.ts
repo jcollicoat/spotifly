@@ -9,15 +9,15 @@ import { AudioFeaturesDTO } from '../addons/types';
 import { AlbumDTO } from '../albums/types';
 import { ArtistDTO } from '../artists/types';
 import {
-    IGetRecentlyPlayedAPI,
-    IGetTopTracksAPI,
-    ITrack,
-    ITrackArtist,
-    ITrackAddonsDTO,
-    IGetTrackAPI,
-    ITrackArtistDTO,
-    ITracksAddonsDTO,
-    ITracks,
+    RecentlyPlayedDTO,
+    TopTracksDTO,
+    Track,
+    TrackArtist,
+    TrackAddonsDTO,
+    TrackDTO,
+    TrackArtistDTO,
+    TracksAddonsDTO,
+    Tracks,
     TopTracksMeta,
     RecentlyPlayedMeta,
 } from './types';
@@ -29,9 +29,9 @@ const buildTrackAlbum = (album: AlbumDTO): AlbumMinimum => ({
 });
 
 const buildTrackArtists = (
-    artistsDTO: ArtistDTO[] | ITrackArtistDTO[],
+    artistsDTO: ArtistDTO[] | TrackArtistDTO[],
     artistIDs?: string[]
-): ITrackArtist[] =>
+): TrackArtist[] =>
     artistsDTO.map((artistDTO) => ({
         id: artistDTO.id,
         key: appendUUID(artistDTO.id),
@@ -40,10 +40,10 @@ const buildTrackArtists = (
     }));
 
 export const buildTrack = async (
-    trackAPI: IGetTrackAPI,
-    addons?: ITrackAddonsDTO,
+    trackAPI: TrackDTO,
+    addons?: TrackAddonsDTO,
     imageSize?: ImageSize
-): Promise<ITrack> => {
+): Promise<Track> => {
     const color = await getAverageColor(trackAPI.album.images[2].url);
     if (!color.hex) {
         throw new Error(
@@ -72,10 +72,10 @@ export const buildTrack = async (
 };
 
 export const getSingleTrackAddonsFromList = (
-    addons: ITracksAddonsDTO,
+    addons: TracksAddonsDTO,
     trackID: string,
     index: number
-): ITrackAddonsDTO => ({
+): TrackAddonsDTO => ({
     audioFeaturesAPI: addons.audioFeaturesListAPI.audio_features.find(
         (featureSet) => featureSet.id === trackID
     ) as AudioFeaturesDTO, // This will never be undefined unless the API breaks
@@ -84,10 +84,10 @@ export const getSingleTrackAddonsFromList = (
 });
 
 export const buildTracks = async (
-    trackAPIs: IGetTrackAPI[],
-    addons?: ITracksAddonsDTO,
+    trackAPIs: TrackDTO[],
+    addons?: TracksAddonsDTO,
     imageSize?: ImageSize
-): Promise<ITrack[]> =>
+): Promise<Track[]> =>
     await Promise.all(
         trackAPIs.map(
             async (track, index) =>
@@ -101,9 +101,9 @@ export const buildTracks = async (
     );
 
 export const buildRecentlyPlayed = async (
-    recentlyPlayedAPI: IGetRecentlyPlayedAPI,
-    addons?: ITracksAddonsDTO
-): Promise<ITracks<RecentlyPlayedMeta>> => ({
+    recentlyPlayedAPI: RecentlyPlayedDTO,
+    addons?: TracksAddonsDTO
+): Promise<Tracks<RecentlyPlayedMeta>> => ({
     items: await buildTracks(
         recentlyPlayedAPI.items.map((item) => item.track),
         addons
@@ -121,9 +121,9 @@ export const buildRecentlyPlayed = async (
 });
 
 export const buildTopTracks = async (
-    topTracksAPI: IGetTopTracksAPI,
-    addons?: ITracksAddonsDTO
-): Promise<ITracks<TopTracksMeta>> => ({
+    topTracksAPI: TopTracksDTO,
+    addons?: TracksAddonsDTO
+): Promise<Tracks<TopTracksMeta>> => ({
     items: await buildTracks(topTracksAPI.items, addons),
     meta: {
         next: topTracksAPI.next,

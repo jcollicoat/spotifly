@@ -8,12 +8,12 @@ import {
 import { CheckSavedDTO } from '../_helpers/types';
 import { AudioFeaturesDTO, AudioFeaturesListDTO } from '../addons/types';
 import { TopArtistsDTO } from '../artists/types';
-import { ITrackAddonsDTO, ITracksAddonsDTO } from './types';
+import { TrackAddonsDTO, TracksAddonsDTO } from './types';
 
 export const getTrackAddons = async (
     access_token: string,
     trackID: string
-): Promise<ITrackAddonsDTO> => {
+): Promise<TrackAddonsDTO> => {
     const audioFeaturesAPI = await axios.get<AudioFeaturesDTO>(
         EPAudioFeatures + trackID,
         {
@@ -48,7 +48,7 @@ export const getTrackAddons = async (
 export const getTracksAddons = async (
     access_token: string,
     trackIDs: string
-): Promise<ITracksAddonsDTO> => {
+): Promise<TracksAddonsDTO> => {
     const audioFeaturesListAPI = await axios.get<AudioFeaturesListDTO>(
         EPAudioFeaturesList,
         {

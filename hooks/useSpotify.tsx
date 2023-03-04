@@ -7,7 +7,7 @@ import {
     getTopArtists,
     getTopTracks,
 } from '../lib/client/api';
-import { IRecentlyPlayed, ITrack, ITopTracks } from '../lib/tracks/types';
+import { IRecentlyPlayed, Track, ITopTracks } from '../lib/tracks/types';
 
 export const useRecentlyPlayed = (): UseQueryResult<IRecentlyPlayed> => {
     return useQuery(['recently-played'], getRecentlyPlayed, {
@@ -15,7 +15,7 @@ export const useRecentlyPlayed = (): UseQueryResult<IRecentlyPlayed> => {
     });
 };
 
-export const useRecentlyPlayedSingle = (): UseQueryResult<ITrack> => {
+export const useRecentlyPlayedSingle = (): UseQueryResult<Track> => {
     return useQuery(['recently-played'], getRecentlyPlayedSingle, {
         staleTime: TimeMS.Minutes5,
     });

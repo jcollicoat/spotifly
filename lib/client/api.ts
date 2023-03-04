@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Album } from '../albums/types';
 import { Artist, TopArtists } from '../artists/types';
 import {
-    ITrack,
-    ITracks,
+    Track,
+    Tracks,
     RecentlyPlayedMeta,
     TopTracksMeta,
 } from '../tracks/types';
@@ -53,17 +53,17 @@ export const getTrack = async ({
     queryKey,
 }: {
     queryKey: QueryKey;
-}): Promise<ITrack> => {
-    const { data: track }: { data: ITrack } = await axios.get('/api/getTrack', {
+}): Promise<Track> => {
+    const { data: track }: { data: Track } = await axios.get('/api/getTrack', {
         params: { trackID: queryKey[1] },
     });
     return track;
 };
 
 export const getRecentlyPlayed = async (): Promise<
-    ITracks<RecentlyPlayedMeta>
+    Tracks<RecentlyPlayedMeta>
 > => {
-    const { data: recentlyPlayed }: { data: ITracks<RecentlyPlayedMeta> } =
+    const { data: recentlyPlayed }: { data: Tracks<RecentlyPlayedMeta> } =
         await axios.get('/api/spotify/getRecentlyPlayed');
     return recentlyPlayed;
 };
@@ -72,8 +72,8 @@ export const getRecentlyPlayedNumber = async ({
     queryKey,
 }: {
     queryKey: QueryKey;
-}): Promise<ITracks<RecentlyPlayedMeta>> => {
-    const { data: recentlyPlayed }: { data: ITracks<RecentlyPlayedMeta> } =
+}): Promise<Tracks<RecentlyPlayedMeta>> => {
+    const { data: recentlyPlayed }: { data: Tracks<RecentlyPlayedMeta> } =
         await axios.get('/api/spotify/getRecentlyPlayed', {
             params: { limit: queryKey[1] },
         });
@@ -81,9 +81,9 @@ export const getRecentlyPlayedNumber = async ({
 };
 
 export const getRecentlyPlayedSingle = async (): Promise<
-    ITracks<RecentlyPlayedMeta>
+    Tracks<RecentlyPlayedMeta>
 > => {
-    const { data: recentlyPlayed }: { data: ITracks<RecentlyPlayedMeta> } =
+    const { data: recentlyPlayed }: { data: Tracks<RecentlyPlayedMeta> } =
         await axios.get('/api/getRecentlyPlayed', {
             params: { limit: '1' },
         });
@@ -97,8 +97,8 @@ export const getTopArtists = async (): Promise<TopArtists> => {
     return topArtists;
 };
 
-export const getTopTracks = async (): Promise<ITracks<TopTracksMeta>> => {
-    const { data: topTracks }: { data: ITracks<TopTracksMeta> } =
+export const getTopTracks = async (): Promise<Tracks<TopTracksMeta>> => {
+    const { data: topTracks }: { data: Tracks<TopTracksMeta> } =
         await axios.get('/api/getTopTracks');
     return topTracks;
 };

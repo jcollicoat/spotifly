@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useRecentlyPlayed, useTopTracks } from '../../hooks/useSpotify';
 import { appendUUID } from '../../lib/_helpers/helpers';
-import { ITrack } from '../../lib/tracks/types';
+import { Track } from '../../lib/tracks/types';
 import { ListTrack } from '../ListTrack/ListTrack';
 import { ICreatePanel, SkeletonStates } from '../types';
 import { IPanelDisplay, Panel } from './_Bases/Panel/Panel';
@@ -38,7 +38,7 @@ export const TrackList: FC<ITracksListPanel> = ({
     const { data, isError, isLoading } = query();
 
     // TODO: Fix this ugly ass code
-    const mapTracks = (tracks?: ITrack[] | SkeletonStates) => {
+    const mapTracks = (tracks?: Track[] | SkeletonStates) => {
         if (isSkeleton || !tracks) {
             return new Array(20)
                 .fill('')

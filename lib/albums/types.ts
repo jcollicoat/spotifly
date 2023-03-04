@@ -5,7 +5,7 @@ import {
     AudioFeaturesListDTO,
 } from '../addons/types';
 import { TopArtistsDTO } from '../artists/types';
-import { ITrack, IGetTrackAPI } from '../tracks/types';
+import { Track, TrackDTO } from '../tracks/types';
 
 // Client
 
@@ -17,7 +17,7 @@ export interface AlbumArtist {
 }
 
 export type AlbumTrack = Omit<
-    ITrack,
+    Track,
     'album' | 'artists' | 'color' | 'image' | 'popularity'
 >;
 
@@ -63,7 +63,7 @@ interface AlbumCopyrightsDTO {
 }
 
 export type AlbumTrackDTO = Omit<
-    IGetTrackAPI,
+    TrackDTO,
     'album' | 'external_ids' | 'popularity'
 >;
 

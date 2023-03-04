@@ -1,6 +1,6 @@
-import { ITrack } from '../lib/tracks/types';
+import { Track } from '../lib/tracks/types';
 
-export const mockTrack: ITrack = {
+export const mockTrack: Track = {
     id: '6DWxT8r4Yn3rQiBGvNkoRH',
     album: {
         id: '5gfoERgFITXydCMLl0B97c',

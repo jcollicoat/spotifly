@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { AppPage } from '../../components/AppPage/AppPage';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { getTrack } from '../../lib/client/api';
-import { ITrack } from '../../lib/client/spotify-types';
+import { Track } from '../../lib/client/spotify-types';
 
 const TrackPage: NextPage = () => {
     const router = useRouter();
@@ -15,7 +15,7 @@ const TrackPage: NextPage = () => {
         data: track,
         isError,
         isLoading,
-    } = useQuery<ITrack>(['tracks', trackID], getTrack, {
+    } = useQuery<Track>(['tracks', trackID], getTrack, {
         staleTime: Infinity,
     });
 

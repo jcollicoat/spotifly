@@ -6,17 +6,14 @@ import { handleError } from '../../lib/_helpers/server';
 import { determineAccessToken } from '../../lib/auth/server';
 import { getTracksAddons } from '../../lib/tracks/addons';
 import { buildRecentlyPlayed } from '../../lib/tracks/builders';
-import {
-    IGetRecentlyPlayedAPI,
-    ITracksAddonsDTO,
-} from '../../lib/tracks/types';
+import { RecentlyPlayedDTO, TracksAddonsDTO } from '../../lib/tracks/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const access_token = await determineAccessToken(req);
 
         const limit = req.query.limit ? Number(req.query.limit) : 20;
-        const recentlyPlayedAPI = await axios.get<IGetRecentlyPlayedAPI>(
+        const recentlyPlayedAPI = await axios.get<RecentlyPlayedDTO>(
             EPRecentlyPlayed,
             {
                 headers: {
@@ -33,7 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 const trackIDs = recentlyPlayedAPI.data.items
                     .map((item) => item.track.id)
                     .join(',');
-                const addons: ITracksAddonsDTO = await getTracksAddons(
+                const addons: TracksAddonsDTO = await getTracksAddons(
                     access_token,
                     trackIDs
                 );
