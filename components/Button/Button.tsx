@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { useMedia } from 'react-use';
 import { breakpoints } from '../../context/breakpoints/breakpoints';
-import { signInOrOut } from '../../lib/auth/client';
+import { signInOrOut } from '../../lib/_auth/client';
 import { Glyph } from '../Glyphs/Glyph';
 import styles from './Button.module.scss';
 

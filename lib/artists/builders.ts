@@ -1,7 +1,7 @@
 import { getAverageColor } from 'fast-average-color-node';
 import { appendUUID } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
-import { AddonsDTO } from '../addons/types';
+import { AddonsDTO } from '../_addons/types';
 import { Artist, ArtistDTO, TopArtists, TopArtistsDTO } from './types';
 
 export const buildArtist = async (

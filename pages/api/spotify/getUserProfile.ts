@@ -2,7 +2,7 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleError } from '../../../lib/_helpers/server';
-import { determineAccessToken } from '../../../lib/auth/server';
+import { determineAccessToken } from '../../../lib/_auth/server';
 import { buildUserProfile } from '../../../lib/user/builders';
 import { UserProfileDTO } from '../../../lib/user/types';
 

@@ -6,7 +6,7 @@ import { handleError } from '../../lib/_helpers/server';
 import { getAlbumAddons } from '../../lib/albums/addons';
 import { buildAlbum } from '../../lib/albums/builders';
 import { AlbumAddonsDTO, AlbumDTO } from '../../lib/albums/types';
-import { determineAccessToken } from '../../lib/auth/server';
+import { determineAccessToken } from '../../lib/_auth/server';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {

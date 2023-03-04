@@ -3,7 +3,7 @@ import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { EPRecentlyPlayed } from '../../lib/_helpers/endpoints';
 import { handleError } from '../../lib/_helpers/server';
-import { determineAccessToken } from '../../lib/auth/server';
+import { determineAccessToken } from '../../lib/_auth/server';
 import { getTracksAddons } from '../../lib/tracks/addons';
 import { buildRecentlyPlayed } from '../../lib/tracks/builders';
 import { RecentlyPlayedDTO, TracksAddonsDTO } from '../../lib/tracks/types';

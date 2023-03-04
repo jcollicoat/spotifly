@@ -5,7 +5,7 @@ import { handleError } from '../../lib/_helpers/server';
 import { getAlbumsAddons } from '../../lib/albums/addons';
 import { buildAlbums } from '../../lib/albums/builders';
 import { AlbumsAddonsDTO, AlbumsDTO } from '../../lib/albums/types';
-import { determineAccessToken } from '../../lib/auth/server';
+import { determineAccessToken } from '../../lib/_auth/server';
 
 const endpoint = 'https://api.spotify.com/v1/albums';
 

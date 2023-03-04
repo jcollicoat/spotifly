@@ -2,10 +2,10 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleError } from '../../../lib/_helpers/server';
-import { AddonsDTO } from '../../../lib/addons/types';
+import { AddonsDTO } from '../../../lib/_addons/types';
 import { buildTopArtists } from '../../../lib/artists/builders';
 import { TopArtistsDTO } from '../../../lib/artists/types';
-import { determineAccessToken } from '../../../lib/auth/server';
+import { determineAccessToken } from '../../../lib/_auth/server';
 
 const endpoint = 'https://api.spotify.com/v1/me/top/artists';
 

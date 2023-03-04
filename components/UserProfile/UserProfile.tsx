@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { FC } from 'react';
-import { getUserProfile } from '../../lib/client/api';
+import { getUserProfile } from '../../lib/_client/api';
 import { UserProfile } from '../../lib/user/types';
 import { IPanelDisplay, Panel } from '../Panels/_Bases/Panel/Panel';
 import { IPanelHeading } from '../Panels/_Bases/PanelHeading/PanelHeading';

@@ -4,8 +4,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { AppPage } from '../../components/AppPage/AppPage';
 import { Spinner } from '../../components/Spinner/Spinner';
-import { getTrack } from '../../lib/client/api';
-import { Track } from '../../lib/client/spotify-types';
+import { getTrack } from '../../lib/_client/api';
+import { Track } from '../../lib/_client/spotify-types';
 
 const TrackPage: NextPage = () => {
     const router = useRouter();

@@ -3,7 +3,7 @@ import {
     AudioFeatures,
     AudioFeaturesDTO,
     AudioFeaturesListDTO,
-} from '../addons/types';
+} from '../_addons/types';
 import { AlbumDTO } from '../albums/types';
 import { TopArtistsDTO } from '../artists/types';
 

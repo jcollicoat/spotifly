@@ -6,7 +6,7 @@ import {
     EPTopArtists,
 } from '../_helpers/endpoints';
 import { CheckSavedDTO } from '../_helpers/types';
-import { AudioFeaturesDTO, AudioFeaturesListDTO } from '../addons/types';
+import { AudioFeaturesDTO, AudioFeaturesListDTO } from '../_addons/types';
 import { TopArtistsDTO } from '../artists/types';
 import { TrackAddonsDTO, TracksAddonsDTO } from './types';
 

@@ -4,8 +4,8 @@ import { AlbumMinimum, ImageSize } from '../_helpers/types';
 import {
     buildAudioFeatures,
     buildAudioFeaturesListToSingle,
-} from '../addons/builders';
-import { AudioFeaturesDTO } from '../addons/types';
+} from '../_addons/builders';
+import { AudioFeaturesDTO } from '../_addons/types';
 import { AlbumDTO } from '../albums/types';
 import { ArtistDTO } from '../artists/types';
 import {

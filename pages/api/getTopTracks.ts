@@ -3,7 +3,7 @@ import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { EPTopTracks } from '../../lib/_helpers/endpoints';
 import { handleError } from '../../lib/_helpers/server';
-import { determineAccessToken } from '../../lib/auth/server';
+import { determineAccessToken } from '../../lib/_auth/server';
 import { getTracksAddons } from '../../lib/tracks/addons';
 import { buildTopTracks } from '../../lib/tracks/builders';
 import { TopTracksDTO, TracksAddonsDTO } from '../../lib/tracks/types';
