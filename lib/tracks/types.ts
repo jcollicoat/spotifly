@@ -5,7 +5,7 @@ import {
     AudioFeaturesListDTO,
 } from '../addons/types';
 import { AlbumDTO } from '../albums/types';
-import { ITopArtistsAPI } from '../artists/types';
+import { TopArtistsDTO } from '../artists/types';
 
 // Client
 
@@ -56,7 +56,7 @@ export interface ITracks<TracksMeta> {
 
 export interface ITrackAddonsDTO {
     audioFeaturesAPI: AudioFeaturesDTO;
-    topArtistsAPI: ITopArtistsAPI;
+    topArtistsAPI: TopArtistsDTO;
     checkSavedAPI: CheckSavedDTO;
 }
 
@@ -71,7 +71,7 @@ export interface ITrackArtistDTO {
 
 export interface ITracksAddonsDTO {
     audioFeaturesListAPI: AudioFeaturesListDTO;
-    topArtistsAPI: ITopArtistsAPI;
+    topArtistsAPI: TopArtistsDTO;
     checkSavedAPI: CheckSavedDTO;
 }
 

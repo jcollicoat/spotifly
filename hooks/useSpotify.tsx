@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { TimeMS } from '../lib/_helpers/constants';
-import { ITopArtists } from '../lib/artists/types';
+import { TopArtists } from '../lib/artists/types';
 import {
     getRecentlyPlayed,
     getRecentlyPlayedSingle,
@@ -21,7 +21,7 @@ export const useRecentlyPlayedSingle = (): UseQueryResult<ITrack> => {
     });
 };
 
-export const useTopArtists = (): UseQueryResult<ITopArtists> => {
+export const useTopArtists = (): UseQueryResult<TopArtists> => {
     return useQuery(['top-artists'], getTopArtists, {
         staleTime: Infinity,
     });

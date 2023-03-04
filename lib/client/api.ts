@@ -1,7 +1,7 @@
 import { QueryKey } from '@tanstack/react-query';
 import axios from 'axios';
 import { Album } from '../albums/types';
-import { IArtist, ITopArtists } from '../artists/types';
+import { Artist, TopArtists } from '../artists/types';
 import {
     ITrack,
     ITracks,
@@ -39,8 +39,8 @@ export const getArtist = async ({
     queryKey,
 }: {
     queryKey: QueryKey;
-}): Promise<IArtist> => {
-    const { data: artist }: { data: IArtist } = await axios.get(
+}): Promise<Artist> => {
+    const { data: artist }: { data: Artist } = await axios.get(
         '/api/spotify/getArtist',
         {
             params: { artistID: queryKey[1] },
@@ -90,8 +90,8 @@ export const getRecentlyPlayedSingle = async (): Promise<
     return recentlyPlayed;
 };
 
-export const getTopArtists = async (): Promise<ITopArtists> => {
-    const { data: topArtists }: { data: ITopArtists } = await axios.get(
+export const getTopArtists = async (): Promise<TopArtists> => {
+    const { data: topArtists }: { data: TopArtists } = await axios.get(
         '/api/spotify/getTopArtists'
     );
     return topArtists;

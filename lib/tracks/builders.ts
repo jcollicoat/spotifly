@@ -7,7 +7,7 @@ import {
 } from '../addons/builders';
 import { AudioFeaturesDTO } from '../addons/types';
 import { AlbumDTO } from '../albums/types';
-import { IGetArtistAPI } from '../artists/types';
+import { ArtistDTO } from '../artists/types';
 import {
     IGetRecentlyPlayedAPI,
     IGetTopTracksAPI,
@@ -29,7 +29,7 @@ const buildTrackAlbum = (album: AlbumDTO): AlbumMinimum => ({
 });
 
 const buildTrackArtists = (
-    artistsDTO: IGetArtistAPI[] | ITrackArtistDTO[],
+    artistsDTO: ArtistDTO[] | ITrackArtistDTO[],
     artistIDs?: string[]
 ): ITrackArtist[] =>
     artistsDTO.map((artistDTO) => ({

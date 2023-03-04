@@ -6,7 +6,7 @@ import {
 } from '../_helpers/endpoints';
 import { CheckSavedDTO } from '../_helpers/types';
 import { AudioFeaturesListDTO } from '../addons/types';
-import { ITopArtistsAPI } from '../artists/types';
+import { TopArtistsDTO } from '../artists/types';
 import { AlbumAddonsDTO, AlbumsAddonsDTO, AlbumDTO } from './types';
 
 export const getAlbumAddons = async (
@@ -36,7 +36,7 @@ export const getAlbumAddons = async (
         },
     });
 
-    const topArtistsAPI = await axios.get<ITopArtistsAPI>(EPTopArtists, {
+    const topArtistsAPI = await axios.get<TopArtistsDTO>(EPTopArtists, {
         headers: {
             Authorization: access_token,
         },
@@ -95,14 +95,11 @@ export const getAlbumsAddons = async (
 
     const topArtistsAPIs = await Promise.all(
         trackIDsByAlbum.map(async (trackSet) => {
-            const topArtistsAPI = await axios.get<ITopArtistsAPI>(
-                EPTopArtists,
-                {
-                    headers: {
-                        Authorization: access_token,
-                    },
-                }
-            );
+            const topArtistsAPI = await axios.get<TopArtistsDTO>(EPTopArtists, {
+                headers: {
+                    Authorization: access_token,
+                },
+            });
             return {
                 topArtistsAPI: topArtistsAPI.data,
                 id: trackSet.albumID,

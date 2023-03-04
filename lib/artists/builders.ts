@@ -2,12 +2,12 @@ import { getAverageColor } from 'fast-average-color-node';
 import { appendUUID } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
 import { AddonsDTO } from '../addons/types';
-import { IArtist, IGetArtistAPI, ITopArtists, ITopArtistsAPI } from './types';
+import { Artist, ArtistDTO, TopArtists, TopArtistsDTO } from './types';
 
 export const buildArtist = async (
-    artistAPI: IGetArtistAPI,
+    artistAPI: ArtistDTO,
     imageSize?: ImageSize
-): Promise<IArtist> => {
+): Promise<Artist> => {
     const color = await getAverageColor(artistAPI.images[2].url);
     if (!color.hex) {
         throw new Error(
@@ -29,19 +29,19 @@ export const buildArtist = async (
 };
 
 export const buildArtists = async (
-    artists: IGetArtistAPI[],
+    artists: ArtistDTO[],
     imageSize?: ImageSize
-): Promise<IArtist[]> => {
+): Promise<Artist[]> => {
     return await Promise.all(
         artists.map(async (artist) => await buildArtist(artist, imageSize))
     );
 };
 
 export const buildTopArtists = async (
-    data: ITopArtistsAPI,
+    data: TopArtistsDTO,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     addons?: AddonsDTO
-): Promise<ITopArtists> => ({
+): Promise<TopArtists> => ({
     artists: await buildArtists(data.items),
     next: data.next,
     offset: data.offset,

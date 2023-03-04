@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { AlbumDTO } from '../albums/types';
-import { IGetArtistAPI } from '../artists/types';
+import { ArtistDTO } from '../artists/types';
 import { ITrackArtistDTO } from '../tracks/types';
 import { AlbumMinimum, ArtistMinimum } from './types';
 
@@ -15,7 +15,7 @@ export const reduceAlbum = (album: AlbumDTO): AlbumMinimum => {
 };
 
 export const reduceArtists = (
-    artists: IGetArtistAPI[] | ITrackArtistDTO[]
+    artists: ArtistDTO[] | ITrackArtistDTO[]
 ): ArtistMinimum[] =>
     artists.map((artist) => ({
         id: artist.id,

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useTopArtists } from '../../hooks/useSpotify';
 import { appendUUID } from '../../lib/_helpers/helpers';
-import { IArtist } from '../../lib/artists/types';
+import { Artist } from '../../lib/artists/types';
 import { IPanelDisplay, Panel } from '../Panels/_Bases/Panel/Panel';
 import {
     HeadingLevel,
@@ -36,7 +36,7 @@ export const ArtistList: FC<IArtistListPanel> = ({
     const { data, isError, isLoading } = query();
 
     // TODO: Fix this ugly ass code
-    const mapArtists = (artists?: IArtist[] | SkeletonStates) => {
+    const mapArtists = (artists?: Artist[] | SkeletonStates) => {
         if (!artists || isSkeleton) {
             return new Array(20)
                 .fill('')

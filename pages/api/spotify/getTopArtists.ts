@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleError } from '../../../lib/_helpers/server';
 import { AddonsDTO } from '../../../lib/addons/types';
 import { buildTopArtists } from '../../../lib/artists/builders';
-import { ITopArtistsAPI } from '../../../lib/artists/types';
+import { TopArtistsDTO } from '../../../lib/artists/types';
 import { determineAccessToken } from '../../../lib/auth/server';
 
 const endpoint = 'https://api.spotify.com/v1/me/top/artists';
@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const access_token = await determineAccessToken(req);
 
-        const topArtistsAPI = await axios.get<ITopArtistsAPI>(endpoint, {
+        const topArtistsAPI = await axios.get<TopArtistsDTO>(endpoint, {
             headers: {
                 Authorization: access_token,
             },

@@ -3,7 +3,7 @@ import { AlbumArtistDTO } from '../albums/types';
 
 // Client
 
-export interface IArtist {
+export interface Artist {
     id: string;
     color: string;
     followers: number;
@@ -15,8 +15,8 @@ export interface IArtist {
     type: string;
 }
 
-export interface ITopArtists {
-    artists: IArtist[];
+export interface TopArtists {
+    artists: Artist[];
     next: string | null;
     offset: number;
     previous: string | null;
@@ -25,7 +25,7 @@ export interface ITopArtists {
 
 // Server
 
-export interface IGetArtistAPI {
+export interface ArtistDTO {
     id: string;
     external_urls: ObjectDTO;
     followers: ObjectDTO;
@@ -38,11 +38,11 @@ export interface IGetArtistAPI {
     uri: string;
 }
 
-export interface IGetArtistsAPI {
-    artists: IGetArtistAPI[];
+export interface ArtistsDTO {
+    artists: ArtistDTO[];
 }
 
-export interface IGetArtistAlbums {
+export interface ArtistAlbumsDTO {
     href: string;
     items: {
         id: string;
@@ -67,9 +67,9 @@ export interface IGetArtistAlbums {
     total: number;
 }
 
-export interface ITopArtistsAPI {
+export interface TopArtistsDTO {
     href: string;
-    items: IGetArtistAPI[];
+    items: ArtistDTO[];
     limit: number;
     next: string | null;
     offset: number;
