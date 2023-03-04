@@ -6,7 +6,7 @@ import {
     buildAudioFeaturesListToSingle,
 } from '../addons/builders';
 import { AudioFeaturesDTO } from '../addons/types';
-import { IGetAlbumAPI } from '../albums/types';
+import { AlbumDTO } from '../albums/types';
 import { IGetArtistAPI } from '../artists/types';
 import {
     IGetRecentlyPlayedAPI,
@@ -22,7 +22,7 @@ import {
     RecentlyPlayedMeta,
 } from './types';
 
-const buildTrackAlbum = (album: IGetAlbumAPI): AlbumMinimum => ({
+const buildTrackAlbum = (album: AlbumDTO): AlbumMinimum => ({
     id: album.id,
     key: appendUUID(album.id),
     name: album.name,

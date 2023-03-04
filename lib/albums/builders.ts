@@ -7,22 +7,22 @@ import {
 } from '../addons/builders';
 import { AudioFeaturesDTO } from '../addons/types';
 import {
-    IAlbum,
-    IAlbumAddonsDTO,
-    IGetAlbumAPI,
-    IAlbumArtist,
-    IAlbumsAddonsDTO,
-    IAlbumTrack,
-    IAlbumTrackAddonsDTO,
-    IGetAlbumArtistDTO,
-    IGetAlbumTrackDTO,
-    IGetAlbumsAPI,
+    Album,
+    AlbumAddonsDTO,
+    AlbumDTO,
+    AlbumArtist,
+    AlbumsAddonsDTO,
+    AlbumTrack,
+    AlbumTrackAddonsDTO,
+    AlbumArtistDTO,
+    AlbumTrackDTO,
+    AlbumsDTO,
 } from './types';
 
 const buildAlbumArtists = (
-    albumArtistsDTOs: IGetAlbumArtistDTO[],
+    albumArtistsDTOs: AlbumArtistDTO[],
     artistIDs?: string[]
-): IAlbumArtist[] =>
+): AlbumArtist[] =>
     albumArtistsDTOs.map((artist) => ({
         id: artist.id,
         key: appendUUID(artist.id),
@@ -31,10 +31,10 @@ const buildAlbumArtists = (
     }));
 
 const findAlbumTrackAddons = (
-    addons: IAlbumAddonsDTO,
+    addons: AlbumAddonsDTO,
     trackID: string,
     index: number
-): IAlbumTrackAddonsDTO => {
+): AlbumTrackAddonsDTO => {
     return {
         audioFeaturesAPI: addons.audioFeaturesListAPI.audio_features.find(
             (featureSet) => featureSet.id === trackID
@@ -44,9 +44,9 @@ const findAlbumTrackAddons = (
 };
 
 const buildAlbumTracks = (
-    albumTracksDTOs: IGetAlbumTrackDTO[],
-    addons?: IAlbumAddonsDTO
-): IAlbumTrack[] =>
+    albumTracksDTOs: AlbumTrackDTO[],
+    addons?: AlbumAddonsDTO
+): AlbumTrack[] =>
     albumTracksDTOs.map((track, index) => {
         const singleAddons =
             addons && findAlbumTrackAddons(addons, track.id, index);
@@ -65,10 +65,10 @@ const buildAlbumTracks = (
     });
 
 export const buildAlbum = async (
-    albumAPI: IGetAlbumAPI,
-    addons?: IAlbumAddonsDTO,
+    albumAPI: AlbumDTO,
+    addons?: AlbumAddonsDTO,
     imageSize?: ImageSize
-): Promise<IAlbum> => {
+): Promise<Album> => {
     const color = await getAverageColor(albumAPI.images[2].url);
     if (!color.hex) {
         throw new Error(
@@ -99,10 +99,10 @@ export const buildAlbum = async (
 };
 
 export const buildAlbums = async (
-    albumsAPI: IGetAlbumsAPI,
-    addons?: IAlbumsAddonsDTO,
+    albumsAPI: AlbumsDTO,
+    addons?: AlbumsAddonsDTO,
     imageSize?: ImageSize
-): Promise<IAlbum[]> => {
+): Promise<Album[]> => {
     return await Promise.all(
         albumsAPI.albums.map(
             async (albumAPI) => await buildAlbum(albumAPI, addons, imageSize)

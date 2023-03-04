@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { AppPage } from '../../components/AppPage/AppPage';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { getAlbum } from '../../lib/client/api';
-import { IAlbum } from '../../lib/client/spotify-types';
+import { Album } from '../../lib/client/spotify-types';
 
 const AlbumPage: NextPage = () => {
     const router = useRouter();
@@ -15,7 +15,7 @@ const AlbumPage: NextPage = () => {
         data: album,
         isError,
         isLoading,
-    } = useQuery<IAlbum>(['albums', albumID], getAlbum, {
+    } = useQuery<Album>(['albums', albumID], getAlbum, {
         staleTime: Infinity,
     });
 

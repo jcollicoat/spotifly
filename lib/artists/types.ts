@@ -1,5 +1,5 @@
 import { ImageDTO, ObjectDTO } from '../_helpers/types';
-import { IGetAlbumArtistDTO } from '../albums/types';
+import { AlbumArtistDTO } from '../albums/types';
 
 // Client
 
@@ -48,7 +48,7 @@ export interface IGetArtistAlbums {
         id: string;
         album_group: string;
         album_type: string;
-        artists: IGetAlbumArtistDTO[];
+        artists: AlbumArtistDTO[];
         available_markets: string[];
         external_urls: ObjectDTO;
         href: string;

@@ -9,46 +9,46 @@ import { ITrack, IGetTrackAPI } from '../tracks/types';
 
 // Client
 
-export interface IAlbumArtist {
+export interface AlbumArtist {
     id: string;
     key: string;
     name: string;
     top_artist: boolean;
 }
 
-export type IAlbumTrack = Omit<
+export type AlbumTrack = Omit<
     ITrack,
     'album' | 'artists' | 'color' | 'image' | 'popularity'
 >;
 
-export interface IAlbum {
+export interface Album {
     id: string;
     key: string;
     album_type: string;
-    artists: IAlbumArtist[];
+    artists: AlbumArtist[];
     color: string;
     image: string;
     name: string;
     release_date: string;
     total_tracks: number;
-    tracks: IAlbumTrack[];
+    tracks: AlbumTrack[];
     audio_features?: AudioFeatures;
 }
 
 // Server
 
-export interface IAlbumAddonsDTO {
+export interface AlbumAddonsDTO {
     audioFeaturesListAPI: AudioFeaturesListDTO;
     topArtistsAPI: ITopArtistsAPI;
     checkSavedAPI: CheckSavedDTO;
 }
 
-export interface IAlbumTrackAddonsDTO {
+export interface AlbumTrackAddonsDTO {
     audioFeaturesAPI: AudioFeaturesDTO;
     checkSavedAPI: CheckSavedDTO;
 }
 
-export interface IGetAlbumArtistDTO {
+export interface AlbumArtistDTO {
     id: string;
     external_urls: ObjectDTO;
     href: string;
@@ -57,22 +57,22 @@ export interface IGetAlbumArtistDTO {
     uri: string;
 }
 
-interface IGetAlbumCopyrightsDTO {
+interface AlbumCopyrightsDTO {
     text: string;
     type: string;
 }
 
-export type IGetAlbumTrackDTO = Omit<
+export type AlbumTrackDTO = Omit<
     IGetTrackAPI,
     'album' | 'external_ids' | 'popularity'
 >;
 
-export interface IGetAlbumAPI {
+export interface AlbumDTO {
     id: string;
     album_type: string;
-    artists: IGetAlbumArtistDTO[];
+    artists: AlbumArtistDTO[];
     available_markets: string[];
-    copyrights: IGetAlbumCopyrightsDTO[];
+    copyrights: AlbumCopyrightsDTO[];
     external_ids: ObjectDTO;
     external_urls: ObjectDTO;
     genres: string[];
@@ -87,7 +87,7 @@ export interface IGetAlbumAPI {
     total_tracks: number;
     tracks: {
         href: string;
-        items: IGetAlbumTrackDTO[];
+        items: AlbumTrackDTO[];
         limit: number;
         next: string | null;
         offset: number;
@@ -98,13 +98,13 @@ export interface IGetAlbumAPI {
     uri: string;
 }
 
-export interface IAlbumsAddonsDTO {
+export interface AlbumsAddonsDTO {
     addonSets: {
-        addons: IAlbumAddonsDTO;
+        addons: AlbumAddonsDTO;
         id: string;
     }[];
 }
 
-export interface IGetAlbumsAPI {
-    albums: IGetAlbumAPI[];
+export interface AlbumsDTO {
+    albums: AlbumDTO[];
 }

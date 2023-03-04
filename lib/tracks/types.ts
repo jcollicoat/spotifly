@@ -4,7 +4,7 @@ import {
     AudioFeaturesDTO,
     AudioFeaturesListDTO,
 } from '../addons/types';
-import { IGetAlbumAPI } from '../albums/types';
+import { AlbumDTO } from '../albums/types';
 import { ITopArtistsAPI } from '../artists/types';
 
 // Client
@@ -77,7 +77,7 @@ export interface ITracksAddonsDTO {
 
 export interface IGetTrackAPI {
     id: string;
-    album: IGetAlbumAPI;
+    album: AlbumDTO;
     artists: ITrackArtistDTO[];
     available_markets: string[];
     disc_number: number;

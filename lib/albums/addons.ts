@@ -7,12 +7,12 @@ import {
 import { CheckSavedDTO } from '../_helpers/types';
 import { AudioFeaturesListDTO } from '../addons/types';
 import { ITopArtistsAPI } from '../artists/types';
-import { IAlbumAddonsDTO, IAlbumsAddonsDTO, IGetAlbumAPI } from './types';
+import { AlbumAddonsDTO, AlbumsAddonsDTO, AlbumDTO } from './types';
 
 export const getAlbumAddons = async (
     access_token: string,
-    albumAPI: IGetAlbumAPI
-): Promise<IAlbumAddonsDTO> => {
+    albumAPI: AlbumDTO
+): Promise<AlbumAddonsDTO> => {
     const trackIDs = albumAPI.tracks.items.map((track) => track.id).join(',');
 
     const audioFeaturesListAPI = await axios.get<AudioFeaturesListDTO>(
@@ -55,7 +55,7 @@ export const getAlbumsAddons = async (
         albumID: string;
         trackIDs: string[];
     }[]
-): Promise<IAlbumsAddonsDTO> => {
+): Promise<AlbumsAddonsDTO> => {
     const audioFeaturesListAPIs = await Promise.all(
         trackIDsByAlbum.map(async (trackSet) => {
             const audioFeaturesListAPI = await axios.get<AudioFeaturesListDTO>(

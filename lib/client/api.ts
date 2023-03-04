@@ -1,6 +1,6 @@
 import { QueryKey } from '@tanstack/react-query';
 import axios from 'axios';
-import { IAlbum } from '../albums/types';
+import { Album } from '../albums/types';
 import { IArtist, ITopArtists } from '../artists/types';
 import {
     ITrack,
@@ -14,8 +14,8 @@ export const getAlbum = async ({
     queryKey,
 }: {
     queryKey: QueryKey;
-}): Promise<IAlbum> => {
-    const { data: album }: { data: IAlbum } = await axios.get('/api/getAlbum', {
+}): Promise<Album> => {
+    const { data: album }: { data: Album } = await axios.get('/api/getAlbum', {
         params: { albumID: queryKey[1] },
     });
     return album;
@@ -25,8 +25,8 @@ export const getAlbums = async ({
     queryKey,
 }: {
     queryKey: QueryKey;
-}): Promise<IAlbum[]> => {
-    const { data: albums }: { data: IAlbum[] } = await axios.get(
+}): Promise<Album[]> => {
+    const { data: albums }: { data: Album[] } = await axios.get(
         '/api/getAlbums',
         {
             params: { albumIDs: queryKey[1] },

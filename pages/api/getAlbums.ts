@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleError } from '../../lib/_helpers/server';
 import { getAlbumsAddons } from '../../lib/albums/addons';
 import { buildAlbums } from '../../lib/albums/builders';
-import { IAlbumsAddonsDTO, IGetAlbumsAPI } from '../../lib/albums/types';
+import { AlbumsAddonsDTO, AlbumsDTO } from '../../lib/albums/types';
 import { determineAccessToken } from '../../lib/auth/server';
 
 const endpoint = 'https://api.spotify.com/v1/albums';
@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const access_token = await determineAccessToken(req);
 
         const albumIDs = req.query.albumIDs?.toString();
-        const albumsAPI = await axios.get<IGetAlbumsAPI>(endpoint, {
+        const albumsAPI = await axios.get<AlbumsDTO>(endpoint, {
             headers: {
                 Authorization: access_token,
             },
@@ -29,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     albumID: album.id,
                     trackIDs: album.tracks.items.map((track) => track.id),
                 }));
-                const addons: IAlbumsAddonsDTO = await getAlbumsAddons(
+                const addons: AlbumsAddonsDTO = await getAlbumsAddons(
                     access_token,
                     trackIDsByAlbum
                 );

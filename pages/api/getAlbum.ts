@@ -5,7 +5,7 @@ import { EPAlbum } from '../../lib/_helpers/endpoints';
 import { handleError } from '../../lib/_helpers/server';
 import { getAlbumAddons } from '../../lib/albums/addons';
 import { buildAlbum } from '../../lib/albums/builders';
-import { IAlbumAddonsDTO, IGetAlbumAPI } from '../../lib/albums/types';
+import { AlbumAddonsDTO, AlbumDTO } from '../../lib/albums/types';
 import { determineAccessToken } from '../../lib/auth/server';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const access_token = await determineAccessToken(req);
 
         const albumID = req.query.albumID;
-        const albumAPI = await axios.get<IGetAlbumAPI>(EPAlbum + albumID, {
+        const albumAPI = await axios.get<AlbumDTO>(EPAlbum + albumID, {
             headers: {
                 Authorization: access_token,
             },
@@ -21,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         if (req.query.addons === 'true') {
             try {
-                const addons: IAlbumAddonsDTO = await getAlbumAddons(
+                const addons: AlbumAddonsDTO = await getAlbumAddons(
                     access_token,
                     albumAPI.data
                 );
