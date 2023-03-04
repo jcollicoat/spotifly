@@ -16,9 +16,9 @@ export const Header: FC = () => (
                 <nav className={styles.nav}>
                     <Button
                         ariaLabel="Navigate home"
+                        displayAsGlyph="responsive"
                         href="/"
                         glyph={<Glyph type="Home" />}
-                        showGlyph="responsive"
                         style="tertiary"
                         type="link"
                     >
@@ -26,15 +26,15 @@ export const Header: FC = () => (
                     </Button>
                     <Button
                         ariaLabel="Navigate to your dashboard"
+                        displayAsGlyph="responsive"
                         href="/dashboard"
                         glyph={<Glyph type="Dashboard" />}
-                        showGlyph="responsive"
                         style="tertiary"
                         type="link"
                     >
                         Dashboard
                     </Button>
-                    <ButtonSignInOut showGlyph="responsive" />
+                    <ButtonSignInOut displayAsGlyph="responsive" />
                 </nav>
             </div>
         </Panel>
