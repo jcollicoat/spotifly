@@ -6,13 +6,13 @@ export enum ImageSize {
     large = 0,
 }
 
-export interface IAlbumMinimum {
+export interface AlbumMinimum {
     id: string;
     key: string;
     name: string;
 }
 
-export interface IArtistMinimum {
+export interface ArtistMinimum {
     id: string;
     key: string;
     name: string;
@@ -20,14 +20,14 @@ export interface IArtistMinimum {
 
 // Server
 
-export type ICheckSavedAPI = boolean[];
+export type CheckSavedDTO = boolean[];
 
-export interface IImageDTO {
+export interface ImageDTO {
     height: number;
     width: number;
     url: string;
 }
 
-export interface IObjectDTO {
+export interface ObjectDTO {
     [key: string]: string;
 }

@@ -1,4 +1,4 @@
-import { ICheckSavedAPI, IAlbumMinimum, IObjectDTO } from '../_helpers/types';
+import { CheckSavedDTO, AlbumMinimum, ObjectDTO } from '../_helpers/types';
 import {
     IAudioFeatures,
     IGetAudioFeaturesAPI,
@@ -18,7 +18,7 @@ export interface ITrackArtist {
 
 export interface ITrack {
     id: string;
-    album: IAlbumMinimum;
+    album: AlbumMinimum;
     artists: ITrackArtist[];
     color: string;
     image: string;
@@ -57,12 +57,12 @@ export interface ITracks<TracksMeta> {
 export interface ITrackAddonsDTO {
     audioFeaturesAPI: IGetAudioFeaturesAPI;
     topArtistsAPI: ITopArtistsAPI;
-    checkSavedAPI: ICheckSavedAPI;
+    checkSavedAPI: CheckSavedDTO;
 }
 
 export interface ITrackArtistDTO {
     id: string;
-    external_urls: IObjectDTO;
+    external_urls: ObjectDTO;
     href: string;
     name: string;
     type: string;
@@ -72,7 +72,7 @@ export interface ITrackArtistDTO {
 export interface ITracksAddonsDTO {
     audioFeaturesListAPI: IGetAudioFeaturesListAPI;
     topArtistsAPI: ITopArtistsAPI;
-    checkSavedAPI: ICheckSavedAPI;
+    checkSavedAPI: CheckSavedDTO;
 }
 
 export interface IGetTrackAPI {
@@ -83,8 +83,8 @@ export interface IGetTrackAPI {
     disc_number: number;
     duration_ms: number;
     explicit: boolean;
-    external_ids: IObjectDTO;
-    external_urls: IObjectDTO;
+    external_ids: ObjectDTO;
+    external_urls: ObjectDTO;
     href: string;
     is_local: false;
     name: string;

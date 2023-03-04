@@ -1,6 +1,6 @@
 import { getAverageColor } from 'fast-average-color-node';
 import { appendUUID } from '../_helpers/helpers';
-import { IAlbumMinimum, ImageSize } from '../_helpers/types';
+import { AlbumMinimum, ImageSize } from '../_helpers/types';
 import {
     buildAudioFeatures,
     buildAudioFeaturesListToSingle,
@@ -22,7 +22,7 @@ import {
     RecentlyPlayedMeta,
 } from './types';
 
-const buildTrackAlbum = (album: IGetAlbumAPI): IAlbumMinimum => ({
+const buildTrackAlbum = (album: IGetAlbumAPI): AlbumMinimum => ({
     id: album.id,
     key: appendUUID(album.id),
     name: album.name,

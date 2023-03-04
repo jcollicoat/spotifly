@@ -5,7 +5,7 @@ import {
     EPCheckSaved,
     EPTopArtists,
 } from '../_helpers/endpoints';
-import { ICheckSavedAPI } from '../_helpers/types';
+import { CheckSavedDTO } from '../_helpers/types';
 import {
     IGetAudioFeaturesAPI,
     IGetAudioFeaturesListAPI,
@@ -32,7 +32,7 @@ export const getTrackAddons = async (
         },
     });
 
-    const checkSavedAPI = await axios.get<ICheckSavedAPI>(EPCheckSaved, {
+    const checkSavedAPI = await axios.get<CheckSavedDTO>(EPCheckSaved, {
         headers: {
             Authorization: access_token,
         },
@@ -70,7 +70,7 @@ export const getTracksAddons = async (
         },
     });
 
-    const checkSavedAPI = await axios.get<ICheckSavedAPI>(EPCheckSaved, {
+    const checkSavedAPI = await axios.get<CheckSavedDTO>(EPCheckSaved, {
         headers: {
             Authorization: access_token,
         },

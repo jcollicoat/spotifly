@@ -2,11 +2,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { IGetAlbumAPI } from '../albums/types';
 import { IGetArtistAPI } from '../artists/types';
 import { ITrackArtistDTO } from '../tracks/types';
-import { IAlbumMinimum, IArtistMinimum } from './types';
+import { AlbumMinimum, ArtistMinimum } from './types';
 
 export const appendUUID = (input: string): string => `${input}-${uuidv4()}`;
 
-export const reduceAlbum = (album: IGetAlbumAPI): IAlbumMinimum => {
+export const reduceAlbum = (album: IGetAlbumAPI): AlbumMinimum => {
     return {
         id: album.id,
         key: appendUUID(album.id),
@@ -16,7 +16,7 @@ export const reduceAlbum = (album: IGetAlbumAPI): IAlbumMinimum => {
 
 export const reduceArtists = (
     artists: IGetArtistAPI[] | ITrackArtistDTO[]
-): IArtistMinimum[] =>
+): ArtistMinimum[] =>
     artists.map((artist) => ({
         id: artist.id,
         key: appendUUID(artist.id),

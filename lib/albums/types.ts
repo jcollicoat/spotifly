@@ -1,4 +1,4 @@
-import { ICheckSavedAPI, IImageDTO, IObjectDTO } from '../_helpers/types';
+import { CheckSavedDTO, ImageDTO, ObjectDTO } from '../_helpers/types';
 import {
     IAudioFeatures,
     IGetAudioFeaturesAPI,
@@ -40,17 +40,17 @@ export interface IAlbum {
 export interface IAlbumAddonsDTO {
     audioFeaturesListAPI: IGetAudioFeaturesListAPI;
     topArtistsAPI: ITopArtistsAPI;
-    checkSavedAPI: ICheckSavedAPI;
+    checkSavedAPI: CheckSavedDTO;
 }
 
 export interface IAlbumTrackAddonsDTO {
     audioFeaturesAPI: IGetAudioFeaturesAPI;
-    checkSavedAPI: ICheckSavedAPI;
+    checkSavedAPI: CheckSavedDTO;
 }
 
 export interface IGetAlbumArtistDTO {
     id: string;
-    external_urls: IObjectDTO;
+    external_urls: ObjectDTO;
     href: string;
     name: string;
     type: string;
@@ -73,17 +73,17 @@ export interface IGetAlbumAPI {
     artists: IGetAlbumArtistDTO[];
     available_markets: string[];
     copyrights: IGetAlbumCopyrightsDTO[];
-    external_ids: IObjectDTO;
-    external_urls: IObjectDTO;
+    external_ids: ObjectDTO;
+    external_urls: ObjectDTO;
     genres: string[];
     href: string;
-    images: IImageDTO[];
+    images: ImageDTO[];
     label: string;
     name: string;
     popularity: number;
     release_date: string;
     release_date_precision: string;
-    restrictions?: IObjectDTO;
+    restrictions?: ObjectDTO;
     total_tracks: number;
     tracks: {
         href: string;

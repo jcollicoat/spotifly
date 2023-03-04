@@ -4,7 +4,7 @@ import {
     EPCheckSaved,
     EPTopArtists,
 } from '../_helpers/endpoints';
-import { ICheckSavedAPI } from '../_helpers/types';
+import { CheckSavedDTO } from '../_helpers/types';
 import { IGetAudioFeaturesListAPI } from '../addons/types';
 import { ITopArtistsAPI } from '../artists/types';
 import { IAlbumAddonsDTO, IAlbumsAddonsDTO, IGetAlbumAPI } from './types';
@@ -27,7 +27,7 @@ export const getAlbumAddons = async (
         }
     );
 
-    const checkSavedAPI = await axios.get<ICheckSavedAPI>(EPCheckSaved, {
+    const checkSavedAPI = await axios.get<CheckSavedDTO>(EPCheckSaved, {
         headers: {
             Authorization: access_token,
         },
@@ -76,17 +76,14 @@ export const getAlbumsAddons = async (
 
     const checkSavedAPIs = await Promise.all(
         trackIDsByAlbum.map(async (trackSet) => {
-            const checkSavedAPI = await axios.get<ICheckSavedAPI>(
-                EPCheckSaved,
-                {
-                    headers: {
-                        Authorization: access_token,
-                    },
-                    params: {
-                        ids: trackSet.trackIDs,
-                    },
-                }
-            );
+            const checkSavedAPI = await axios.get<CheckSavedDTO>(EPCheckSaved, {
+                headers: {
+                    Authorization: access_token,
+                },
+                params: {
+                    ids: trackSet.trackIDs,
+                },
+            });
             return {
                 checkSavedAPI: checkSavedAPI.data,
                 id: trackSet.albumID,

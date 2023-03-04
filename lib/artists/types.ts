@@ -1,4 +1,4 @@
-import { IImageDTO, IObjectDTO } from '../_helpers/types';
+import { ImageDTO, ObjectDTO } from '../_helpers/types';
 import { IGetAlbumArtistDTO } from '../albums/types';
 
 // Client
@@ -27,11 +27,11 @@ export interface ITopArtists {
 
 export interface IGetArtistAPI {
     id: string;
-    external_urls: IObjectDTO;
-    followers: IObjectDTO;
+    external_urls: ObjectDTO;
+    followers: ObjectDTO;
     genres: string[];
     href: string;
-    images: IImageDTO[];
+    images: ImageDTO[];
     name: string;
     popularity: number;
     type: string;
@@ -50,9 +50,9 @@ export interface IGetArtistAlbums {
         album_type: string;
         artists: IGetAlbumArtistDTO[];
         available_markets: string[];
-        external_urls: IObjectDTO;
+        external_urls: ObjectDTO;
         href: string;
-        images: IImageDTO[];
+        images: ImageDTO[];
         name: string;
         release_date: string;
         release_date_precision: string;
