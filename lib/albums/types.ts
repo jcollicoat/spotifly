@@ -1,8 +1,8 @@
 import { CheckSavedDTO, ImageDTO, ObjectDTO } from '../_helpers/types';
 import {
-    IAudioFeatures,
-    IGetAudioFeaturesAPI,
-    IGetAudioFeaturesListAPI,
+    AudioFeatures,
+    AudioFeaturesDTO,
+    AudioFeaturesListDTO,
 } from '../addons/types';
 import { ITopArtistsAPI } from '../artists/types';
 import { ITrack, IGetTrackAPI } from '../tracks/types';
@@ -32,19 +32,19 @@ export interface IAlbum {
     release_date: string;
     total_tracks: number;
     tracks: IAlbumTrack[];
-    audio_features?: IAudioFeatures;
+    audio_features?: AudioFeatures;
 }
 
 // Server
 
 export interface IAlbumAddonsDTO {
-    audioFeaturesListAPI: IGetAudioFeaturesListAPI;
+    audioFeaturesListAPI: AudioFeaturesListDTO;
     topArtistsAPI: ITopArtistsAPI;
     checkSavedAPI: CheckSavedDTO;
 }
 
 export interface IAlbumTrackAddonsDTO {
-    audioFeaturesAPI: IGetAudioFeaturesAPI;
+    audioFeaturesAPI: AudioFeaturesDTO;
     checkSavedAPI: CheckSavedDTO;
 }
 

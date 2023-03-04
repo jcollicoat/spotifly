@@ -2,7 +2,7 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { handleError } from '../../../lib/_helpers/server';
-import { IAddonsDTO } from '../../../lib/addons/types';
+import { AddonsDTO } from '../../../lib/addons/types';
 import { buildArtist } from '../../../lib/artists/builders';
 import { IGetArtistAPI } from '../../../lib/artists/types';
 import { determineAccessToken } from '../../../lib/auth/server';
@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         try {
             // Fetch addons here
 
-            const addons: IAddonsDTO | undefined = undefined;
+            const addons: AddonsDTO | undefined = undefined;
 
             const builtArtist = await buildArtist(artistAPI.data, addons);
 

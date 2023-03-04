@@ -1,7 +1,7 @@
 import { getAverageColor } from 'fast-average-color-node';
 import { appendUUID } from '../_helpers/helpers';
 import { ImageSize } from '../_helpers/types';
-import { IAddonsDTO } from '../addons/types';
+import { AddonsDTO } from '../addons/types';
 import { IArtist, IGetArtistAPI, ITopArtists, ITopArtistsAPI } from './types';
 
 export const buildArtist = async (
@@ -40,7 +40,7 @@ export const buildArtists = async (
 export const buildTopArtists = async (
     data: ITopArtistsAPI,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    addons?: IAddonsDTO
+    addons?: AddonsDTO
 ): Promise<ITopArtists> => ({
     artists: await buildArtists(data.items),
     next: data.next,

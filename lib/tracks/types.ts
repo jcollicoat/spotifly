@@ -1,8 +1,8 @@
 import { CheckSavedDTO, AlbumMinimum, ObjectDTO } from '../_helpers/types';
 import {
-    IAudioFeatures,
-    IGetAudioFeaturesAPI,
-    IGetAudioFeaturesListAPI,
+    AudioFeatures,
+    AudioFeaturesDTO,
+    AudioFeaturesListDTO,
 } from '../addons/types';
 import { IGetAlbumAPI } from '../albums/types';
 import { ITopArtistsAPI } from '../artists/types';
@@ -26,7 +26,7 @@ export interface ITrack {
     name: string;
     popularity: number;
     type: string;
-    audio_features?: IAudioFeatures;
+    audio_features?: AudioFeatures;
     saved?: boolean;
 }
 
@@ -49,13 +49,13 @@ export type RecentlyPlayedMeta = {
 export interface ITracks<TracksMeta> {
     items: ITrack[];
     meta: TracksMeta;
-    audio_features?: IAudioFeatures;
+    audio_features?: AudioFeatures;
 }
 
 // Server
 
 export interface ITrackAddonsDTO {
-    audioFeaturesAPI: IGetAudioFeaturesAPI;
+    audioFeaturesAPI: AudioFeaturesDTO;
     topArtistsAPI: ITopArtistsAPI;
     checkSavedAPI: CheckSavedDTO;
 }
@@ -70,7 +70,7 @@ export interface ITrackArtistDTO {
 }
 
 export interface ITracksAddonsDTO {
-    audioFeaturesListAPI: IGetAudioFeaturesListAPI;
+    audioFeaturesListAPI: AudioFeaturesListDTO;
     topArtistsAPI: ITopArtistsAPI;
     checkSavedAPI: CheckSavedDTO;
 }

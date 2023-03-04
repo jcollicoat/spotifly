@@ -1,6 +1,6 @@
 // Client
 
-export interface IAudioFeatures {
+export interface AudioFeatures {
     acousticness: number;
     danceability: number;
     duration_ms: number;
@@ -16,13 +16,9 @@ export interface IAudioFeatures {
     valence: number;
 }
 
-export interface IAddonsTrack {
-    audio_features: IAudioFeatures;
-}
-
 // Server
 
-export interface IGetAudioFeaturesAPI {
+export interface AudioFeaturesDTO {
     id: string;
     acousticness: number;
     analysis_url: string;
@@ -43,19 +39,10 @@ export interface IGetAudioFeaturesAPI {
     valence: number;
 }
 
-export interface IGetAudioFeaturesListAPI {
-    audio_features: IGetAudioFeaturesAPI[];
+export interface AudioFeaturesListDTO {
+    audio_features: AudioFeaturesDTO[];
 }
 
-export interface IAudioFeaturesListsDTO {
-    audio_features: IGetAudioFeaturesAPI[];
-    id?: string;
-}
-
-export interface IAddonsAlbum {
-    audio_features?: IAudioFeatures;
-}
-
-export interface IAddonsDTO {
-    audio_features?: IGetAudioFeaturesListAPI;
+export interface AddonsDTO {
+    audio_features?: AudioFeaturesListDTO;
 }

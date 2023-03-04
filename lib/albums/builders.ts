@@ -5,7 +5,7 @@ import {
     buildAudioFeatures,
     buildAudioFeaturesListToSingle,
 } from '../addons/builders';
-import { IGetAudioFeaturesAPI } from '../addons/types';
+import { AudioFeaturesDTO } from '../addons/types';
 import {
     IAlbum,
     IAlbumAddonsDTO,
@@ -38,7 +38,7 @@ const findAlbumTrackAddons = (
     return {
         audioFeaturesAPI: addons.audioFeaturesListAPI.audio_features.find(
             (featureSet) => featureSet.id === trackID
-        ) as IGetAudioFeaturesAPI, // This will never be undefined unless the API breaks
+        ) as AudioFeaturesDTO, // This will never be undefined unless the API breaks
         checkSavedAPI: [addons.checkSavedAPI[index]],
     };
 };

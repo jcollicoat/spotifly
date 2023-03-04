@@ -5,7 +5,7 @@ import {
     EPTopArtists,
 } from '../_helpers/endpoints';
 import { CheckSavedDTO } from '../_helpers/types';
-import { IGetAudioFeaturesListAPI } from '../addons/types';
+import { AudioFeaturesListDTO } from '../addons/types';
 import { ITopArtistsAPI } from '../artists/types';
 import { IAlbumAddonsDTO, IAlbumsAddonsDTO, IGetAlbumAPI } from './types';
 
@@ -15,7 +15,7 @@ export const getAlbumAddons = async (
 ): Promise<IAlbumAddonsDTO> => {
     const trackIDs = albumAPI.tracks.items.map((track) => track.id).join(',');
 
-    const audioFeaturesListAPI = await axios.get<IGetAudioFeaturesListAPI>(
+    const audioFeaturesListAPI = await axios.get<AudioFeaturesListDTO>(
         EPAudioFeaturesList,
         {
             headers: {
@@ -58,15 +58,17 @@ export const getAlbumsAddons = async (
 ): Promise<IAlbumsAddonsDTO> => {
     const audioFeaturesListAPIs = await Promise.all(
         trackIDsByAlbum.map(async (trackSet) => {
-            const audioFeaturesListAPI =
-                await axios.get<IGetAudioFeaturesListAPI>(EPAudioFeaturesList, {
+            const audioFeaturesListAPI = await axios.get<AudioFeaturesListDTO>(
+                EPAudioFeaturesList,
+                {
                     headers: {
                         Authorization: access_token,
                     },
                     params: {
                         ids: trackSet.trackIDs.toString(),
                     },
-                });
+                }
+            );
             return {
                 audioFeaturesListAPI: audioFeaturesListAPI.data,
                 id: trackSet.albumID,
