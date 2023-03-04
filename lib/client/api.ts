@@ -8,7 +8,7 @@ import {
     RecentlyPlayedMeta,
     TopTracksMeta,
 } from '../tracks/types';
-import { IUserProfile } from '../user/types';
+import { UserProfile } from '../user/types';
 
 export const getAlbum = async ({
     queryKey,
@@ -103,8 +103,8 @@ export const getTopTracks = async (): Promise<Tracks<TopTracksMeta>> => {
     return topTracks;
 };
 
-export const getUserProfile = async (): Promise<IUserProfile> => {
-    const { data: user }: { data: IUserProfile } = await axios.get(
+export const getUserProfile = async (): Promise<UserProfile> => {
+    const { data: user }: { data: UserProfile } = await axios.get(
         '/api/spotify/getUserProfile'
     );
     return user;

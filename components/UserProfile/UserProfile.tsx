@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { FC } from 'react';
 import { getUserProfile } from '../../lib/client/api';
-import { IUserProfile } from '../../lib/user/types';
+import { UserProfile } from '../../lib/user/types';
 import { IPanelDisplay, Panel } from '../Panels/_Bases/Panel/Panel';
 import { IPanelHeading } from '../Panels/_Bases/PanelHeading/PanelHeading';
 import { SkeletonImage } from '../Skeletons/SkeletonImage/SkeletonImage';
@@ -10,7 +10,7 @@ import { SkeletonText } from '../Skeletons/SkeletonText/SkeletonText';
 import { IComponent, ICreatePanel } from '../types';
 import styles from './UserProfile.module.scss';
 
-type UserProfileSkeleton = IComponent<IUserProfile>;
+type UserProfileSkeleton = IComponent<UserProfile>;
 
 const UserProfileSkeleton: FC<UserProfileSkeleton> = ({ data, state }) => {
     const displayFollowers =
@@ -75,7 +75,7 @@ export const UserProfile: FC<ICreatePanel> = ({ isSkeleton }) => {
         data: user,
         isError,
         isLoading,
-    } = useQuery<IUserProfile>(['userProfile'], getUserProfile, {
+    } = useQuery<UserProfile>(['userProfile'], getUserProfile, {
         staleTime: Infinity,
     });
 

@@ -1,6 +1,6 @@
-import { IUserProfileAPI, IUserProfile } from './types';
+import { UserProfileDTO, UserProfile } from './types';
 
-export const buildUserProfile = (data: IUserProfileAPI): IUserProfile => ({
+export const buildUserProfile = (data: UserProfileDTO): UserProfile => ({
     country: data.country,
     display_name: data.display_name,
     followers: data.followers.total,

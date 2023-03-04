@@ -1,4 +1,6 @@
-export interface IUserProfile {
+// Client
+
+export interface UserProfile {
     country: string;
     display_name: string;
     followers: number;
@@ -8,7 +10,9 @@ export interface IUserProfile {
     type: string;
 }
 
-export interface IUserProfileAPI {
+// Server
+
+export interface UserProfileDTO {
     country: string;
     display_name: string;
     email: string;
