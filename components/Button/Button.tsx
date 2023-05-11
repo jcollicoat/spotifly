@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { FC } from 'react';
 import { useMedia } from 'react-use';
-import { breakpoints } from '../../context/breakpoints/breakpoints';
+import { mediaQueries } from '../../context/breakpoints/breakpoints';
 import { signInOrOut } from '../../lib/_auth/client';
 import { Glyph } from '../Glyphs/Glyph';
 import styles from './Button.module.scss';
@@ -29,13 +29,13 @@ interface ButtonPropsForLink extends Button {
 export type ButtonProps = ButtonPropsForButton | ButtonPropsForLink;
 
 const ButtonContent: FC<ButtonProps> = (props) => {
-    const isSmall = useMedia(`(max-width: ${breakpoints.medium - 1}px)`, false);
+    const isMobile = useMedia(mediaQueries.mobile, false);
     const { children, displayGlyph, glyph } = props;
 
     if (!displayGlyph) {
         return <>{children}</>;
     }
-    if (displayGlyph === 'always' || (displayGlyph === 'mobile' && isSmall)) {
+    if (displayGlyph === 'always' || (displayGlyph === 'mobile' && isMobile)) {
         return <>{glyph}</>;
     }
     return (
