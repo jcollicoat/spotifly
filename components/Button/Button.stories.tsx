@@ -70,13 +70,3 @@ Link.args = {
     href: 'https://www.google.com',
     style: 'primary',
 };
-
-export const SignInOut = Template.bind({});
-SignInOut.args = {
-    ariaLabel: 'Sign in',
-    children: 'Sign in',
-    displayGlyph: 'postfix',
-    glyph: 'SignInOut',
-    onClick: () => alert('This is just Storybook.'),
-    style: 'secondary',
-};

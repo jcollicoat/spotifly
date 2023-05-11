@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import { useMedia } from 'react-use';
 import { breakpoints } from '../../context/breakpoints/breakpoints';
 import { signInOrOut } from '../../lib/_auth/client';
@@ -9,118 +9,75 @@ import { Glyph } from '../Glyphs/Glyph';
 import styles from './Button.module.scss';
 
 interface Button {
-    displayGlyph?: 'prefix' | 'postfix' | 'always' | 'mobile';
-    style?: 'cta' | 'primary' | 'secondary' | 'tertiary';
-}
-
-interface ButtonWithChildren extends Button {
     ariaLabel: string;
     children: React.ReactNode;
+    displayGlyph?: 'prefix' | 'postfix' | 'always' | 'mobile';
+    style?: 'cta' | 'primary' | 'secondary' | 'tertiary';
     glyph?: React.ReactNode;
 }
 
-interface ButtonTypeProps extends ButtonWithChildren {
-    onClick: () => void;
-}
-
-const ButtonType: FC<ButtonTypeProps> = ({
-    ariaLabel,
-    children,
-    onClick,
-    style = 'cta',
-}) => (
-    <button
-        aria-label={ariaLabel}
-        className={classNames(styles.button, styles[style])}
-        onClick={onClick}
-        type="button"
-    >
-        {children}
-    </button>
-);
-
-interface LinkTypeProps extends ButtonWithChildren {
-    href: string;
-}
-
-const LinkType: FC<LinkTypeProps> = ({
-    ariaLabel,
-    children,
-    href,
-    style = 'cta',
-}) => {
-    if (href.startsWith('https://')) {
-        return (
-            <a
-                aria-label={ariaLabel}
-                className={classNames(styles.button, styles[style])}
-                href={href}
-                rel="noopener noreferrer"
-                target="_blank"
-            >
-                {children}
-            </a>
-        );
-    } else {
-        return <Link href={href}>{children}</Link>;
-    }
-};
-
-interface ButtonPropsForButton extends ButtonWithChildren {
+interface ButtonPropsForButton extends Button {
     onClick: () => void;
     href?: never;
 }
 
-interface ButtonPropsForLink extends ButtonWithChildren {
+interface ButtonPropsForLink extends Button {
     href: string;
     onClick?: never;
 }
 
-type ButtonProps = ButtonPropsForButton | ButtonPropsForLink;
+export type ButtonProps = ButtonPropsForButton | ButtonPropsForLink;
 
-export const Button: FC<ButtonProps> = ({
-    ariaLabel,
-    children,
-    displayGlyph,
-    glyph,
-    href,
-    onClick,
-    style,
-}) => {
+const ButtonContent: FC<ButtonProps> = (props) => {
     const isSmall = useMedia(`(max-width: ${breakpoints.medium - 1}px)`, false);
+    const { children, displayGlyph, glyph } = props;
 
-    const buttonContent = useCallback(() => {
-        switch (displayGlyph) {
-            case 'prefix':
-            case 'postfix':
-                return (
-                    <>
-                        {displayGlyph === 'prefix' ? glyph : children}
-                        {displayGlyph === 'postfix' ? glyph : children}
-                    </>
-                );
-            case 'always':
-                return glyph;
-            case 'mobile':
-                return isSmall ? glyph : children;
-            default:
-                return children;
-        }
-    }, [children, displayGlyph, glyph, isSmall]);
+    if (!displayGlyph) {
+        return <>{children}</>;
+    }
+    if (displayGlyph === 'always' || (displayGlyph === 'mobile' && isSmall)) {
+        return <>{glyph}</>;
+    }
+    return (
+        <>
+            {displayGlyph === 'prefix' && glyph}
+            {children}
+            {displayGlyph === 'postfix' && glyph}
+        </>
+    );
+};
+
+export const Button: FC<ButtonProps> = (props) => {
+    const { ariaLabel, href, onClick, style = 'secondary' } = props;
 
     if (onClick) {
         return (
-            <ButtonType ariaLabel={ariaLabel} onClick={onClick} style={style}>
-                {buttonContent()}
-            </ButtonType>
-        );
-    } else {
-        return (
-            <LinkType ariaLabel={ariaLabel} href={href} style={style}>
-                {buttonContent()}
-            </LinkType>
+            <button
+                aria-label={ariaLabel}
+                className={classNames(styles.button, styles[style])}
+                onClick={onClick}
+                type="button"
+            >
+                <ButtonContent {...props} />
+            </button>
         );
     }
+
+    return href.startsWith('https://') ? (
+        <a
+            aria-label={ariaLabel}
+            className={classNames(styles.button, styles[style])}
+            href={href}
+            rel="noopener noreferrer"
+            target="_blank"
+        >
+            <ButtonContent {...props} />
+        </a>
+    ) : (
+        <Link href={href}>
+            <ButtonContent {...props} />
+        </Link>
+    );
 };
 
 export const ButtonSignInOut: FC<Button> = ({ displayGlyph, style }) => {
