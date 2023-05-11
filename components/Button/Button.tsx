@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { useMedia } from 'react-use';
 import { breakpoints } from '../../context/breakpoints/breakpoints';
 import { signInOrOut } from '../../lib/_auth/client';
@@ -9,7 +9,7 @@ import { Glyph } from '../Glyphs/Glyph';
 import styles from './Button.module.scss';
 
 interface Button {
-    displayGlyph?: 'withText' | 'always' | 'mobile';
+    displayGlyph?: 'prefix' | 'postfix' | 'always' | 'mobile';
     style?: 'cta' | 'primary' | 'secondary' | 'tertiary';
 }
 
@@ -62,16 +62,7 @@ const LinkType: FC<LinkTypeProps> = ({
             </a>
         );
     } else {
-        return (
-            <Link href={href} passHref>
-                {/* <a
-                    aria-label={ariaLabel}
-                    className={classNames(styles.button, styles[style])}
-                >
-                    {children}
-                </a> */}
-            </Link>
-        );
+        return <Link href={href}>{children}</Link>;
     }
 };
 
@@ -98,23 +89,24 @@ export const Button: FC<ButtonProps> = ({
 }) => {
     const isSmall = useMedia(`(max-width: ${breakpoints.medium - 1}px)`, false);
 
-    const buttonContent = () => {
-        if (displayGlyph === 'withText') {
-            return (
-                <>
-                    {children}
-                    {glyph}
-                </>
-            );
-        } else if (
-            displayGlyph === 'always' ||
-            (displayGlyph === 'mobile' && isSmall)
-        ) {
-            return glyph;
-        } else {
-            return children;
+    const buttonContent = useCallback(() => {
+        switch (displayGlyph) {
+            case 'prefix':
+            case 'postfix':
+                return (
+                    <>
+                        {displayGlyph === 'prefix' ? glyph : children}
+                        {displayGlyph === 'postfix' ? glyph : children}
+                    </>
+                );
+            case 'always':
+                return glyph;
+            case 'mobile':
+                return isSmall ? glyph : children;
+            default:
+                return children;
         }
-    };
+    }, [children, displayGlyph, glyph, isSmall]);
 
     if (onClick) {
         return (
@@ -133,15 +125,12 @@ export const Button: FC<ButtonProps> = ({
 
 export const ButtonSignInOut: FC<Button> = ({ displayGlyph, style }) => {
     const { data: session } = useSession();
-    const glyph = displayGlyph && (
-        <Glyph type="SignInOut" signout={Boolean(session)} />
-    );
 
     return (
         <Button
             ariaLabel={session ? 'Sign out' : 'Sign in with Spotify'}
             onClick={signInOrOut}
-            glyph={glyph}
+            glyph={<Glyph type="SignInOut" signout={Boolean(session)} />}
             displayGlyph={displayGlyph}
             style={style ?? (session ? 'secondary' : 'primary')}
         >

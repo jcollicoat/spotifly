@@ -244,7 +244,6 @@ interface ISignInOut {
 }
 
 const SignInOut: FC<ISignInOut> = ({ signout }) => {
-    console.log(signout);
     return signout ? (
         <g>
             <line
