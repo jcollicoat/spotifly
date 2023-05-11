@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { FC } from 'react';
 import { useMedia } from 'react-use';
 import { breakpoints } from '../../context/breakpoints/breakpoints';
@@ -8,22 +8,22 @@ import { signInOrOut } from '../../lib/_auth/client';
 import { Glyph } from '../Glyphs/Glyph';
 import styles from './Button.module.scss';
 
-interface IButton {
-    displayAsGlyph?: 'always' | 'responsive';
+interface Button {
+    displayGlyph?: 'withText' | 'always' | 'mobile';
     style?: 'cta' | 'primary' | 'secondary' | 'tertiary';
 }
 
-interface IButtonWithChildren extends IButton {
+interface ButtonWithChildren extends Button {
     ariaLabel: string;
     children: React.ReactNode;
     glyph?: React.ReactNode;
 }
 
-interface IButtonType extends IButtonWithChildren {
+interface ButtonTypeProps extends ButtonWithChildren {
     onClick: () => void;
 }
 
-const ButtonType: FC<IButtonType> = ({
+const ButtonType: FC<ButtonTypeProps> = ({
     ariaLabel,
     children,
     onClick,
@@ -39,11 +39,11 @@ const ButtonType: FC<IButtonType> = ({
     </button>
 );
 
-interface ILinkType extends IButtonWithChildren {
+interface LinkTypeProps extends ButtonWithChildren {
     href: string;
 }
 
-const LinkType: FC<ILinkType> = ({
+const LinkType: FC<LinkTypeProps> = ({
     ariaLabel,
     children,
     href,
@@ -75,35 +75,40 @@ const LinkType: FC<ILinkType> = ({
     }
 };
 
-interface IButtonTypeProps extends IButtonWithChildren {
+interface ButtonPropsForButton extends ButtonWithChildren {
     onClick: () => void;
     href?: never;
-    type?: never;
 }
 
-interface ILinkTypeProps extends IButtonWithChildren {
+interface ButtonPropsForLink extends ButtonWithChildren {
     href: string;
-    type: 'link';
     onClick?: never;
 }
 
-type IButtonProps = IButtonTypeProps | ILinkTypeProps;
+type ButtonProps = ButtonPropsForButton | ButtonPropsForLink;
 
-export const Button: FC<IButtonProps> = ({
+export const Button: FC<ButtonProps> = ({
     ariaLabel,
     children,
-    displayAsGlyph,
+    displayGlyph,
     glyph,
     href,
     onClick,
     style,
-    type,
 }) => {
     const isSmall = useMedia(`(max-width: ${breakpoints.medium - 1}px)`, false);
+
     const buttonContent = () => {
-        if (
-            displayAsGlyph === 'always' ||
-            (displayAsGlyph === 'responsive' && isSmall)
+        if (displayGlyph === 'withText') {
+            return (
+                <>
+                    {children}
+                    {glyph}
+                </>
+            );
+        } else if (
+            displayGlyph === 'always' ||
+            (displayGlyph === 'mobile' && isSmall)
         ) {
             return glyph;
         } else {
@@ -111,23 +116,24 @@ export const Button: FC<IButtonProps> = ({
         }
     };
 
-    if (type === 'link') {
+    if (onClick) {
+        return (
+            <ButtonType ariaLabel={ariaLabel} onClick={onClick} style={style}>
+                {buttonContent()}
+            </ButtonType>
+        );
+    } else {
         return (
             <LinkType ariaLabel={ariaLabel} href={href} style={style}>
                 {buttonContent()}
             </LinkType>
         );
     }
-    return (
-        <ButtonType ariaLabel={ariaLabel} onClick={onClick} style={style}>
-            {buttonContent()}
-        </ButtonType>
-    );
 };
 
-export const ButtonSignInOut: FC<IButton> = ({ displayAsGlyph, style }) => {
+export const ButtonSignInOut: FC<Button> = ({ displayGlyph, style }) => {
     const { data: session } = useSession();
-    const glyph = displayAsGlyph && (
+    const glyph = displayGlyph && (
         <Glyph type="SignInOut" signout={Boolean(session)} />
     );
 
@@ -136,7 +142,7 @@ export const ButtonSignInOut: FC<IButton> = ({ displayAsGlyph, style }) => {
             ariaLabel={session ? 'Sign out' : 'Sign in with Spotify'}
             onClick={signInOrOut}
             glyph={glyph}
-            displayAsGlyph={displayAsGlyph}
+            displayGlyph={displayGlyph}
             style={style ?? (session ? 'secondary' : 'primary')}
         >
             {session ? 'Sign out' : 'Sign in with Spotify'}

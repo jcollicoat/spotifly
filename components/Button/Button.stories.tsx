@@ -1,6 +1,5 @@
 import { ComponentStory } from '@storybook/react';
 import { Glyph, GlyphType } from '../Glyphs/Glyph';
-
 import { Button } from './Button';
 
 export default {
@@ -33,7 +32,7 @@ export default {
 };
 
 const Template: ComponentStory<typeof Button> = (args) => {
-    if (args.displayAsGlyph !== undefined) {
+    if (args.displayGlyph !== undefined) {
         return (
             <Button
                 {...args}
@@ -49,7 +48,9 @@ export const Default = Template.bind({});
 Default.args = {
     ariaLabel: 'Default Button',
     children: 'Default Button',
+    displayGlyph: undefined,
     glyph: 'Dashboard',
+    onClick: () => alert('Button clicked!'),
     style: 'cta',
 };
 Default.argTypes = {
@@ -64,8 +65,8 @@ export const Link = Template.bind({});
 Link.args = {
     ariaLabel: 'Google link button',
     children: 'Google link button',
+    displayGlyph: undefined,
     glyph: 'Dashboard',
     href: 'https://www.google.com',
     style: 'primary',
-    type: 'link',
 };
